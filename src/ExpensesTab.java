@@ -47,10 +47,15 @@ public class ExpensesTab extends JPanel {
 
         add(formPanel, BorderLayout.NORTH);
 
+
+        // ------------------------------
+        // Table Of Expenses Top Expenses
+        // -------------------------------
         String[] columnsForTable = { "Name", "Amount", "Category" };
-        tableModel = new DefaultTableModel(columnsForTable, 3);
+        tableModel = new DefaultTableModel(columnsForTable, 3); // 3 is number of rows
         topExpenses = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(topExpenses);
+        topExpenses.setGridColor(Color.BLACK);
         add(scrollPane, BorderLayout.CENTER);
 
         submitButton.addActionListener(e -> addExpense());
