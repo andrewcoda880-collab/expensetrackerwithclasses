@@ -11,5 +11,7 @@ public class SettingsTab extends JPanel {
         title.setFont(new Font("Arial", Font.BOLD, 24));
 
         add(title, BorderLayout.CENTER);
+
+        //hey!
     }
 }
