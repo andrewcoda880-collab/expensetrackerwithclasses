@@ -21,36 +21,40 @@ public class ExpensesTab extends JPanel {
         JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         formPanel.setBackground(Constants.APP_COLOR);
 
+        // ----- Name --------
         JLabel nameLabel = new JLabel("Expense Name:");
         nameField = new JTextField();
 
+        formPanel.add(nameLabel);
+        formPanel.add(nameField);
+
+        // ----- Amount ------
         JLabel amountLabel = new JLabel("Amount:");
         amountField = new JTextField();
+
+        formPanel.add(amountLabel);
+        formPanel.add(amountField);
+
+        // ----- Category ----
 
         JLabel categoryLabel = new JLabel("Category");
         String[] categories = { "", "Food", "Transport", "Entertainment", "Bills", "Other" };
         categoryMenu = new JComboBox<>(categories);
 
-        JButton submitButton = new JButton("Submit Expense");
-
-        formPanel.add(nameLabel);
-        formPanel.add(nameField);
-
-        formPanel.add(amountLabel);
-        formPanel.add(amountField);
-
         formPanel.add(categoryLabel);
         formPanel.add(categoryMenu);
+
+        // ---- Submit --------
+
+        JButton submitButton = new JButton("Submit Expense");
 
         formPanel.add(new JLabel());
         formPanel.add(submitButton);
 
-        add(formPanel, BorderLayout.NORTH);
+        submitButton.addActionListener(e -> addExpense());
 
+        // --- Top Expenses Table ---
 
-        // ------------------------------
-        // Table Of Expenses Top Expenses
-        // -------------------------------
         String[] columnsForTable = { "Name", "Amount", "Category" };
         tableModel = new DefaultTableModel(columnsForTable, 3); // 3 is number of rows
         topExpenses = new JTable(tableModel);
@@ -58,7 +62,8 @@ public class ExpensesTab extends JPanel {
         topExpenses.setGridColor(Color.BLACK);
         add(scrollPane, BorderLayout.CENTER);
 
-        submitButton.addActionListener(e -> addExpense());
+
+        add(formPanel, BorderLayout.NORTH);
     }
 
     private void addExpense() {
