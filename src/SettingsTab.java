@@ -13,5 +13,8 @@ public class SettingsTab extends JPanel {
         add(title, BorderLayout.CENTER);
 
         //hey!
+        //yo
+        
+         
     }
 }
