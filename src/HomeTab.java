@@ -15,7 +15,6 @@ public class HomeTab extends JPanel {
         title.setBounds(150, 150, 250, 250);
 
         
-
         JPanel homepagePanel = new JPanel();
         JLabel homepageLabel = new JLabel();
 
