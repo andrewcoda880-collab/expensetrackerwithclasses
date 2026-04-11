@@ -1,0 +1,20 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class ExpenseManager {
+
+    private List<Expense> expenses = new ArrayList<>(); // list of our expenses
+
+    public void addExpense(Expense expense){ 
+        expenses.add(expense);
+    }
+
+    public List<Expense> getSortedExpenses(){ // sorts our expenses from high to low
+        List<Expense> sortedExpenses = new ArrayList<>(expenses);
+        sortedExpenses.sort((a,b) -> Double.compare(b.getAmount(), a.getAmount()));
+        return sortedExpenses;
+        
+    }
+}
