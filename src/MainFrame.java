@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
         cardPanel.add(new GraphsTab(), "GRAPHS");
         cardPanel.add(new LoginTab(), "LOGIN");
 
-        )
+        
         
     }
 }
