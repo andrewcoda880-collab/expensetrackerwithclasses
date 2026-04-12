@@ -1,23 +1,15 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class SettingsTab extends JPanel {
+public class LoginTab extends JPanel {
     
-    public SettingsTab(){
+    public LoginTab(){
         setLayout(new BorderLayout());
         setBackground(Constants.APP_COLOR);
 
-        JLabel title = new JLabel("Setting$");
+        JLabel title = new JLabel("Login");
         title.setFont(new Font("Arial", Font.BOLD, 24));
 
         add(title, BorderLayout.CENTER);
-
-        //hey!
-        //yo
-        //commit test
-        //heyo
-        
-        
-         
     }
 }
