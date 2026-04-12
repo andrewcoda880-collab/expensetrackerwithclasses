@@ -19,12 +19,7 @@ public class HomeTab extends JPanel {
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setVerticalAlignment(JLabel.NORTH);
 
-<<<<<<< HEAD
-=======
-        
-        JPanel homepagePanel = new JPanel();
-        JLabel homepageLabel = new JLabel();
->>>>>>> 55c765e16b583f1357d844f6a9500037339b2d21
+
 
         homepagePanel.add(homepageLabel);
         homepagePanel.setLayout(new BorderLayout());
