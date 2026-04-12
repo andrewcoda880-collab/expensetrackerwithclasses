@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 
 public final class Constants {
