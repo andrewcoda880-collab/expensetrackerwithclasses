@@ -15,6 +15,10 @@ public class ExpenseManager {
         List<Expense> sortedExpenses = new ArrayList<>(expenses);
         sortedExpenses.sort((a,b) -> Double.compare(b.getAmount(), a.getAmount()));
         return sortedExpenses;
-        
+  
+    }
+
+    public List<Expense> getExpenses() { // returns regular list of expenses ()
+        return expenses;
     }
 }
