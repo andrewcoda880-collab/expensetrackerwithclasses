@@ -12,16 +12,31 @@ import java.util.Scanner;
 public class PieChartCreator extends Application {
  
     @Override public void start(Stage stage) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("=== Expense Tracker ===");
+        System.out.print("Enter expense amount for Bills: $");
+        double expense1 = scanner.nextDouble();
+        
+        System.out.print("Enter expense amount for Rent: $");
+        double expense2 = scanner.nextDouble();
+        
+        System.out.print("Enter expense amount for Food: $");
+        double expense3 = scanner.nextDouble();
+        
+        System.out.print("Enter expense amount for Entertainment: $");
+        double expense4 = scanner.nextDouble();
+        
+        System.out.print("Enter expense amount for Takeout: $");
+        double expense5 = scanner.nextDouble();
+        
+        scanner.close();
+        
         Scene scene = new Scene(new Group());
         stage.setTitle("Expenses");
         stage.setWidth(500);
         stage.setHeight(500);
-		  
-		  double expense1 = 103.4;
-		  double expense2 = 125.2;
-		  double expense3 = 125.12;
-		  double expense4 = 213.3;
-		  double expense5 = 214.3;
+        
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
                 new PieChart.Data("Bills", expense1),
@@ -35,7 +50,6 @@ public class PieChartCreator extends Application {
         ((Group) scene.getRoot()).getChildren().add(chart);
         stage.setScene(scene);
         stage.show();
-		  
     }
  
     public static void main(String[] args) {
