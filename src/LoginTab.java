@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import javax.swing.*;
 
@@ -43,16 +42,24 @@ public class LoginTab extends JPanel {
         loginButton.setBounds(150, 290, 120, 35);
         add(loginButton);
 
-        // Button action (simple test login)
-        loginButton.addActionListener(e -> {
-            String username = usernameField.getText();
-            String password = new String(passwordField.getPassword());
+        // Event
+        loginButton.addActionListener(e -> handleLogin());
+    }
 
-            if (username.equals("admin") && password.equals("1234")) {
-                JOptionPane.showMessageDialog(this, "Login successful!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid login");
-            }
-        });
+    // ===================== LOGIC METHODS =====================
+
+    private void handleLogin() {
+        String username = usernameField.getText();
+        char[] password = passwordField.getPassword();
+
+        if (authenticate(username, password)) {
+            JOptionPane.showMessageDialog(this, "Login successful!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid login");
+        }
+    }
+
+    private boolean authenticate(String username, char[] password) {
+        return username.equals("admin") && String.valueOf(password).equals("1234");
     }
 }
