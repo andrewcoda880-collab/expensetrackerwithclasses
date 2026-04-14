@@ -14,10 +14,15 @@ public class ExpensesTab extends JPanel {
     private JTable recentExpenses;
     private DefaultTableModel recentExepenseTableModel;
     private ExpenseManager expenseManager;
+    private CardLayout layout;
+    private JPanel container;
 
-    public ExpensesTab(ExpenseManager expenseManager) {
+    public ExpensesTab(ExpenseManager expenseManager, CardLayout layout, JPanel container) {
 
         this.expenseManager = expenseManager;
+        this.layout = layout;
+        this.container = container;
+
         this.setBackground(Constants.APP_COLOR);
         setLayout(new BorderLayout());
 
@@ -25,9 +30,23 @@ public class ExpensesTab extends JPanel {
         add(createInputsPanel(), BorderLayout.NORTH);
         
         add(createTablesPanel(), BorderLayout.CENTER);
+
+        add(createBottomPanel(), BorderLayout.SOUTH);
         
          
 
+    }
+
+    private JPanel createBottomPanel() {
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        bottomPanel.setBackground(Constants.APP_COLOR);
+
+        JButton viewAllExpensesButton = new JButton("View All Expenses");
+        viewAllExpensesButton.addActionListener(e -> layout.show(container, "ALL EXPENSES"));
+        bottomPanel.add(viewAllExpensesButton);
+
+        return bottomPanel; 
     }
 
     private JPanel createTablesPanel () {
