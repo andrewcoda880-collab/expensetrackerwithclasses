@@ -9,7 +9,7 @@ import javafx.scene.chart.*;
 import javafx.scene.Group;
 import java.util.Scanner;
 
-public class PieChartSample extends Application {
+public class PieChartCreator extends Application {
  
     @Override public void start(Stage stage) {
         Scene scene = new Scene(new Group());
