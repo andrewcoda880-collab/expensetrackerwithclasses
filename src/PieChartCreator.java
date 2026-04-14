@@ -13,37 +13,37 @@ public class PieChartCreator extends Application {
  
     @Override public void start(Stage stage) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Expense Tracker");
+        System.out.print("Enter expense amount for Food: ");
+        double expense1 = scanner.nextDouble();//Scanners to get input for categories that are going to be used in pie chart
         
-        System.out.println("=== Expense Tracker ===");
-        System.out.print("Enter expense amount for Bills: $");
-        double expense1 = scanner.nextDouble();
-        
-        System.out.print("Enter expense amount for Rent: $");
+        System.out.print("Enter expense amount for Transport: ");
         double expense2 = scanner.nextDouble();
         
-        System.out.print("Enter expense amount for Food: $");
+        System.out.print("Enter expense amount for Entertainment: ");
         double expense3 = scanner.nextDouble();
         
-        System.out.print("Enter expense amount for Entertainment: $");
+        System.out.print("Enter expense amount for Bills: ");
         double expense4 = scanner.nextDouble();
         
-        System.out.print("Enter expense amount for Takeout: $");
+        System.out.print("Enter expense amount for Other: ");
+		  scanner.nextLine();
         double expense5 = scanner.nextDouble();
-        
+        scanner.nextLine();
         scanner.close();
         
         Scene scene = new Scene(new Group());
-        stage.setTitle("Expenses");
-        stage.setWidth(500);
-        stage.setHeight(500);
+        stage.setTitle(Constants.APP_TITLE);  // Using constant from Constants class
+        stage.setWidth(Constants.WINDOW_WIDTH);  // Using constant from Constants class
+        stage.setHeight(Constants.WINDOW_HEIGHT);  // Using constant from Constants class
         
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
-                new PieChart.Data("Bills", expense1),
-                new PieChart.Data("Rent", expense2),
-                new PieChart.Data("Food", expense3),
-                new PieChart.Data("Entertainment", expense4),
-                new PieChart.Data("Takeout", expense5));
+                new PieChart.Data("Food", expense1),//Creates different section of the pie chart
+                new PieChart.Data("Transport",expense2),
+                new PieChart.Data("Entertainment", expense3),
+                new PieChart.Data("Bills",expense4),
+                new PieChart.Data("Other", expense5));
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Expenses");
 
