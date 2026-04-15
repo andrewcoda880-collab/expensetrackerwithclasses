@@ -16,6 +16,7 @@ public class ExpensesTab extends JPanel {
     private ExpenseManager expenseManager;
     private CardLayout layout;
     private JPanel container;
+    private JLabel sumOfAllExpenses;
 
     public ExpensesTab(ExpenseManager expenseManager, CardLayout layout, JPanel container) {
 
@@ -45,6 +46,10 @@ public class ExpensesTab extends JPanel {
         JButton viewAllExpensesButton = new JButton("View All Expenses");
         viewAllExpensesButton.addActionListener(e -> layout.show(container, "ALL EXPENSES"));
         bottomPanel.add(viewAllExpensesButton);
+
+        sumOfAllExpenses = new JLabel("Total Spent: " + expenseManager.getSumOfAllExpenses());
+        bottomPanel.add(sumOfAllExpenses);
+
 
         return bottomPanel; 
     }
@@ -204,5 +209,12 @@ public class ExpensesTab extends JPanel {
                     expenses.get(i).getCategory(),
             });
         }
+
+        refreshSumOfAllExpenses();
+    }
+
+    private void refreshSumOfAllExpenses(){
+        sumOfAllExpenses.setText("Total Spent: " + expenseManager.getSumOfAllExpenses());
+        return;
     }
 }
