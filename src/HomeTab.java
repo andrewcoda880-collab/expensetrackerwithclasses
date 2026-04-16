@@ -1,69 +1,70 @@
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.*;
 public class HomeTab extends JPanel {
-    
-    public HomeTab(CardLayout Homelayout, JPanel HomeContainer) {
+
+
+
+    public HomeTab(CardLayout layout, JPanel Container) {
         
         setBackground(Constants.APP_COLOR);
-    
-        JPanel homepagePanel = new JPanel();
-        JLabel homepageLabel = new JLabel();
-
+        this.setLayout(null);
+        addButtons(layout, Container);
+        addTitle();
+    }
+    //method to add the title to the homepage panel
+    public void addTitle(){
         JLabel title = new JLabel("Home");
         title.setFont(new Font("Arial", Font.BOLD, 24));
-
         this.add(title);
         title.setBounds(125, 25, 250, 250);
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setVerticalAlignment(JLabel.NORTH);
 
-
-
-        homepagePanel.add(homepageLabel);
-        homepagePanel.setLayout(new BorderLayout());
-
+        
+    }
+    //method to add the buttons to the homepage panel
+    public void addButtons(CardLayout layout, JPanel container){
         //add My Expenses button to the homepage panel
-        JButton myExpensesButton = new JButton("My Expenses");
+        final JButton myExpensesButton = new JButton("My Expenses");
         myExpensesButton.setBounds(100,75,300,50);
 
         //add the Budget button to the homepage panel
-        JButton budgetButton = new JButton("Budget");
+        final JButton budgetButton = new JButton("My Budget");
         budgetButton.setBounds(100,150,300,50);
 
         //add investments button to the homepage panel
-        JButton investmentsButton = new JButton("Investments");
+        final JButton investmentsButton = new JButton("My Investments");
         investmentsButton.setBounds(100,225,300,50);
 
         //add the reports button to the homepage panel
-        JButton SubscriptionsButton = new JButton("Subscriptions");
+        final JButton SubscriptionsButton = new JButton("My Subscriptions");
         SubscriptionsButton.setBounds(100,300,300,50);
 
 
         //add the settings button to the homepage panel
-        JButton settingsButton = new JButton("Settings");
+        final JButton settingsButton = new JButton("My Settings");
         settingsButton.setBounds(100,375,300,50);
 
-
-        this.setLayout(null);
         
-        myExpensesButton.addActionListener(e -> Homelayout.show(HomeContainer, "MY EXPENSES"));
-        budgetButton.addActionListener(e -> Homelayout.show(HomeContainer, "MY BUDGET"));
-        investmentsButton.addActionListener(e -> {
-            // Code to navigate to the Investments tab
-        });
-        SubscriptionsButton.addActionListener(e -> {
-            // Code to navigate to the Subscriptions tab
-        });
-        settingsButton.addActionListener(e -> {
-            // Code to navigate to the Settings tab
-        });
 
         add(myExpensesButton);
         add(budgetButton);
         add(investmentsButton);
         add(SubscriptionsButton);
         add(settingsButton);
+
+        myExpensesButton.addActionListener(e -> layout.show(container, "MYEXPENSES"));
+        budgetButton.addActionListener(e -> layout.show(container, "MYBUDGET"));
+        investmentsButton.addActionListener(e -> layout.show(container, "MYINVESTMENTS"));
+        SubscriptionsButton.addActionListener(e -> layout.show(container, "MYSUBSCRIPTIONS"));
+        settingsButton.addActionListener(e -> layout.show(container, "MYSETTINGS"));
+
+        container.add(new myExpenses(), "MYEXPENSES");
+        container.add(new myBudget(), "MYBUDGET");
+        container.add(new myInvestments(), "MYINVESTMENTS");
+        container.add(new mySubscriptions(), "MYSUBSCRIPTIONS");
+        container.add(new mySettings(), "MYSETTINGS");
+
     }
 }
