@@ -5,6 +5,7 @@
     ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "/Users/kylepaz/Downloads/jfreechart-1.0.1/**/*.jar"
     ]
 }

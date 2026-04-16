@@ -46,6 +46,9 @@ public class HomeTab extends JPanel {
         final JButton settingsButton = new JButton("My Settings");
         settingsButton.setBounds(100,375,300,50);
 
+        final JButton incomeButton = new JButton("My Income");
+        incomeButton.setBounds(100,450,300,50);
+
         
 
         add(myExpensesButton);
@@ -53,18 +56,21 @@ public class HomeTab extends JPanel {
         add(investmentsButton);
         add(SubscriptionsButton);
         add(settingsButton);
-
+        add(incomeButton);
+        
         myExpensesButton.addActionListener(e -> layout.show(container, "MYEXPENSES"));
         budgetButton.addActionListener(e -> layout.show(container, "MYBUDGET"));
         investmentsButton.addActionListener(e -> layout.show(container, "MYINVESTMENTS"));
         SubscriptionsButton.addActionListener(e -> layout.show(container, "MYSUBSCRIPTIONS"));
         settingsButton.addActionListener(e -> layout.show(container, "MYSETTINGS"));
+        incomeButton.addActionListener(e -> layout.show(container, "MYINCOME"));
 
         container.add(new myExpenses(), "MYEXPENSES");
         container.add(new myBudget(), "MYBUDGET");
         container.add(new myInvestments(), "MYINVESTMENTS");
         container.add(new mySubscriptions(), "MYSUBSCRIPTIONS");
         container.add(new mySettings(), "MYSETTINGS");
+        container.add(new myIncome(), "MYINCOME");
 
     }
 }
