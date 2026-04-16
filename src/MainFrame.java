@@ -8,6 +8,8 @@ public class MainFrame extends JFrame {
     private JPanel cardPanel = new JPanel(cardLayout);
     private ExpenseManager expenseManager = new ExpenseManager();
 
+    
+
     public MainFrame() {
 
         setTitle(Constants.APP_TITLE);
@@ -35,6 +37,11 @@ public class MainFrame extends JFrame {
 
         //SHOW LOGIN FIRST
         cardLayout.show(cardPanel, "LOGIN");
+
+    
+    
+    
+        
 
         
         
