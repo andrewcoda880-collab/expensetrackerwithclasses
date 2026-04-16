@@ -79,6 +79,8 @@ public class GraphsTab extends JPanel {
         if (entertainmentTotal > 0) dataset.setValue("Entertainment", entertainmentTotal);
         if (billsTotal > 0) dataset.setValue("Bills", billsTotal);
         if (otherTotal > 0) dataset.setValue("Other", otherTotal);
+
+
         
         double totalExpenses = foodTotal + transportTotal + entertainmentTotal + billsTotal + otherTotal;
         
@@ -109,7 +111,22 @@ public class GraphsTab extends JPanel {
         add(chartPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
-    }
+        // Check if entertainment expenses exceed bills and show warning
+        if (entertainmentTotal > billsTotal) {
+            String warningMessage = String.format(
+                "⚠️ Warning: Entertainment expenses ($%.2f) exceed Bills ($%.2f)!\n" +
+                "Get Your like together man!",
+                entertainmentTotal, billsTotal
+            );
+            
+            // Show warning dialog
+            JOptionPane.showMessageDialog(
+                this,
+                warningMessage,
+                "Budget Alert",
+                JOptionPane.WARNING_MESSAGE
+            );
+        }    }
     
     public void refreshChart() {
         updatePieChart();
