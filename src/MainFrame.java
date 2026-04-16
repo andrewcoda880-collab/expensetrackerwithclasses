@@ -27,12 +27,15 @@ public class MainFrame extends JFrame {
         // ADD PANELS 
         // -------------------------
         cardPanel.add(new HomeTab(cardLayout, cardPanel), "HOME");
-        cardPanel.add(new ExpensesTab(expenseManager), "EXPENSES");
+        cardPanel.add(new ExpensesTab(expenseManager, cardLayout, cardPanel), "EXPENSES");
         cardPanel.add(new SettingsTab(), "SETTINGS");
-        cardPanel.add(new GraphsTab(expenseManager), "GRAPHS");  // Pass expenseManager here
+        cardPanel.add(new GraphsTab(expenseManager), "GRAPHS");
         cardPanel.add(new LoginTab(), "LOGIN");
+        
+        // You'll need to create an AllExpensesTab if you want to use the "ALL EXPENSES" view
+        // cardPanel.add(new AllExpensesTab(expenseManager), "ALL EXPENSES");
 
-        //SHOW LOGIN FIRST
+        // SHOW LOGIN FIRST
         cardLayout.show(cardPanel, "LOGIN");
     }
 }
