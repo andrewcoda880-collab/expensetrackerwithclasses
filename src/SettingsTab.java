@@ -17,7 +17,7 @@ public class SettingsTab extends JPanel {
         add(title, BorderLayout.NORTH);
 
         String titleNotificationSettings = "Notification Settings";
-        notifsMenu = new Defau
+        notifsMenu = new DefaultTableModel();
 
 
         //hey!
