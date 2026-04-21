@@ -106,7 +106,6 @@ public class myIncome extends JPanel {
         add(IncomeSummaryButton);
 
         submitButton.addActionListener(e -> addIncome());
-        IncomeSummaryButton.addActionListener(e -> viewIncomeSummary());
     }
 
         private void addIncome() {
@@ -134,9 +133,10 @@ public class myIncome extends JPanel {
             }
         }
 
-        private void viewIncomeSummary() {
-            // This method can be expanded to calculate and display a summary of the user's income, such as total income, average income, etc.
-            // For now, it simply shows the table with the entered income data.
+        public void viewIncomeSummary() {
+            // This method will calculate the total income based on the entries in the income table and display it to the user.
+            // It will also provide a breakdown of the income by source and frequency.
         }
+
 
 }
