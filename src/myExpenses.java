@@ -16,7 +16,6 @@ public class myExpenses extends JPanel {
         label.setFont(new Font("Arial", Font.BOLD, 24));
         add(label);
 
-
     }
 
     
