@@ -21,4 +21,12 @@ public class ExpenseManager {
     public List<Expense> getExpenses() { // returns regular list of expenses ()
         return expenses;
     }
+
+    public double getSumOfAllExpenses() {
+        double total = 0;
+        for (Expense e : expenses){
+            total += e.getAmount();
+        }
+        return total;
+    }
 }

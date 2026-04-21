@@ -14,16 +14,106 @@ public class ExpensesTab extends JPanel {
     private JTable recentExpenses;
     private DefaultTableModel recentExepenseTableModel;
     private ExpenseManager expenseManager;
+    private CardLayout layout;
+    private JPanel container;
+    private JLabel sumOfAllExpenses;
 
-    public ExpensesTab(ExpenseManager expenseManager) {
+    public ExpensesTab(ExpenseManager expenseManager, CardLayout layout, JPanel container) {
 
         this.expenseManager = expenseManager;
+        this.layout = layout;
+        this.container = container;
+
         this.setBackground(Constants.APP_COLOR);
         setLayout(new BorderLayout());
 
-        // -------------------
-        // INPUTS PANEL
-        // -------------------
+        
+        add(createInputsPanel(), BorderLayout.NORTH);
+        
+        add(createTablesPanel(), BorderLayout.CENTER);
+
+        add(createBottomPanel(), BorderLayout.SOUTH);
+        
+         
+
+    }
+
+    private JPanel createBottomPanel() {
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        bottomPanel.setBackground(Constants.APP_COLOR);
+
+        JButton viewAllExpensesButton = new JButton("View All Expenses");
+        viewAllExpensesButton.addActionListener(e -> layout.show(container, "ALL EXPENSES"));
+        bottomPanel.add(viewAllExpensesButton);
+
+        sumOfAllExpenses = new JLabel("Total Spent: " + expenseManager.getSumOfAllExpenses());
+        bottomPanel.add(sumOfAllExpenses);
+
+
+        return bottomPanel; 
+    }
+
+    private JPanel createTablesPanel () {
+        JPanel tablesPanel = new JPanel();
+        tablesPanel.setLayout(new BoxLayout(tablesPanel, BoxLayout.Y_AXIS));
+        tablesPanel.setBackground(Constants.APP_COLOR);
+
+
+        JPanel topExpensesPanel = new JPanel();
+        topExpensesPanel.setLayout(new BoxLayout(topExpensesPanel, BoxLayout.Y_AXIS));
+        topExpensesPanel.setBackground(Constants.APP_COLOR);
+
+       
+
+        JPanel recentExpensesPanel = new JPanel();
+        recentExpensesPanel.setLayout(new BoxLayout(recentExpensesPanel, BoxLayout.Y_AXIS));
+        recentExpensesPanel.setBackground(Constants.APP_COLOR);
+
+
+        // -- Top Expenses Label ---
+
+        JLabel topExpensesLabel = new JLabel("Top Expenses:");
+        topExpensesLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        topExpensesLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        topExpensesPanel.add(topExpensesLabel);
+
+        // --- Top Expenses Table ---
+
+        String[] columnsForTable = { "Name", "Amount", "Category" };
+        topExpenseTableModel = new DefaultTableModel(columnsForTable, 0);
+        topExpenses = new JTable(topExpenseTableModel);
+        JScrollPane topExpensesScrollPane = new JScrollPane(topExpenses);
+        topExpenses.setGridColor(Color.BLACK);
+        topExpenses.setBackground(Constants.APP_COLOR);
+
+        topExpensesPanel.add(topExpensesScrollPane);
+        tablesPanel.add(topExpensesPanel);
+        
+       
+        // --- Recent Expenses Label -----
+
+        JLabel recentExpensesLabel = new JLabel("Recent Expenses:");
+        recentExpensesLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        recentExpensesLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        recentExpensesPanel.add(recentExpensesLabel);
+        
+
+        // --- Recent Expenses Table -----
+        recentExepenseTableModel = new DefaultTableModel(columnsForTable, 0); 
+        recentExpenses = new JTable(recentExepenseTableModel);
+        JScrollPane recentExpensesScrollPane = new JScrollPane(recentExpenses);
+        recentExpenses.setGridColor(Color.BLACK);
+        recentExpensesPanel.add(recentExpensesScrollPane);
+
+        tablesPanel.add(recentExpensesPanel);
+
+        return tablesPanel; 
+    }
+
+    private JPanel createInputsPanel () {
 
         JPanel inputsPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         inputsPanel.setBackground(Constants.APP_COLOR);
@@ -59,74 +149,8 @@ public class ExpensesTab extends JPanel {
         inputsPanel.add(submitButton);
 
         submitButton.addActionListener(e -> addExpense());
-        add(inputsPanel, BorderLayout.NORTH);
 
-        // -----------------------
-        // TABLES PANELS
-        // ----------------------
-
-        JPanel tablesPanel = new JPanel();
-        tablesPanel.setLayout(new BoxLayout(tablesPanel, BoxLayout.Y_AXIS));
-        tablesPanel.setBackground(Constants.APP_COLOR);
-
-
-        JPanel topExpensesPanel = new JPanel();
-        topExpensesPanel.setLayout(new BoxLayout(topExpensesPanel, BoxLayout.Y_AXIS));
-        topExpensesPanel.setBackground(Constants.APP_COLOR);
-
-       
-
-        JPanel recentExpensesPanel = new JPanel();
-        recentExpensesPanel.setLayout(new BoxLayout(recentExpensesPanel, BoxLayout.Y_AXIS));
-        recentExpensesPanel.setBackground(Constants.APP_COLOR);
-
-        
-
-        // -- Top Expenses Label ---
-
-        JLabel topExpensesLabel = new JLabel("Top Expenses:");
-        topExpensesLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        topExpensesLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        topExpensesPanel.add(topExpensesLabel);
-
-        // --- Top Expenses Table ---
-
-        String[] columnsForTable = { "Name", "Amount", "Category" };
-        topExpenseTableModel = new DefaultTableModel(columnsForTable, 0);
-        topExpenses = new JTable(topExpenseTableModel);
-        JScrollPane topExpensesScrollPane = new JScrollPane(topExpenses);
-        topExpenses.setGridColor(Color.BLACK);
-        topExpenses.setBackground(Constants.APP_COLOR);
-
-        topExpensesPanel.add(topExpensesScrollPane);
-        tablesPanel.add(topExpensesPanel);
-        
-       
-         
-
-        // --- Recent Expenses Label -----
-
-        JLabel recentExpensesLabel = new JLabel("Recent Expenses:");
-        recentExpensesLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        recentExpensesLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        recentExpensesPanel.add(recentExpensesLabel);
-        
-
-        // --- Recent Expenses Table -----
-        recentExepenseTableModel = new DefaultTableModel(columnsForTable, 0); 
-        recentExpenses = new JTable(recentExepenseTableModel);
-        JScrollPane recentExpensesScrollPane = new JScrollPane(recentExpenses);
-        recentExpenses.setGridColor(Color.BLACK);
-        recentExpensesPanel.add(recentExpensesScrollPane);
-
-        tablesPanel.add(recentExpensesPanel);
-        add(tablesPanel);
-        
-
-         
-
+        return inputsPanel;
     }
 
     private void addExpense() {
@@ -139,34 +163,49 @@ public class ExpensesTab extends JPanel {
             return;
         }
 
+
         try {
             double amount = Double.parseDouble(amountText);
+
+            if (amount < 0) {
+                JOptionPane.showMessageDialog(this, "Must be a non-negative number");
+                return;
+            }
             Expense expense = new Expense(name, amount, category);
             expenseManager.addExpense(expense);
 
             JOptionPane.showMessageDialog(this, "Expense Added");
 
-            nameField.setText("");
-            amountField.setText("");
-            categoryMenu.setSelectedIndex(0);
-
-            refreshTables();
+            clearInputs();
+            refreshExpensesTabData();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Must be a valid number");
         }
     }
 
-    private void refreshTables() {
+    private void clearInputs() {
+            nameField.setText("");
+            amountField.setText("");
+            categoryMenu.setSelectedIndex(0);
+    }
+
+    private void refreshExpensesTabData() {
+        
+        refreshRecentExpensesTable();
+        refreshTopExpensesTable();
+        refreshSumOfAllExpenses();
+    }
+
+    private void refreshSumOfAllExpenses(){
+        sumOfAllExpenses.setText("Total Spent: " + expenseManager.getSumOfAllExpenses());
+        return;
+    }
+
+    private void refreshTopExpensesTable() {
         topExpenseTableModel.setRowCount(0);
-        recentExepenseTableModel.setRowCount(0);
-
         List<Expense> sortedExpenses = expenseManager.getSortedExpenses();
-        List<Expense> expenses = expenseManager.getExpenses();
-
         int sortedLimit = Math.min(3, sortedExpenses.size()); // limits our table size to 3 (or less)
-        int recentLimit = Math.min(3, expenses.size());
-
         for (int i = 0; i < sortedLimit; i++) {
             topExpenseTableModel.addRow(new Object[] {
                     sortedExpenses.get(i).getName(),
@@ -174,7 +213,13 @@ public class ExpensesTab extends JPanel {
                     sortedExpenses.get(i).getCategory(),
             });
         }
+    }
 
+    private void refreshRecentExpensesTable(){
+
+        recentExepenseTableModel.setRowCount(0);
+        List<Expense> expenses = expenseManager.getExpenses();
+        int recentLimit = Math.min(3, expenses.size());
         for (int i = recentLimit - 1; i >= 0; i--) {
             recentExepenseTableModel.addRow(new Object[] {
                     expenses.get(i).getName(),
@@ -182,7 +227,6 @@ public class ExpensesTab extends JPanel {
                     expenses.get(i).getCategory(),
             });
         }
+
     }
 }
-//hey
-//hi

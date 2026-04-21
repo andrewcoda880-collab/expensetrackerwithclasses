@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import javax.swing.*;
 
@@ -43,16 +42,57 @@ public class LoginTab extends JPanel {
         loginButton.setBounds(150, 290, 120, 35);
         add(loginButton);
 
-        // Button action (simple test login)
-        loginButton.addActionListener(e -> {
-            String username = usernameField.getText();
-            String password = new String(passwordField.getPassword());
+        // Register button (NEW)
+        JButton registerButton = new JButton("Register");
+        registerButton.setBounds(150, 340, 120, 35);
+        add(registerButton);
 
-            if (username.equals("admin") && password.equals("1234")) {
-                JOptionPane.showMessageDialog(this, "Login successful!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid login");
-            }
-        });
+        // Events
+        loginButton.addActionListener(e -> handleLogin());
+        registerButton.addActionListener(e -> handleRegister());
+    }
+
+        // Event
+        loginButton.addActionListener(e -> handleLogin());
+    }
+
+    // ===================== LOGIC METHODS =====================
+
+    private void handleLogin() {
+        String username = usernameField.getText();
+        char[] password = passwordField.getPassword();
+
+        if (authenticate(username, password)) {
+            JOptionPane.showMessageDialog(this, "Login successful!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid login");
+        }
+    }
+
+    private void handleRegister() {
+        String username = usernameField.getText();
+        String password = String.valueOf(passwordField.getPassword());
+
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter username and password");
+            return;
+        }
+
+        if (UserStore.users.containsKey(username)) {
+            JOptionPane.showMessageDialog(this, "Username already exists");
+            return;
+        }
+
+        UserStore.users.put(username, password);
+
+        UserStore.saveUsers();
+        JOptionPane.showMessageDialog(this, "User registered! You can now log in.");
+    }
+
+    private boolean authenticate(String username, char[] password) {
+        String storedPassword = UserStore.users.get(username);
+        return storedPassword != null && storedPassword.equals(String.valueOf(password));
+    private boolean authenticate(String username, char[] password) {
+        return username.equals("admin") && String.valueOf(password).equals("1234");
     }
 }
