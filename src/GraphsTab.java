@@ -50,28 +50,22 @@ public class GraphsTab extends JPanel {
         double billsTotal = 0;
         double otherTotal = 0;
         
-        for (Expense expense : expenses) {
-            String category = expense.getCategory();
-            double amount = expense.getAmount();
-            
-            switch (category) {
-                case "Food":
-                    foodTotal += amount;
-                    break;
-                case "Transport":
-                    transportTotal += amount;
-                    break;
-                case "Entertainment":
-                    entertainmentTotal += amount;
-                    break;
-                case "Bills":
-                    billsTotal += amount;
-                    break;
-                default:
-                    otherTotal += amount;
-                    break;
-            }
+    for (Expense expense : expenses) {
+        String category = expense.getCategory();
+        double amount = expense.getAmount();
+        
+        if (category.equals("Food")) {
+            foodTotal += amount;
+        } else if (category.equals("Transport")) {
+            transportTotal += amount;
+        } else if (category.equals("Entertainment")) {
+            entertainmentTotal += amount;
+        } else if (category.equals("Bills")) {
+            billsTotal += amount;
+        } else {
+            otherTotal += amount;
         }
+    }
         
         // Add to dataset (only if > 0)
         if (foodTotal > 0) dataset.setValue("Food", foodTotal);
@@ -112,21 +106,9 @@ public class GraphsTab extends JPanel {
         revalidate();
         repaint();
         // Check if entertainment expenses exceed bills and show warning
-        if (entertainmentTotal > billsTotal) {
-            String warningMessage = String.format(
-                "⚠️ Warning: Entertainment expenses ($%.2f) exceed Bills ($%.2f)!\n" +
-                "Get Your like together man!",
-                entertainmentTotal, billsTotal
-            );
-            
-            // Show warning dialog
-            JOptionPane.showMessageDialog(
-                this,
-                warningMessage,
-                "Budget Alert",
-                JOptionPane.WARNING_MESSAGE
-            );
-        }    }
+        Warning.checkEntertainmentVsBills(entertainmentTotal, billsTotal, totalExpenses);
+
+        }
     
     public void refreshChart() {
         updatePieChart();
