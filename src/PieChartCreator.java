@@ -55,5 +55,4 @@ public class PieChartCreator extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-}
-*/
+}*/
