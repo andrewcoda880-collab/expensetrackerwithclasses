@@ -17,6 +17,8 @@ public class ExpensesTab extends JPanel {
     private CardLayout layout;
     private JPanel container;
     private JLabel sumOfAllExpenses;
+    private Budget budget;
+    private JLabel budgetInformation;
 
     public ExpensesTab(ExpenseManager expenseManager, CardLayout layout, JPanel container) {
 
@@ -39,17 +41,29 @@ public class ExpensesTab extends JPanel {
     }
 
     private JPanel createBottomPanel() {
+        // Create panel
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         bottomPanel.setBackground(Constants.APP_COLOR);
 
+        // view all expenses button
         JButton viewAllExpensesButton = new JButton("View All Expenses");
         viewAllExpensesButton.addActionListener(e -> layout.show(container, "ALL EXPENSES"));
         bottomPanel.add(viewAllExpensesButton);
 
-        sumOfAllExpenses = new JLabel("Total Spent: " + expenseManager.getSumOfAllExpenses());
+        // sum of all expenses
+
+        sumOfAllExpenses = new JLabel("Total Spent: $" + String.format("%.2f", expenseManager.getSumOfAllExpenses()));
+        sumOfAllExpenses.setFont(new Font("Arial", Font.BOLD, 16));
         bottomPanel.add(sumOfAllExpenses);
 
+        // remaining budget
+
+        budget = new Budget(45);
+
+        budgetInformation = new JLabel("Your have: $" + String.format("%.2f",(budget.getBudget() -  expenseManager.getSumOfAllExpenses())) + " remaining" );
+        budgetInformation.setFont(new Font("Arial", Font.BOLD, 16));
+        bottomPanel.add(budgetInformation);
 
         return bottomPanel; 
     }
@@ -195,11 +209,11 @@ public class ExpensesTab extends JPanel {
         refreshRecentExpensesTable();
         refreshTopExpensesTable();
         refreshSumOfAllExpenses();
+        refreshBudget();
     }
 
     private void refreshSumOfAllExpenses(){
-        sumOfAllExpenses.setText("Total Spent: " + expenseManager.getSumOfAllExpenses());
-        return;
+        sumOfAllExpenses.setText("Total Spent: " + String.format("%.2f", expenseManager.getSumOfAllExpenses()));
     }
 
     private void refreshTopExpensesTable() {
@@ -213,6 +227,10 @@ public class ExpensesTab extends JPanel {
                     sortedExpenses.get(i).getCategory(),
             });
         }
+    }
+
+    private void refreshBudget() {
+        budgetInformation.setText("Your have $" + String.format ("%.2f", (budget.getBudget() -  expenseManager.getSumOfAllExpenses())) + " remaining" );
     }
 
     private void refreshRecentExpensesTable(){
