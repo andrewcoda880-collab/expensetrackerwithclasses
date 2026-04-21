@@ -12,6 +12,13 @@ public class GraphsTab extends JPanel {
     private ExpenseManager expenseManager;
     private ChartPanel chartPanel;
     
+    // Define constant colors for each category
+    private static final Color FOOD_COLOR = new Color(255, 99, 132);      // Red/Pink
+    private static final Color TRANSPORT_COLOR = new Color(54, 162, 235);  // Blue
+    private static final Color ENTERTAINMENT_COLOR = new Color(255, 206, 86); // Yellow
+    private static final Color BILLS_COLOR = new Color(75, 192, 192);      // Teal
+    private static final Color OTHER_COLOR = new Color(153, 102, 255);     // Purple
+    
     public GraphsTab(ExpenseManager expenseManager) {
         this.expenseManager = expenseManager;
         setLayout(new BorderLayout());
@@ -50,22 +57,22 @@ public class GraphsTab extends JPanel {
         double billsTotal = 0;
         double otherTotal = 0;
         
-    for (Expense expense : expenses) {
-        String category = expense.getCategory();
-        double amount = expense.getAmount();
-        
-        if (category.equals("Food")) {
-            foodTotal += amount;
-        } else if (category.equals("Transport")) {
-            transportTotal += amount;
-        } else if (category.equals("Entertainment")) {
-            entertainmentTotal += amount;
-        } else if (category.equals("Bills")) {
-            billsTotal += amount;
-        } else {
-            otherTotal += amount;
+        for (Expense expense : expenses) {
+            String category = expense.getCategory();
+            double amount = expense.getAmount();
+            
+            if (category.equals("Food")) {
+                foodTotal += amount;
+            } else if (category.equals("Transport")) {
+                transportTotal += amount;
+            } else if (category.equals("Entertainment")) {
+                entertainmentTotal += amount;
+            } else if (category.equals("Bills")) {
+                billsTotal += amount;
+            } else {
+                otherTotal += amount;
+            }
         }
-    }
         
         // Add to dataset (only if > 0)
         if (foodTotal > 0) dataset.setValue("Food", foodTotal);
@@ -73,8 +80,6 @@ public class GraphsTab extends JPanel {
         if (entertainmentTotal > 0) dataset.setValue("Entertainment", entertainmentTotal);
         if (billsTotal > 0) dataset.setValue("Bills", billsTotal);
         if (otherTotal > 0) dataset.setValue("Other", otherTotal);
-
-
         
         double totalExpenses = foodTotal + transportTotal + entertainmentTotal + billsTotal + otherTotal;
         
@@ -93,6 +98,23 @@ public class GraphsTab extends JPanel {
         plot.setLabelFont(new Font("Arial", Font.PLAIN, 12));
         plot.setLabelBackgroundPaint(new Color(255, 255, 255, 200));
         
+        // Set fixed colors for each category (only if they exist in the dataset)
+        if (foodTotal > 0) {
+            plot.setSectionPaint(0, FOOD_COLOR);
+        }
+        if (transportTotal > 0) {
+            plot.setSectionPaint(1, TRANSPORT_COLOR);
+        }
+        if (entertainmentTotal > 0) {
+            plot.setSectionPaint(2, ENTERTAINMENT_COLOR);
+        }
+        if (billsTotal > 0) {
+            plot.setSectionPaint(3, BILLS_COLOR);
+        }
+        if (otherTotal > 0) {
+            plot.setSectionPaint(4, OTHER_COLOR);
+        }
+        
         // Remove old chart panel and add new one
         if (chartPanel != null) {
             remove(chartPanel);
@@ -105,10 +127,10 @@ public class GraphsTab extends JPanel {
         add(chartPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
+        
         // Check if entertainment expenses exceed bills and show warning
         Warning.checkEntertainmentVsBills(entertainmentTotal, billsTotal, totalExpenses);
-
-        }
+    }
     
     public void refreshChart() {
         updatePieChart();
