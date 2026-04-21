@@ -1,19 +1,14 @@
 import javax.swing.*;
 
 public class Warning {
-    
-    // Checker class to see if entertainment is more than your bills
-    // or if entertainment is around 25% of bills
+    //We will see if entertainment is more than bills or a certain amount, as of now 25% of bills
     public static void checkEntertainmentVsBills(double entertainmentTotal, double billsTotal, double totalExpenses) {
         if (totalExpenses > 1000) {
             // Check if entertainment exceeds bills
             if (entertainmentTotal > billsTotal) {
                 String warningMessage = String.format(
                     "⚠️ WARNING: Entertainment expenses ($%.2f) EXCEED Bills ($%.2f)!\n" +
-                    "You're spending more on entertainment than on essential bills!\n" +
-                    "Please review your spending habits immediately.",
-                    entertainmentTotal, billsTotal
-                );
+                    "You're spending WAY more on entertainment than nessisary, its more than your Bill!\n" + entertainmentTotal, billsTotal);
                 
                 JOptionPane.showMessageDialog(
                     null,
@@ -27,7 +22,7 @@ public class Warning {
                 double percentage = (entertainmentTotal / billsTotal) * 100;
                 String warningMessage = String.format(
                     "⚠️ Budget Alert: Entertainment expenses ($%.2f) are %.1f%% of your Bills ($%.2f)!\n" +
-                    "Consider reducing entertainment spending to save more money.",
+                    "Consider spending less money man!",
                     entertainmentTotal, percentage, billsTotal
                 );
                 

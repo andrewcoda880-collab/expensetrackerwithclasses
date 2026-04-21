@@ -6,7 +6,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset; 
 import org.jfree.ui.ApplicationFrame; 
 import org.jfree.ui.RefineryUtilities; 
-
+//Bar Chart is seperate for now, it is here to be used for later for Graph tab, here to see how Bar graphs works.
 public class BarChart extends ApplicationFrame {
    
    public BarChart( String applicationTitle , String chartTitle ) {
