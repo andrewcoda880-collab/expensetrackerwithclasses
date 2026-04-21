@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import javax.swing.*;
 
@@ -8,7 +7,6 @@ public class LoginTab extends JPanel {
     private JPasswordField passwordField;
 
     public LoginTab() {
-
         setLayout(null);
         setBackground(Constants.APP_COLOR);
 
@@ -43,16 +41,74 @@ public class LoginTab extends JPanel {
         loginButton.setBounds(150, 290, 120, 35);
         add(loginButton);
 
-        // Button action (simple test login)
-        loginButton.addActionListener(e -> {
-            String username = usernameField.getText();
-            String password = new String(passwordField.getPassword());
+        // Register button
+        JButton registerButton = new JButton("Register");
+        registerButton.setBounds(150, 340, 120, 35);
+        add(registerButton);
 
-            if (username.equals("admin") && password.equals("1234")) {
-                JOptionPane.showMessageDialog(this, "Login successful!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid login");
-            }
-        });
+        // Events
+        loginButton.addActionListener(e -> handleLogin());
+        registerButton.addActionListener(e -> handleRegister());
+    }
+
+    // ===================== VALIDATION METHODS =====================
+
+    private boolean isValidUsername(String username) {
+        return username.matches("[a-zA-Z0-9]+");
+    }
+
+    private boolean isValidPassword(String password) {
+        // At least 6 chars, 1 uppercase, 1 special char
+        return password.matches("^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}$");
+    }
+
+    // ===================== LOGIC METHODS =====================
+
+    private void handleLogin() {
+        String username = usernameField.getText();
+        char[] password = passwordField.getPassword();
+
+        if (authenticate(username, password)) {
+            JOptionPane.showMessageDialog(this, "Login successful!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid login");
+        }
+    }
+
+    private void handleRegister() {
+        String username = usernameField.getText();
+        String password = String.valueOf(passwordField.getPassword());
+
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter username and password");
+            return;
+        }
+
+        if (!isValidUsername(username)) {
+            JOptionPane.showMessageDialog(this,
+                    "Username must contain only letters and numbers (no spaces or symbols)");
+            return;
+        }
+
+        if (!isValidPassword(password)) {
+            JOptionPane.showMessageDialog(this,
+                    "Password must be at least 6 characters, include 1 uppercase letter and 1 special character");
+            return;
+        }
+
+        if (UserStore.users.containsKey(username)) {
+            JOptionPane.showMessageDialog(this, "Username already exists");
+            return;
+        }
+
+        UserStore.users.put(username, password);
+        UserStore.saveUsers();
+
+        JOptionPane.showMessageDialog(this, "User registered! You can now log in.");
+    }
+
+    private boolean authenticate(String username, char[] password) {
+        String storedPassword = UserStore.users.get(username);
+        return storedPassword != null && storedPassword.equals(String.valueOf(password));
     }
 }
