@@ -128,7 +128,6 @@ public class GraphsTab extends JPanel {
         if (billsTotal > 0) dataset.setValue("Bills", billsTotal);
         if (otherTotal > 0) dataset.setValue("Other", otherTotal);
         
-        // Create chart - similar to BarChart example but for pie
         JFreeChart chart = ChartFactory.createPieChart(
             String.format("Expense Distribution (Total: $%.2f)", totalExpenses),
             dataset,
@@ -160,25 +159,24 @@ public class GraphsTab extends JPanel {
     private void updateBarChart() {
         calculateExpenses();
         
-        // Create dataset - similar to the BarChart example
         CategoryDataset dataset = createBarChartDataset();
         
         // Create bar chart - following the BarChart example pattern
         JFreeChart barChart = ChartFactory.createBarChart(
             String.format("Expense Distribution (Total: $%.2f)", totalExpenses), // Chart title
-            "Category",                                                          // X-axis label
-            "Amount ($)",                                                        // Y-axis label
-            dataset,                                                             // Dataset
-            PlotOrientation.VERTICAL,                                            // Orientation
-            true,                                                                // Include legend
-            true,                                                                // Tooltips
-            false                                                                // URLs
+            "Category",// X-axis label
+            "Amount ($)",// Y-axis label
+            dataset,// Dataset
+            PlotOrientation.VERTICAL,// Orientation
+            true,// Include legend
+            true,// Tooltips
+            false// URLs
         );
         
         // Customize the chart appearance
         CategoryPlot plot = (CategoryPlot) barChart.getPlot();
         plot.setBackgroundPaint(Constants.APP_COLOR);
-        plot.setDomainGridlinePaint(Color.LIGHT_GRAY);
+        plot.setDomainGridlinePaint(Color.LIGHT_GRAY);//Color is being chosen
         plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
         
         // Set custom colors for bars
@@ -210,8 +208,6 @@ public class GraphsTab extends JPanel {
     
     private CategoryDataset createBarChartDataset() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
-        // Add values to dataset - following the pattern from BarChart example
         // The row key is the category name, column key is always "Amount"
         if (foodTotal > 0) {
             dataset.addValue(foodTotal, "Food", "Amount");
@@ -233,12 +229,10 @@ public class GraphsTab extends JPanel {
     }
     
     private void updateChartPanel(JFreeChart chart) {
-        // Remove old chart panel
         if (chartPanel != null) {
             chartContainer.remove(chartPanel);
         }
         
-        // Create new chart panel - similar to BarChart example
         chartPanel = new ChartPanel(chart);
         chartPanel.setBackground(Constants.APP_COLOR);
         chartPanel.setPreferredSize(new Dimension(Constants.WINDOW_WIDTH - 50, 400));
