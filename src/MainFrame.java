@@ -27,7 +27,8 @@ public class MainFrame extends JFrame {
         // ADD PANELS 
         // -------------------------
         cardPanel.add(new HomeTab(cardLayout, cardPanel), "HOME");
-        cardPanel.add(new ExpensesTab(expenseManager), "EXPENSES");
+        cardPanel.add(new AllExpensesTab(), "ALL EXPENSES");
+        cardPanel.add(new ExpensesTab(expenseManager, cardLayout, cardPanel), "EXPENSES");
         cardPanel.add(new SettingsTab(), "SETTINGS");
         cardPanel.add(new GraphsTab(), "GRAPHS");
         cardPanel.add(new LoginTab(), "LOGIN");
