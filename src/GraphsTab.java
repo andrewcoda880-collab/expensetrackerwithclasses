@@ -28,12 +28,6 @@ private void updatePieChart() {
         }
     }
     
-    // Add to dataset (only if > 0)
-    if (foodTotal > 0) dataset.setValue("Food", foodTotal);
-    if (transportTotal > 0) dataset.setValue("Transport", transportTotal);
-    if (entertainmentTotal > 0) dataset.setValue("Entertainment", entertainmentTotal);
-    if (billsTotal > 0) dataset.setValue("Bills", billsTotal);
-    if (otherTotal > 0) dataset.setValue("Other", otherTotal);
     
     double totalExpenses = foodTotal + transportTotal + entertainmentTotal + billsTotal + otherTotal;
     
