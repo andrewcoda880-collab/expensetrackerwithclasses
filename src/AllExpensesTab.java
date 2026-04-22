@@ -42,6 +42,7 @@ public class AllExpensesTab extends JPanel {
         String[] columnsForTable = { "Name", "Amount", "Category" };
         allExpensesTableModel = new DefaultTableModel(columnsForTable, 0);
         allExpensesTable = new JTable(allExpensesTableModel);
+        allExpensesTable.setAutoCreateRowSorter(true);
         JScrollPane allExpensesScrollPane = new JScrollPane(allExpensesTable);
         allExpensesTable.setGridColor(Color.BLACK);
         allExpensesTable.setBackground(Constants.APP_COLOR);

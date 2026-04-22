@@ -239,18 +239,17 @@ public class ExpensesTab extends JPanel {
         budgetInformation.setText("You have $" + String.format ("%.2f", (budget.getBudget() -  expenseManager.getSumOfAllExpenses())) + " remaining" );
     }
 
-    private void refreshRecentExpensesTable(){
-
-        recentExpenseTableModel.setRowCount(0);
-        List<Expense> expenses = expenseManager.getExpenses();
-        int recentLimit = Math.min(3, expenses.size());
-        for (int i = recentLimit - 1; i >= 0; i--) {
-            recentExpenseTableModel.addRow(new Object[] {
-                    expenses.get(i).getName(),
-                    String.format("%.2f", expenses.get(i).getAmount()), // 2 decimal places
-                    expenses.get(i).getCategory(),
-            });
-        }
-
+    private void refreshRecentExpensesTable() {
+    recentExpenseTableModel.setRowCount(0);
+    List<Expense> expenses = expenseManager.getExpenses();
+    int size = expenses.size();
+    int recentLimit = Math.min(3, size);
+    for (int i = size - 1; i >= size - recentLimit; i--) {
+        recentExpenseTableModel.addRow(new Object[] {
+                expenses.get(i).getName(),
+                String.format("%.2f", expenses.get(i).getAmount()),
+                expenses.get(i).getCategory(),
+        });
     }
+}
 }
