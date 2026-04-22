@@ -12,7 +12,7 @@ public class ExpensesTab extends JPanel {
     private JTable topExpenses;
     private DefaultTableModel topExpenseTableModel;
     private JTable recentExpenses;
-    private DefaultTableModel recentExepenseTableModel;
+    private DefaultTableModel recentExpenseTableModel;
     private ExpenseManager expenseManager;
     private CardLayout layout;
     private JPanel container;
@@ -65,7 +65,7 @@ public class ExpensesTab extends JPanel {
 
         budget = new Budget(45);
 
-        budgetInformation = new JLabel("Your have: $" + String.format("%.2f",(budget.getBudget() -  expenseManager.getSumOfAllExpenses())) + " remaining" );
+        budgetInformation = new JLabel("You have: $" + String.format("%.2f",(budget.getBudget() -  expenseManager.getSumOfAllExpenses())) + " remaining" );
         budgetInformation.setFont(new Font("Arial", Font.BOLD, 16));
         bottomPanel.add(budgetInformation);
 
@@ -120,8 +120,8 @@ public class ExpensesTab extends JPanel {
         
 
         // --- Recent Expenses Table -----
-        recentExepenseTableModel = new DefaultTableModel(columnsForTable, 0); 
-        recentExpenses = new JTable(recentExepenseTableModel);
+        recentExpenseTableModel = new DefaultTableModel(columnsForTable, 0); 
+        recentExpenses = new JTable(recentExpenseTableModel);
         JScrollPane recentExpensesScrollPane = new JScrollPane(recentExpenses);
         recentExpenses.setBackground(Constants.APP_COLOR);
         recentExpenses.setGridColor(Color.BLACK);
@@ -219,7 +219,7 @@ public class ExpensesTab extends JPanel {
     }
 
     private void refreshSumOfAllExpenses(){
-        sumOfAllExpenses.setText("Total Spent: " + String.format("%.2f", expenseManager.getSumOfAllExpenses()));
+        sumOfAllExpenses.setText("Total Spent: $" + String.format("%.2f", expenseManager.getSumOfAllExpenses()));
     }
 
     private void refreshTopExpensesTable() {
@@ -236,16 +236,16 @@ public class ExpensesTab extends JPanel {
     }
 
     private void refreshBudget() {
-        budgetInformation.setText("Your have $" + String.format ("%.2f", (budget.getBudget() -  expenseManager.getSumOfAllExpenses())) + " remaining" );
+        budgetInformation.setText("You have $" + String.format ("%.2f", (budget.getBudget() -  expenseManager.getSumOfAllExpenses())) + " remaining" );
     }
 
     private void refreshRecentExpensesTable(){
 
-        recentExepenseTableModel.setRowCount(0);
+        recentExpenseTableModel.setRowCount(0);
         List<Expense> expenses = expenseManager.getExpenses();
         int recentLimit = Math.min(3, expenses.size());
         for (int i = recentLimit - 1; i >= 0; i--) {
-            recentExepenseTableModel.addRow(new Object[] {
+            recentExpenseTableModel.addRow(new Object[] {
                     expenses.get(i).getName(),
                     String.format("%.2f", expenses.get(i).getAmount()), // 2 decimal places
                     expenses.get(i).getCategory(),
