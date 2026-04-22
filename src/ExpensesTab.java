@@ -19,9 +19,11 @@ public class ExpensesTab extends JPanel {
     private JLabel sumOfAllExpenses;
     private Budget budget;
     private JLabel budgetInformation;
+    private AllExpensesTab allExpensesTab;
 
-    public ExpensesTab(ExpenseManager expenseManager, CardLayout layout, JPanel container) {
+    public ExpensesTab(ExpenseManager expenseManager, CardLayout layout, JPanel container, AllExpensesTab allExpensesTab) {
 
+        this.allExpensesTab = allExpensesTab;
         this.expenseManager = expenseManager;
         this.layout = layout;
         this.container = container;
@@ -48,7 +50,9 @@ public class ExpensesTab extends JPanel {
 
         // view all expenses button
         JButton viewAllExpensesButton = new JButton("View All Expenses");
-        viewAllExpensesButton.addActionListener(e -> layout.show(container, "ALL EXPENSES"));
+        viewAllExpensesButton.addActionListener(e -> {layout.show(container, "ALL EXPENSES");
+                                                        allExpensesTab.refreshTable();
+        });
         bottomPanel.add(viewAllExpensesButton);
 
         // sum of all expenses
@@ -119,6 +123,7 @@ public class ExpensesTab extends JPanel {
         recentExepenseTableModel = new DefaultTableModel(columnsForTable, 0); 
         recentExpenses = new JTable(recentExepenseTableModel);
         JScrollPane recentExpensesScrollPane = new JScrollPane(recentExpenses);
+        recentExpenses.setBackground(Constants.APP_COLOR);
         recentExpenses.setGridColor(Color.BLACK);
         recentExpensesPanel.add(recentExpensesScrollPane);
 
@@ -210,6 +215,7 @@ public class ExpensesTab extends JPanel {
         refreshTopExpensesTable();
         refreshSumOfAllExpenses();
         refreshBudget();
+        allExpensesTab.refreshTable();
     }
 
     private void refreshSumOfAllExpenses(){
