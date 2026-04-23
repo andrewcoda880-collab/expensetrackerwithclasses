@@ -69,7 +69,7 @@ public class AllExpensesTab extends JPanel {
         for (Expense expense : allExpenses) {
             allExpensesTableModel.addRow(new Object[] {
                     expense.getName(),
-                    expense.getAmount(),
+                    String.format("%.2f",expense.getAmount()),
                     expense.getCategory(),
             });
     }

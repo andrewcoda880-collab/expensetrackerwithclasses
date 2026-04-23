@@ -62,7 +62,7 @@ public class ExpensesTab extends JPanel {
 
         // remaining budget
 
-        budget = new Budget(45);
+        budget = new Budget(45); // temporary budget value
 
         budgetInformation = new JLabel("You have: $"
                 + String.format("%.2f", (budget.getBudget() - expenseManager.getSumOfAllExpenses())) + " remaining");
@@ -150,12 +150,14 @@ public class ExpensesTab extends JPanel {
         // ----- Name --------
         JLabel nameLabel = new JLabel("Expense Name:");
         nameField = new JTextField();
+        nameField.setBorder(BorderFactory.createLineBorder(Color.black));
         inputsPanel.add(nameLabel);
         inputsPanel.add(nameField);
 
         // ----- Amount ------
         JLabel amountLabel = new JLabel("Amount:");
         amountField = new JTextField();
+        amountField.setBorder(BorderFactory.createLineBorder(Color.black));
         inputsPanel.add(amountLabel);
         inputsPanel.add(amountField);
 
@@ -190,20 +192,21 @@ public class ExpensesTab extends JPanel {
             
             // Check if amount is valid (from first version)
             if (amount <= 0) {
-                JOptionPane.showMessageDialog(this, "Amount cannot be 0 or less than 0");
+                JOptionPane.showMessageDialog(this, "Amount cannot be 0 or less than 0", "ERROR!", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
             Expense expense = new Expense(name, amount, category);
             expenseManager.addExpense(expense);
 
-            JOptionPane.showMessageDialog(this, "Expense Added");
+            //took this out, expense should just be added - makes it quicker
+            //JOptionPane.showMessageDialog(this, "Expense Added");
 
             clearInputs();
             refreshExpensesTabData();
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Must be a valid number");
+            JOptionPane.showMessageDialog(this, "Must be a valid number", "ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 

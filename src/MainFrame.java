@@ -38,12 +38,6 @@ public class MainFrame extends JFrame {
 
         //SHOW LOGIN FIRST
         cardLayout.show(cardPanel, "LOGIN");
-
-    
-    
-    
-        
-
         
         
     }
