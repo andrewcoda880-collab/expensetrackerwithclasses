@@ -1,15 +1,4 @@
-<<<<<<< HEAD
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel; 
-import org.jfree.chart.JFreeChart; 
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset; 
-import org.jfree.data.category.DefaultCategoryDataset; 
-import org.jfree.ui.ApplicationFrame; 
-import org.jfree.ui.RefineryUtilities; 
-//Bar Chart is seperate for now, it is here to be used for later for Graph tab, here to see how Bar graphs works.
-public class BarChart extends ApplicationFrame {
-=======
+
 // import org.jfree.chart.ChartFactory;
 // import org.jfree.chart.ChartPanel; 
 // import org.jfree.chart.JFreeChart; 
@@ -20,7 +9,6 @@ public class BarChart extends ApplicationFrame {
 // import org.jfree.ui.RefineryUtilities; 
 
 // public class BarChart extends ApplicationFrame {
->>>>>>> Andrew-Branch
    
 //    public BarChart( String applicationTitle , String chartTitle ) {
 //       super( applicationTitle );        
