@@ -4,8 +4,8 @@ import java.awt.Font;
 import javax.swing.*;
 public class HomeTab extends JPanel {
 
-    private CardLayout Homelayout;
-    private JPanel HomeContainer;
+    //private CardLayout Homelayout;
+    //private JPanel HomeContainer;
     
     public HomeTab(CardLayout Homelayout, JPanel HomeContainer) {
         

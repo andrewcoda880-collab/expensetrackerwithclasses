@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.border.Border;
+//import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 public class ExpensesTab extends JPanel {
