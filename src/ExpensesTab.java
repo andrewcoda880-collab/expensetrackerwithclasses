@@ -16,6 +16,7 @@ public class ExpensesTab extends JPanel {
     private ExpenseManager expenseManager;
     private CardLayout layout;
     private JPanel container;
+    private JLabel sumOfAllExpenses;
 
     public ExpensesTab(ExpenseManager expenseManager, CardLayout layout, JPanel container) {
 
@@ -45,6 +46,10 @@ public class ExpensesTab extends JPanel {
         JButton viewAllExpensesButton = new JButton("View All Expenses");
         viewAllExpensesButton.addActionListener(e -> layout.show(container, "ALL EXPENSES"));
         bottomPanel.add(viewAllExpensesButton);
+
+        sumOfAllExpenses = new JLabel("Total Spent: " + expenseManager.getSumOfAllExpenses());
+        bottomPanel.add(sumOfAllExpenses);
+
 
         return bottomPanel; 
     }
@@ -158,15 +163,21 @@ public class ExpensesTab extends JPanel {
             return;
         }
 
+
         try {
             double amount = Double.parseDouble(amountText);
+
+            if (amount < 0) {
+                JOptionPane.showMessageDialog(this, "Must be a non-negative number");
+                return;
+            }
             Expense expense = new Expense(name, amount, category);
             expenseManager.addExpense(expense);
 
             JOptionPane.showMessageDialog(this, "Expense Added");
 
             clearInputs();
-            refreshTables();
+            refreshExpensesTabData();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Must be a valid number");
@@ -179,16 +190,22 @@ public class ExpensesTab extends JPanel {
             categoryMenu.setSelectedIndex(0);
     }
 
-    private void refreshTables() {
+    private void refreshExpensesTabData() {
+        
+        refreshRecentExpensesTable();
+        refreshTopExpensesTable();
+        refreshSumOfAllExpenses();
+    }
+
+    private void refreshSumOfAllExpenses(){
+        sumOfAllExpenses.setText("Total Spent: " + expenseManager.getSumOfAllExpenses());
+        return;
+    }
+
+    private void refreshTopExpensesTable() {
         topExpenseTableModel.setRowCount(0);
-        recentExepenseTableModel.setRowCount(0);
-
         List<Expense> sortedExpenses = expenseManager.getSortedExpenses();
-        List<Expense> expenses = expenseManager.getExpenses();
-
         int sortedLimit = Math.min(3, sortedExpenses.size()); // limits our table size to 3 (or less)
-        int recentLimit = Math.min(3, expenses.size());
-
         for (int i = 0; i < sortedLimit; i++) {
             topExpenseTableModel.addRow(new Object[] {
                     sortedExpenses.get(i).getName(),
@@ -196,7 +213,13 @@ public class ExpensesTab extends JPanel {
                     sortedExpenses.get(i).getCategory(),
             });
         }
+    }
 
+    private void refreshRecentExpensesTable(){
+
+        recentExepenseTableModel.setRowCount(0);
+        List<Expense> expenses = expenseManager.getExpenses();
+        int recentLimit = Math.min(3, expenses.size());
         for (int i = recentLimit - 1; i >= 0; i--) {
             recentExepenseTableModel.addRow(new Object[] {
                     expenses.get(i).getName(),
@@ -204,5 +227,6 @@ public class ExpensesTab extends JPanel {
                     expenses.get(i).getCategory(),
             });
         }
+
     }
 }

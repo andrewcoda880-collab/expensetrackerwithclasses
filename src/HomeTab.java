@@ -2,10 +2,8 @@ import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.*;
 public class HomeTab extends JPanel {
-
-
-
-    public HomeTab(CardLayout layout, JPanel Container) {
+    
+    public HomeTab(CardLayout Homelayout, JPanel HomeContainer) {
         
         setBackground(Constants.APP_COLOR);
         this.setLayout(null);
