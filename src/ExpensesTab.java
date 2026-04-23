@@ -229,8 +229,8 @@ public class ExpensesTab extends JPanel {
     private void refreshTopExpensesTable() {
         topExpenseTableModel.setRowCount(0);
         List<Expense> sortedExpenses = expenseManager.getSortedExpenses();
-        int sortedLimit = Math.min(4, sortedExpenses.size()); // limits our table size to 4 (or less)
-        for (int i = 0; i < sortedLimit; i++) {
+       // int sortedLimit = Math.min(4, sortedExpenses.size()); // limits our table size to 4 (or less)
+        for (int i = 0; i < sortedExpenses.size(); i++) {
             topExpenseTableModel.addRow(new Object[] {
                     sortedExpenses.get(i).getName(),
                     String.format("%.2f", sortedExpenses.get(i).getAmount()),
@@ -245,19 +245,15 @@ public class ExpensesTab extends JPanel {
     }
 
     private void refreshRecentExpensesTable() {
-        recentExpenseTableModel.setRowCount(0);
-        List<Expense> expenses = expenseManager.getExpenses();
-        int size = expenses.size();
-        int recentLimit = Math.min(4, size);
-        for (int i = size - 1; i >= size - recentLimit; i--) {
-            recentExpenseTableModel.addRow(new Object[] {
-                    expenses.get(i).getName(),
-                    String.format("%.2f", expenses.get(i).getAmount()),
-                    expenses.get(i).getCategory(),
-            });
-        }
-
-        refreshSumOfAllExpenses();
+    recentExpenseTableModel.setRowCount(0);
+    List<Expense> expenses = expenseManager.getExpenses();
+    for (int i = expenses.size() - 1; i >= 0; i--) {
+        recentExpenseTableModel.addRow(new Object[] {
+                expenses.get(i).getName(),
+                String.format("%.2f", expenses.get(i).getAmount()),
+                expenses.get(i).getCategory(),
+        });
     }
+}
 
 }
