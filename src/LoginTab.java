@@ -50,7 +50,6 @@ public class LoginTab extends JPanel {
         // Events
         loginButton.addActionListener(e -> handleLogin());
         registerButton.addActionListener(e -> handleRegister());
-    }
 
         // Event
         loginButton.addActionListener(e -> handleLogin());
@@ -93,8 +92,9 @@ public class LoginTab extends JPanel {
         String storedPassword = UserStore.users.get(username);
         return storedPassword != null && storedPassword.equals(String.valueOf(password));
     }
-
-    private boolean authenticate(String username, char[] password) {
+    /*
+    private boolean authenticate2(String username, char[] password) {
         return username.equals("admin") && String.valueOf(password).equals("1234");
     }
+    */
 }

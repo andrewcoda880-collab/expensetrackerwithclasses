@@ -1,3 +1,4 @@
+import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,7 +28,7 @@ public class myIncome extends JPanel {
     private JTable topIncome;
 
     //constructor
-    public myIncome() {
+    public myIncome(CardLayout layout, JPanel container) {
 
         setBackground(Constants.APP_COLOR);
         setLayout(null); // Set layout to null for absolute positioning
@@ -100,30 +101,44 @@ public class myIncome extends JPanel {
         JScrollPane incomeScrollPane = new JScrollPane(topIncome);
         incomeScrollPane.setBounds(0, 335, 500, 150);
         add(incomeScrollPane);
+        submitButton.addActionListener(e -> addIncome());
 
         JButton IncomeSummaryButton = new JButton("View Income Summary");
         IncomeSummaryButton.setBounds(0, 490, 200, 40);
         add(IncomeSummaryButton);
 
-        submitButton.addActionListener(e -> addIncome());
+        // Action listener for the Income Summary button to show the Income Summary panel when clicked
+        IncomeSummaryButton.addActionListener(e -> layout.show(container, "INCOMESUMMARY"));
+        container.add(new IncomeSummary(), "INCOMESUMMARY");
     }
 
         private void addIncome() {
             String source = sourceOfIncomeField.getText();
-            String total = totalIncomeField.getText();
+            String total = "$" + totalIncomeField.getText();
             String inputFrequency = null;
 
             // Determine the frequency of the income based on the user's selection in the dropdown menu
             if ("Weekly".equals(frequencyMenu.getSelectedItem())) {
-                inputFrequency = frequencyAmountField.getText() + " Weeks";
-            } else if ("Monthly".equals(frequencyMenu.getSelectedItem())){
+                if("1".equals(frequencyAmountField.getText())){
+                    inputFrequency = frequencyAmountField.getText() + " Week";
+                } else {
+                    inputFrequency = frequencyAmountField.getText() + " Weeks";
+                }//end weekly if statement
+            } else if ("Monthly".equals(frequencyMenu.getSelectedItem())) {
+                if("1".equals(frequencyAmountField.getText())){
+                    inputFrequency = frequencyAmountField.getText() + " Month";
+                } else {
                 inputFrequency = frequencyAmountField.getText() + " Months";
-            }
-            else if ("Yearly".equals(frequencyMenu.getSelectedItem())) {
+                }//end monthly if statement
+            }  else if ("Yearly".equals(frequencyMenu.getSelectedItem())) {
+                if("1".equals(frequencyAmountField.getText())){
+                    inputFrequency = frequencyAmountField.getText() + " Year";
+                } else {
                 inputFrequency = frequencyAmountField.getText() + " Years";
+                }//end yearly if statement
                 } else {
                 inputFrequency = frequencyAmountField.getText() + " No Frequency Selected";
-                }
+                }//end if statement for frequency selection
 
             if (!source.isEmpty() && !total.isEmpty() && inputFrequency != null && !inputFrequency.isEmpty()) {
                 incomeTableModel.addRow(new Object[]{source, total, inputFrequency});
@@ -132,11 +147,4 @@ public class myIncome extends JPanel {
                 frequencyMenu.setSelectedIndex(0);
             }
         }
-
-        public void viewIncomeSummary() {
-            // This method will calculate the total income based on the entries in the income table and display it to the user.
-            // It will also provide a breakdown of the income by source and frequency.
-        }
-
-
 }

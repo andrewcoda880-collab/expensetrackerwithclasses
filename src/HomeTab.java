@@ -3,7 +3,7 @@ import java.awt.Font;
 import javax.swing.*;
 public class HomeTab extends JPanel {
     
-    public HomeTab(CardLayout Homelayout, JPanel HomeContainer) {
+    public HomeTab(CardLayout layout, JPanel Container) {
         
         setBackground(Constants.APP_COLOR);
         this.setLayout(null);
@@ -68,7 +68,7 @@ public class HomeTab extends JPanel {
         container.add(new myInvestments(), "MYINVESTMENTS");
         container.add(new mySubscriptions(), "MYSUBSCRIPTIONS");
         container.add(new mySettings(), "MYSETTINGS");
-        container.add(new myIncome(), "MYINCOME");
+        container.add(new myIncome(layout,container), "MYINCOME");
 
     }
 }
