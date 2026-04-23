@@ -1,6 +1,10 @@
 import java.awt.*;
+import java.util.EventObject;
+
 import javax.swing.*;
+import javax.swing.event.CellEditorListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 
 public class SettingsTab extends JPanel {
         private DefaultTableModel notifsMenu;
@@ -32,8 +36,66 @@ public class SettingsTab extends JPanel {
         titleNotificationSettings.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 185), 6));
 
         notifsMenu.addRow(new Object[]{"Enable notifications", "Weekly"});
-        JComboBox<String> tableComboBox = new JComboBox<>(new String[]{"Weekly", "Monthly", "Weekly/Monthly", "Off"});
-        notifSettings.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(tableComboBox));
+        notifsMenu.addRow(new Object[]{"Chart Types", "Pie"});
+        
+        notifSettings.getColumnModel().getColumn(1).setCellEditor(new TableCellEditor() {
+            private JComboBox<String> currentComboBox;
+            
+            @Override
+            public java.awt.Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+                if (row == 0) {
+                    currentComboBox = new JComboBox<>(new String[]{"Weekly", "Monthly", "Weekly/Monthly", "Off"});
+                } else if (row == 1) {
+                    currentComboBox = new JComboBox<>(new String[]{"Pie", "Bar", "Line"});
+                } else {
+                    currentComboBox = new JComboBox<>();
+                }
+                currentComboBox.setSelectedItem(value);
+                return currentComboBox;
+            }
+
+            @Override
+            public Object getCellEditorValue() {
+                return currentComboBox.getSelectedItem();
+            }
+
+            @Override
+            public boolean isCellEditable(EventObject anEvent) { return true; }
+            @Override
+            public boolean shouldSelectCell(EventObject anEvent) { return true; }
+            @Override
+            public boolean stopCellEditing() { return true; }
+            @Override
+            public void cancelCellEditing() {}
+            @Override
+            public void addCellEditorListener(CellEditorListener l) {}
+            @Override
+            public void removeCellEditorListener(CellEditorListener l) {}
+
+            @Override
+            public boolean isCellEditable(EventObject anEvent) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'isCellEditable'");
+            }
+
+            @Override
+            public boolean shouldSelectCell(EventObject anEvent) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'shouldSelectCell'");
+            }
+
+            @Override
+            public void addCellEditorListener(CellEditorListener l) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'addCellEditorListener'");
+            }
+
+            @Override
+            public void removeCellEditorListener(CellEditorListener l) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'removeCellEditorListener'");
+            }
+        });
         
         settingsPanel.add(titleNotificationSettings);
         settingsPanel.add(notifSettingsScrollPane);
