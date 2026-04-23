@@ -1,8 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class AllExpensesTab extends JPanel {
     private JPanel topPanel;
-    private JLabel allExpensesTabLabel;
+    private JLabel allExpensesLabel;
     private DefaultTableModel allExpensesTableModel;
     private JTable allExpensesTable;
     private ExpenseManager expenseManager;
@@ -33,9 +35,13 @@ public class AllExpensesTab extends JPanel {
 
         // title
 
-        allExpensesTabLabel = new JLabel("All Expenses");
-        allExpensesTabLabel.setFont(new Font("Arial", Font.BOLD, 15));
-        topPanel.add(allExpensesTabLabel);
+        allExpensesLabel = new JLabel("All Expenses");
+        allExpensesLabel.setFont(new Font("Arial", Font.BOLD, 20));
+
+        JPanel allExpensesLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 20));
+        allExpensesLabelPanel.setBackground(Constants.APP_COLOR);
+        allExpensesLabelPanel.add(allExpensesLabel);
+        topPanel.add(allExpensesLabelPanel);
 
         // table
 
@@ -46,6 +52,10 @@ public class AllExpensesTab extends JPanel {
         JScrollPane allExpensesScrollPane = new JScrollPane(allExpensesTable);
         allExpensesTable.setGridColor(Color.BLACK);
         allExpensesTable.setBackground(Constants.APP_COLOR);
+        allExpensesScrollPane.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Constants.APP_COLOR, 8),
+            BorderFactory.createLineBorder(Color.BLACK, 1)
+        ));
         topPanel.add(allExpensesScrollPane);
 
         
@@ -59,7 +69,7 @@ public class AllExpensesTab extends JPanel {
         for (Expense expense : allExpenses) {
             allExpensesTableModel.addRow(new Object[] {
                     expense.getName(),
-                    String.format("%.2f", expense.getAmount()), // 2 decimal places
+                    expense.getAmount(),
                     expense.getCategory(),
             });
     }

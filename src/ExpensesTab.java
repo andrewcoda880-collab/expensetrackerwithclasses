@@ -109,11 +109,10 @@ public class ExpensesTab extends JPanel {
         topExpenses = new JTable(topExpenseTableModel);
         JScrollPane topExpensesScrollPane = new JScrollPane(topExpenses);
         topExpensesScrollPane.setBorder(BorderFactory.createCompoundBorder(
-
                 BorderFactory.createLineBorder(Constants.APP_COLOR, 10),
                 BorderFactory.createLineBorder(Color.BLACK)));
         topExpenses.setGridColor(Color.BLACK);
-        topExpenses.setBackground(Constants.APP_COLOR);
+        //topExpenses.setBackground(Constants.APP_COLOR);
 
         topExpensesPanel.add(topExpensesScrollPane);
         tablesPanel.add(topExpensesPanel);
@@ -140,7 +139,7 @@ public class ExpensesTab extends JPanel {
         recentExpensesScrollPane.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Constants.APP_COLOR, 10),
                 BorderFactory.createLineBorder(Color.BLACK)));
-        recentExpenses.setBackground(Constants.APP_COLOR);
+        //recentExpenses.setBackground(Constants.APP_COLOR);
         recentExpenses.setGridColor(Color.BLACK);
         recentExpensesPanel.add(recentExpensesScrollPane);
 
@@ -242,7 +241,7 @@ public class ExpensesTab extends JPanel {
     private void refreshTopExpensesTable() {
         topExpenseTableModel.setRowCount(0);
         List<Expense> sortedExpenses = expenseManager.getSortedExpenses();
-        int sortedLimit = Math.min(3, sortedExpenses.size()); // limits our table size to 3 (or less)
+        int sortedLimit = Math.min(4, sortedExpenses.size()); // limits our table size to 4 (or less)
         for (int i = 0; i < sortedLimit; i++) {
             topExpenseTableModel.addRow(new Object[] {
                     sortedExpenses.get(i).getName(),
@@ -261,7 +260,7 @@ public class ExpensesTab extends JPanel {
         recentExpenseTableModel.setRowCount(0);
         List<Expense> expenses = expenseManager.getExpenses();
         int size = expenses.size();
-        int recentLimit = Math.min(3, size);
+        int recentLimit = Math.min(4, size);
         for (int i = size - 1; i >= size - recentLimit; i--) {
             recentExpenseTableModel.addRow(new Object[] {
                     expenses.get(i).getName(),
