@@ -6,7 +6,14 @@ public class LoginTab extends JPanel {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
-    public LoginTab() {
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+
+    public LoginTab(CardLayout cardLayout, JPanel cardPanel) {
+
+        this.cardLayout = cardLayout;
+        this.cardPanel = cardPanel;
+
         setLayout(null);
         setBackground(Constants.APP_COLOR);
 
@@ -16,59 +23,81 @@ public class LoginTab extends JPanel {
         title.setBounds(170, 60, 200, 40);
         add(title);
 
-        // Username label
+        // Username
         JLabel userLabel = new JLabel("Username:");
         userLabel.setBounds(120, 140, 100, 25);
         add(userLabel);
 
-        // Username field
         usernameField = new JTextField();
         usernameField.setBounds(120, 165, 200, 30);
         add(usernameField);
 
-        // Password label
+        // Password
         JLabel passLabel = new JLabel("Password:");
         passLabel.setBounds(120, 210, 100, 25);
         add(passLabel);
 
-        // Password field
         passwordField = new JPasswordField();
         passwordField.setBounds(120, 235, 200, 30);
+        passwordField.setEchoChar('*');
         add(passwordField);
+
+        // Show password
+        JCheckBox showPassword = new JCheckBox("Show Password");
+        showPassword.setBounds(120, 265, 150, 20);
+        showPassword.setBackground(Constants.APP_COLOR);
+        add(showPassword);
+
+        showPassword.addActionListener(e -> {
+            if (showPassword.isSelected()) {
+                passwordField.setEchoChar((char) 0);
+            } else {
+                passwordField.setEchoChar('*');
+            }
+        });
 
         // Login button
         JButton loginButton = new JButton("Login");
-        loginButton.setBounds(150, 290, 120, 35);
+        loginButton.setBounds(150, 300, 120, 35);
         add(loginButton);
 
         // Register button
         JButton registerButton = new JButton("Register");
-        registerButton.setBounds(150, 340, 120, 35);
+        registerButton.setBounds(150, 350, 120, 35);
         add(registerButton);
 
-        // Events
+        // Forgot password link
+        JButton forgotPassword = new JButton("Forgot Password?");
+        forgotPassword.setBounds(120, 400, 200, 25);
+        forgotPassword.setBorderPainted(false);
+        forgotPassword.setContentAreaFilled(false);
+        forgotPassword.setFocusPainted(false);
+        forgotPassword.setForeground(Color.BLUE);
+        forgotPassword.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        add(forgotPassword);
+
+        // EVENTS
         loginButton.addActionListener(e -> handleLogin());
         registerButton.addActionListener(e -> handleRegister());
-    }
 
-    // ===================== VALIDATION METHODS =====================
+        forgotPassword.addActionListener(e ->
+            cardLayout.show(cardPanel, "FORGOT")
+        );
+    }
 
     private boolean isValidUsername(String username) {
         return username.matches("[a-zA-Z0-9]+");
     }
 
     private boolean isValidPassword(String password) {
-        // At least 6 chars, 1 uppercase, 1 special char
         return password.matches("^(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}$");
     }
 
-    // ===================== LOGIC METHODS =====================
-
     private void handleLogin() {
         String username = usernameField.getText();
-        char[] password = passwordField.getPassword();
+        String password = String.valueOf(passwordField.getPassword());
 
-        if (authenticate(username, password)) {
+        if (UserStore.users.containsKey(username)) {
             JOptionPane.showMessageDialog(this, "Login successful!");
         } else {
             JOptionPane.showMessageDialog(this, "Invalid login");
@@ -85,30 +114,23 @@ public class LoginTab extends JPanel {
         }
 
         if (!isValidUsername(username)) {
-            JOptionPane.showMessageDialog(this,
-                    "Username must contain only letters and numbers (no spaces or symbols)");
+            JOptionPane.showMessageDialog(this, "Invalid username format");
             return;
         }
 
         if (!isValidPassword(password)) {
-            JOptionPane.showMessageDialog(this,
-                    "Password must be at least 6 characters, include 1 uppercase letter and 1 special character");
+            JOptionPane.showMessageDialog(this, "Weak password");
             return;
         }
 
         if (UserStore.users.containsKey(username)) {
-            JOptionPane.showMessageDialog(this, "Username already exists");
+            JOptionPane.showMessageDialog(this, "User already exists");
             return;
         }
 
         UserStore.users.put(username, password);
         UserStore.saveUsers();
 
-        JOptionPane.showMessageDialog(this, "User registered! You can now log in.");
-    }
-
-    private boolean authenticate(String username, char[] password) {
-        String storedPassword = UserStore.users.get(username);
-        return storedPassword != null && storedPassword.equals(String.valueOf(password));
+        JOptionPane.showMessageDialog(this, "User registered!");
     }
 }

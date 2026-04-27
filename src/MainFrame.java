@@ -31,7 +31,8 @@ public class MainFrame extends JFrame {
         cardPanel.add(new ExpensesTab(expenseManager, cardLayout, cardPanel), "EXPENSES");
         cardPanel.add(new SettingsTab(), "SETTINGS");
         cardPanel.add(new GraphsTab(), "GRAPHS");
-        cardPanel.add(new LoginTab(), "LOGIN");
+        cardPanel.add(new LoginTab(cardLayout, cardPanel), "LOGIN");
+        cardPanel.add(new ForgotPasswordTab(cardLayout, cardPanel), "FORGOT");
 
         //SHOW LOGIN FIRST
         cardLayout.show(cardPanel, "LOGIN");
