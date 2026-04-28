@@ -6,6 +6,6 @@ import junit.framework.Assert;
 public class ExpenseClassTesting {
 
     ExpenseClassTesting(){
-
+    
     }
 }

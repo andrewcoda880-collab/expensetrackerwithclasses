@@ -1,8 +1,10 @@
 import java.awt.CardLayout;
 import java.awt.Font;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,7 +24,7 @@ public class myIncome extends JPanel {
     private JTextField frequencyAmountField;
     private JLabel frequencyStringsLabel;
     private JTextField frequencyField;
-    private JComboBox<String> frequencyMenu;
+    public  JComboBox<String> frequencyMenu;
     private JLabel TotalIncomeLabel;
     private DefaultTableModel incomeTableModel;
     private JTable topIncome;
@@ -109,13 +111,20 @@ public class myIncome extends JPanel {
 
         // Action listener for the Income Summary button to show the Income Summary panel when clicked
         IncomeSummaryButton.addActionListener(e -> layout.show(container, "INCOMESUMMARY"));
+        IncomeSummaryButton.addActionListener(e -> refreshIncomeTable());
+        IncomeSummaryButton.addActionListener(e -> IncomeSummary.UpdateTotalIncome());
         container.add(new IncomeSummary(), "INCOMESUMMARY");
+
     }
 
-        private void addIncome() {
-            String source = sourceOfIncomeField.getText();
-            String total = "$" + totalIncomeField.getText();
+        public void addIncome() {
+            String source = sourceOfIncomeField.getText().trim();
+            String total =  totalIncomeField.getText().trim();
             String inputFrequency = null;
+            double totalIncome = Double.parseDouble(total);
+            String frequencyAmountString = frequencyAmountField.getText().trim();
+            double frequencyAmount = Double.parseDouble(frequencyAmountString);
+
 
             // Determine the frequency of the income based on the user's selection in the dropdown menu
             if ("Weekly".equals(frequencyMenu.getSelectedItem())) {
@@ -140,11 +149,41 @@ public class myIncome extends JPanel {
                 inputFrequency = frequencyAmountField.getText() + " No Frequency Selected";
                 }//end if statement for frequency selection
 
-            if (!source.isEmpty() && !total.isEmpty() && inputFrequency != null && !inputFrequency.isEmpty()) {
-                incomeTableModel.addRow(new Object[]{source, total, inputFrequency});
-                sourceOfIncomeField.setText("");
-                totalIncomeField.setText("");
-                frequencyMenu.setSelectedIndex(0);
+            if (source.isEmpty() || total.isEmpty() || inputFrequency == null || inputFrequency.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Fill in all fields");
+                return;
+            } try {
+                if (totalIncome < 0 || frequencyAmount < 0){
+                JOptionPane.showMessageDialog(this, "Must be a non-negative number");
+                return;
+                }
+
+            Income income = new Income(source, totalIncome, inputFrequency, frequencyAmount);
+            IncomeSummary.addIncome(income);
+
+            JOptionPane.showMessageDialog(this, "Source of Income Added");
+            incomeTableModel.addRow(new Object[] {
+                source,
+                String.format("$%.2f", totalIncome),
+                inputFrequency
+                });
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Must be a valid number");
             }
         }
-}
+        public void refreshIncomeTable() {
+        incomeTableModel.setRowCount(0);
+        List<Income> incomes = IncomeSummary.getSortedIncomes();
+        int recentLimit = Math.min(3, incomes.size());
+        for (int i = 0; i < recentLimit; i++) {
+            incomeTableModel.addRow(new Object[] {
+                    incomes.get(i).getSource(),
+                    String.format("%.2f", incomes.get(i).getTotalIncome()), // 2 decimal places
+                    incomes.get(i).getInputFrequency(),
+            });
+        }
+
+            }
+
+     }
