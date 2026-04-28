@@ -121,9 +121,19 @@ public class myIncome extends JPanel {
             String source = sourceOfIncomeField.getText().trim();
             String total =  totalIncomeField.getText().trim();
             String inputFrequency = null;
-            double totalIncome = Double.parseDouble(total);
             String frequencyAmountString = frequencyAmountField.getText().trim();
-            double frequencyAmount = Double.parseDouble(frequencyAmountString);
+
+            if (source.isEmpty() || total.isEmpty() ||frequencyAmountString.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Fill in all fields");
+            return;
+            }
+            try {
+                double frequencyAmount = Double.parseDouble(frequencyAmountString);
+                double totalIncome = Double.parseDouble(total);
+                if (totalIncome < 0 || frequencyAmount < 0){
+                JOptionPane.showMessageDialog(this, "Must be a non-negative number");
+                return;
+                }
 
             // Determine the frequency of the income based on the user's selection in the dropdown menu
             if ("Weekly".equals(frequencyMenu.getSelectedItem())) {
@@ -147,17 +157,6 @@ public class myIncome extends JPanel {
                 } else {
                 inputFrequency = frequencyAmountField.getText() + " No Frequency Selected";
                 }//end if statement for frequency selection
-
-            if (source.isEmpty() || total.isEmpty() || inputFrequency == null || inputFrequency.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Fill in all fields");
-            }
-            
-            try {
-                if (totalIncome < 0 || frequencyAmount < 0){
-                JOptionPane.showMessageDialog(this, "Must be a non-negative number");
-                return;
-                }
-         
             Income income = new Income(source, totalIncome, inputFrequency, frequencyAmount);
             IncomeSummary.addIncome(income);
 
@@ -170,8 +169,10 @@ public class myIncome extends JPanel {
 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Must be a valid number");
+                return;
             }
         }
+
         public void refreshIncomeTable() {
         incomeTableModel.setRowCount(0);
         List<Income> incomes = IncomeSummary.getSortedIncomes();
@@ -186,4 +187,21 @@ public class myIncome extends JPanel {
 
             }
 
+        //Setters
+        public void setSourceOfIncome(String source){
+          sourceOfIncomeField.setText(source);
+
+        }
+
+        public void setTotalIncome(String total) {
+        totalIncomeField.setText(total);
+        }
+
+        public void setFrequencyAmount(String amount) {
+        frequencyAmountField.setText(amount);
+        }
+
+        public void setFrequencyMenu(String frequency) {
+        frequencyMenu.setSelectedItem(frequency);
+}
      }
