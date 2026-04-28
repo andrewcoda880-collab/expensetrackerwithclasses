@@ -80,8 +80,7 @@ public class GraphsTab extends JPanel {
         transportTotal = 0;
         entertainmentTotal = 0;
         billsTotal = 0;
-        otherTotal = 0;
-        
+        otherTotal = 0;        
         // Get expenses and aggregate by category
         List<Expense> expenses = expenseManager.getExpenses();
         
@@ -141,7 +140,6 @@ public class GraphsTab extends JPanel {
         plot.setBackgroundPaint(Constants.APP_COLOR);
         plot.setLabelFont(new Font("Arial", Font.PLAIN, 12));
         plot.setLabelBackgroundPaint(new Color(255, 255, 255, 200));
-        
         // Set fixed colors for each category
         if (foodTotal > 0) plot.setSectionPaint(0, FOOD_COLOR);
         if (transportTotal > 0) plot.setSectionPaint(1, TRANSPORT_COLOR);
@@ -153,7 +151,7 @@ public class GraphsTab extends JPanel {
         updateChartPanel(chart);
         
         // Check warning
-        Warning.checkEntertainmentVsBills(entertainmentTotal, billsTotal, totalExpenses);
+        Warning.checkEntertainmentVsBills(entertainmentTotal, billsTotal, totalExpenses,foodTotal, transportTotal, otherTotal);
     }
     
     private void updateBarChart() {
@@ -203,7 +201,7 @@ public class GraphsTab extends JPanel {
         updateChartPanel(barChart);
         
         // Check warning
-        Warning.checkEntertainmentVsBills(entertainmentTotal, billsTotal, totalExpenses);
+        Warning.checkEntertainmentVsBills(entertainmentTotal, billsTotal, totalExpenses, foodTotal, transportTotal, otherTotal);
     }
     
     private CategoryDataset createBarChartDataset() {

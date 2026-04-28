@@ -2,29 +2,50 @@ import javax.swing.*;
 
 public class Warning {
     //We will see if entertainment is more than bills or a certain amount, as of now 25% of bills
-    public static void checkEntertainmentVsBills(double entertainmentTotal, double billsTotal, double totalExpenses) {
+    public static void checkEntertainmentVsBills(double entertainmentTotal, double billsTotal, double totalExpenses,double foodTotal, double otherTotal, double transportTotal) {
         if (totalExpenses > 1000) {
-            // Check if entertainment exceeds bills
-            if (entertainmentTotal > billsTotal) {
+            if (billsTotal == 0){
+                String warningMessage = "You havent put anything in your bills, is everything you inputted correct?";
+                JOptionPane.showMessageDialog(null,warningMessage,
+                    "Critical Budget Alert",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            // Check if entertainment is 25% or more of Total Expenses
+            else if (entertainmentTotal >= totalExpenses * 0.10) {
+                double percentage = (entertainmentTotal / totalExpenses) * 100;
                 String warningMessage = String.format(
-                    "⚠️ WARNING: Entertainment expenses ($%.2f) EXCEED Bills ($%.2f)!\n" +
-                    "You're spending WAY more on entertainment than nessisary, its more than your Bill!\n" + entertainmentTotal, billsTotal);
+                    "⚠️ Budget Alert: Entertainment expenses ($%.2f) are %.1f%% of your total Expenses! ($%.2f)!\n" +
+                    "Consider spending less money on entertainment MAN!",
+                    entertainmentTotal, percentage, totalExpenses);
                 
                 JOptionPane.showMessageDialog(
                     null,
                     warningMessage,
-                    "Critical Budget Alert",
-                    JOptionPane.WARNING_MESSAGE
-                );
+                    "Budget Alert",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
             }
-            // Check if entertainment is 25% or more of bills
-            else if (entertainmentTotal >= billsTotal * 0.25) {
-                double percentage = (entertainmentTotal / billsTotal) * 100;
+            else if (foodTotal >= totalExpenses * 0.15) {
+                double percentage = (entertainmentTotal / totalExpenses) * 100;
                 String warningMessage = String.format(
-                    "⚠️ Budget Alert: Entertainment expenses ($%.2f) are %.1f%% of your Bills ($%.2f)!\n" +
-                    "Consider spending less money man!",
-                    entertainmentTotal, percentage, billsTotal
-                );
+                    "⚠️ Budget Alert: Food expenses ($%.2f) are %.1f%% of your Total ($%.2f)!\n" +
+                    "Is all this food nessisary, groceries? Takeout? Consider thinking of spending less on food!",
+                    foodTotal, percentage, totalExpenses);
+                
+                JOptionPane.showMessageDialog(
+                    null,
+                    warningMessage,
+                    "Budget Alert",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            else if  (transportTotal >= totalExpenses * 0.15){
+                double percentage = (transportTotal / totalExpenses) * 100;
+                String warningMessage = String.format(
+                    "⚠️ Budget Alert: Transport expenses ($%.2f) are %.1f%% of your Total ($%.2f)!\n" +
+                    "How much are you going out? is all this going out nessisary? If not just stay at home save some money on gas!",
+                    transportTotal, percentage, totalExpenses);
                 
                 JOptionPane.showMessageDialog(
                     null,
