@@ -30,50 +30,62 @@ public class ExpensesTab extends JPanel {
         this.container = container;
 
         this.setBackground(Constants.APP_COLOR);
-        setLayout(new BorderLayout());
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        add(createInputsPanel(), BorderLayout.NORTH);
-
-        add(createTablesPanel(), BorderLayout.CENTER);
-
-        add(createBottomPanel(), BorderLayout.SOUTH);
-
+        add(createHeaderPanel());
+        add(createInputsPanel());
+        add(createTablesPanel());
+        add(createBottomPanel());
     }
 
+    private JPanel createHeaderPanel() {
+        JPanel headerPanel = new JPanel();
+        //headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
+        headerPanel.setBackground(Constants.APP_COLOR);
+
+         // ---- Tab Title-----
+        JLabel expesesTabTitle = new JLabel(Constants.USERNAME + "'s Expenses");
+        expesesTabTitle.setFont(new Font("Arial", Font.BOLD, 30));
+        headerPanel.add(expesesTabTitle);
+
+        return headerPanel;
+    }
     private JPanel createBottomPanel() {
-        // Create panel
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-        bottomPanel.setBackground(Constants.APP_COLOR);
 
-        // view all expenses button
-        JButton viewAllExpensesButton = new JButton("View All Expenses");
-        viewAllExpensesButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        viewAllExpensesButton.addActionListener(e -> {
-            layout.show(container, "ALL EXPENSES");
-            allExpensesTab.refreshTable();
-        });
-        bottomPanel.add(viewAllExpensesButton);
+    // flow layout panel to allign components to the left
+    JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+    bottomPanel.setBackground(Constants.APP_COLOR);
+    
 
-        // sum of all expenses
+    // separate panel to stack the components vertically
+    JPanel labelsPanel = new JPanel();
+    labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
+    labelsPanel.setBackground(Constants.APP_COLOR);
 
-        sumOfAllExpenses = new JLabel("Total Spent: $" + String.format("%.2f", expenseManager.getSumOfAllExpenses()));
-        sumOfAllExpenses.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        sumOfAllExpenses.setFont(new Font("Arial", Font.BOLD, 16));
-        bottomPanel.add(sumOfAllExpenses);
+     JButton viewAllExpensesButton = new JButton("View All Expenses");
+    viewAllExpensesButton.addActionListener(e -> {
+        layout.show(container, "ALL EXPENSES");
+        allExpensesTab.refreshTable();
+    });
 
-        // remaining budget
+    labelsPanel.add(viewAllExpensesButton);
 
-        budget = new Budget(45);
+    sumOfAllExpenses = new JLabel("Total Spent: $" + String.format("%.2f", expenseManager.getSumOfAllExpenses()));
+    sumOfAllExpenses.setFont(new Font("Arial", Font.BOLD, 16));
+    sumOfAllExpenses.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+    labelsPanel.add(sumOfAllExpenses);
 
-        budgetInformation = new JLabel("You have: $"
-                + String.format("%.2f", (budget.getBudget() - expenseManager.getSumOfAllExpenses())) + " remaining");
-        budgetInformation.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        budgetInformation.setFont(new Font("Arial", Font.BOLD, 16));
-        bottomPanel.add(budgetInformation);
+    budget = new Budget(45);
+    budgetInformation = new JLabel("You have: $"
+            + String.format("%.2f", (budget.getBudget() - expenseManager.getSumOfAllExpenses())) + " remaining");
+    budgetInformation.setFont(new Font("Arial", Font.BOLD, 16));
+    budgetInformation.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+    labelsPanel.add(budgetInformation);
 
-        return bottomPanel;
-    }
+    bottomPanel.add(labelsPanel);
+
+    return bottomPanel;
+}
 
     private JPanel createTablesPanel() {
         JPanel tablesPanel = new JPanel();
@@ -83,13 +95,11 @@ public class ExpensesTab extends JPanel {
         JPanel topExpensesPanel = new JPanel();
         topExpensesPanel.setLayout(new BoxLayout(topExpensesPanel, BoxLayout.Y_AXIS));
         topExpensesPanel.setBackground(Constants.APP_COLOR);
-
         JPanel recentExpensesPanel = new JPanel();
         recentExpensesPanel.setLayout(new BoxLayout(recentExpensesPanel, BoxLayout.Y_AXIS));
         recentExpensesPanel.setBackground(Constants.APP_COLOR);
 
         // -- Top Expenses Label ---
-
         JLabel topExpensesLabel = new JLabel("Top Expenses:");
         topExpensesLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         topExpensesLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -103,7 +113,6 @@ public class ExpensesTab extends JPanel {
 
 
         // --- Top Expenses Table ---
-
         String[] columnsForTable = { "Name", "Amount", "Category" };
         topExpenseTableModel = new DefaultTableModel(columnsForTable, 0);
         topExpenses = new JTable(topExpenseTableModel);
@@ -118,7 +127,6 @@ public class ExpensesTab extends JPanel {
         tablesPanel.add(topExpensesPanel);
 
         // --- Recent Expenses Label -----
-
         JLabel recentExpensesLabel = new JLabel("Recent Expenses:");
         recentExpensesLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         recentExpensesLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -142,7 +150,6 @@ public class ExpensesTab extends JPanel {
         //recentExpenses.setBackground(Constants.APP_COLOR);
         recentExpenses.setGridColor(Color.BLACK);
         recentExpensesPanel.add(recentExpensesScrollPane);
-
         tablesPanel.add(recentExpensesPanel);
 
         return tablesPanel;
@@ -157,33 +164,33 @@ public class ExpensesTab extends JPanel {
         // ----- Name --------
         JLabel nameLabel = new JLabel("Expense Name:");
         nameField = new JTextField();
-
+        nameField.setBorder(BorderFactory.createLineBorder(Color.black));
         inputsPanel.add(nameLabel);
         inputsPanel.add(nameField);
 
         // ----- Amount ------
         JLabel amountLabel = new JLabel("Amount:");
         amountField = new JTextField();
-
+        amountField.setBorder(BorderFactory.createLineBorder(Color.black));
         inputsPanel.add(amountLabel);
         inputsPanel.add(amountField);
 
         // ----- Category ----
-
         JLabel categoryLabel = new JLabel("Category");
         String[] categories = { "", "Food", "Transport", "Entertainment", "Bills", "Other" };
         categoryMenu = new JComboBox<>(categories);
-
         inputsPanel.add(categoryLabel);
         inputsPanel.add(categoryMenu);
 
+        // ------- date --------
+
+        // SpinnerDateModel expenseDate = new SpinnerDateModel();
+        // inputsPanel.add(expenseDate);
+
         // ---- Submit --------
-
         JButton submitButton = new JButton("Submit Expense");
-
         inputsPanel.add(new JLabel());
         inputsPanel.add(submitButton);
-
         submitButton.addActionListener(e -> addExpense());
 
         return inputsPanel;
@@ -201,21 +208,24 @@ public class ExpensesTab extends JPanel {
 
         try {
             double amount = Double.parseDouble(amountText);
-
-            if (amount < 0) {
-                JOptionPane.showMessageDialog(this, "Must be a non-negative number");
+            
+            // Check if amount is valid (from first version)
+            if (amount <= 0) {
+                JOptionPane.showMessageDialog(this, "Amount cannot be 0 or less than 0", "ERROR!", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            
             Expense expense = new Expense(name, amount, category);
             expenseManager.addExpense(expense);
 
-            JOptionPane.showMessageDialog(this, "Expense Added");
+            //took this out, expense should just be added - makes it quicker
+            //JOptionPane.showMessageDialog(this, "Expense Added");
 
             clearInputs();
             refreshExpensesTabData();
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Must be a valid number");
+            JOptionPane.showMessageDialog(this, "Must be a valid number", "ERROR!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -241,11 +251,11 @@ public class ExpensesTab extends JPanel {
     private void refreshTopExpensesTable() {
         topExpenseTableModel.setRowCount(0);
         List<Expense> sortedExpenses = expenseManager.getSortedExpenses();
-        int sortedLimit = Math.min(4, sortedExpenses.size()); // limits our table size to 4 (or less)
-        for (int i = 0; i < sortedLimit; i++) {
+       // int sortedLimit = Math.min(4, sortedExpenses.size()); // limits our table size to 4 (or less)
+        for (int i = 0; i < sortedExpenses.size(); i++) {
             topExpenseTableModel.addRow(new Object[] {
                     sortedExpenses.get(i).getName(),
-                    String.format("%.2f", sortedExpenses.get(i).getAmount()), // 2 decimal places
+                    String.format("%.2f", sortedExpenses.get(i).getAmount()),
                     sortedExpenses.get(i).getCategory(),
             });
         }
@@ -257,16 +267,15 @@ public class ExpensesTab extends JPanel {
     }
 
     private void refreshRecentExpensesTable() {
-        recentExpenseTableModel.setRowCount(0);
-        List<Expense> expenses = expenseManager.getExpenses();
-        int size = expenses.size();
-        int recentLimit = Math.min(4, size);
-        for (int i = size - 1; i >= size - recentLimit; i--) {
-            recentExpenseTableModel.addRow(new Object[] {
-                    expenses.get(i).getName(),
-                    String.format("%.2f", expenses.get(i).getAmount()),
-                    expenses.get(i).getCategory(),
-            });
-        }
+    recentExpenseTableModel.setRowCount(0);
+    List<Expense> expenses = expenseManager.getExpenses();
+    for (int i = expenses.size() - 1; i >= 0; i--) {
+        recentExpenseTableModel.addRow(new Object[] {
+                expenses.get(i).getName(),
+                String.format("%.2f", expenses.get(i).getAmount()),
+                expenses.get(i).getCategory(),
+        });
     }
+}
+
 }

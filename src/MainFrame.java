@@ -33,17 +33,11 @@ public class MainFrame extends JFrame {
         cardPanel.add(allExpensesTab, "ALL EXPENSES");
         cardPanel.add(new ExpensesTab(expenseManager, cardLayout, cardPanel, allExpensesTab), "EXPENSES");
         cardPanel.add(new SettingsTab(), "SETTINGS");
-        cardPanel.add(new GraphsTab(), "GRAPHS");
+        cardPanel.add(new GraphsTab(expenseManager), "GRAPHS");  // Pass expenseManager here
         cardPanel.add(new LoginTab(), "LOGIN");
 
         //SHOW LOGIN FIRST
         cardLayout.show(cardPanel, "LOGIN");
-
-    
-    
-    
-        
-
         
         
     }

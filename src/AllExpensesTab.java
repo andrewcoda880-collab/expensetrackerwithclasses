@@ -51,7 +51,7 @@ public class AllExpensesTab extends JPanel {
         allExpensesTable.setAutoCreateRowSorter(true);
         JScrollPane allExpensesScrollPane = new JScrollPane(allExpensesTable);
         allExpensesTable.setGridColor(Color.BLACK);
-        allExpensesTable.setBackground(Constants.APP_COLOR);
+        //allExpensesTable.setBackground(Constants.APP_COLOR);
         allExpensesScrollPane.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Constants.APP_COLOR, 8),
             BorderFactory.createLineBorder(Color.BLACK, 1)
@@ -69,7 +69,7 @@ public class AllExpensesTab extends JPanel {
         for (Expense expense : allExpenses) {
             allExpensesTableModel.addRow(new Object[] {
                     expense.getName(),
-                    expense.getAmount(),
+                    String.format("%.2f",expense.getAmount()),
                     expense.getCategory(),
             });
     }
