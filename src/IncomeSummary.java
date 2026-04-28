@@ -11,9 +11,16 @@ public class IncomeSummary extends JPanel {
     private static JLabel yearlyAmount;
     
 
-    public IncomeSummary() {
+    public IncomeSummary(CardLayout layout, JPanel container) {
         setBackground(Constants.APP_COLOR);
         setLayout(null); // Set layout to null for absolute positioning
+
+        JButton AddIncomeButton = new JButton("Add Source of Income");
+        AddIncomeButton.setBounds(300, 450, 200, 60);
+        add(AddIncomeButton);
+
+        AddIncomeButton.addActionListener(e -> layout.show(container, "MYINCOME"));
+        
 
         JLabel summaryLabel = new JLabel("Income Summary");
         summaryLabel.setFont(new Font("Arial", Font.BOLD, 24));

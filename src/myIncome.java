@@ -113,10 +113,10 @@ public class myIncome extends JPanel {
         IncomeSummaryButton.addActionListener(e -> layout.show(container, "INCOMESUMMARY"));
         IncomeSummaryButton.addActionListener(e -> refreshIncomeTable());
         IncomeSummaryButton.addActionListener(e -> IncomeSummary.UpdateTotalIncome());
-        container.add(new IncomeSummary(), "INCOMESUMMARY");
+        container.add(new IncomeSummary(layout,container), "INCOMESUMMARY");
 
     }
-
+    
         public void addIncome() {
             String source = sourceOfIncomeField.getText().trim();
             String total =  totalIncomeField.getText().trim();
@@ -124,7 +124,6 @@ public class myIncome extends JPanel {
             double totalIncome = Double.parseDouble(total);
             String frequencyAmountString = frequencyAmountField.getText().trim();
             double frequencyAmount = Double.parseDouble(frequencyAmountString);
-
 
             // Determine the frequency of the income based on the user's selection in the dropdown menu
             if ("Weekly".equals(frequencyMenu.getSelectedItem())) {
@@ -151,13 +150,14 @@ public class myIncome extends JPanel {
 
             if (source.isEmpty() || total.isEmpty() || inputFrequency == null || inputFrequency.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Fill in all fields");
-                return;
-            } try {
+            }
+            
+            try {
                 if (totalIncome < 0 || frequencyAmount < 0){
                 JOptionPane.showMessageDialog(this, "Must be a non-negative number");
                 return;
                 }
-
+         
             Income income = new Income(source, totalIncome, inputFrequency, frequencyAmount);
             IncomeSummary.addIncome(income);
 
