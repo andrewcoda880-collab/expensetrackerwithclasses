@@ -33,7 +33,6 @@ public class ExpensesTab extends JPanel {
         setLayout(new BorderLayout());
 
         add(createInputsPanel(), BorderLayout.NORTH);
-
         add(createTablesPanel(), BorderLayout.CENTER);
         add(createBottomPanel(), BorderLayout.SOUTH);
     }
@@ -167,6 +166,11 @@ public class ExpensesTab extends JPanel {
         categoryMenu = new JComboBox<>(categories);
         inputsPanel.add(categoryLabel);
         inputsPanel.add(categoryMenu);
+
+        // ------- date --------
+
+        // SpinnerDateModel expenseDate = new SpinnerDateModel();
+        // inputsPanel.add(expenseDate);
 
         // ---- Submit --------
         JButton submitButton = new JButton("Submit Expense");
