@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class Warning {
     //We will see if entertainment is more than bills or a certain amount, as of now 25% of bills
-    public static void checkEntertainmentVsBills(double entertainmentTotal, double billsTotal, double totalExpenses,double foodTotal, double otherTotal, double transportTotal) {
+    public static void checkEntertainmentVsBills(double entertainmentTotal, double billsTotal, double totalExpenses,double foodTotal, double transportTotal, double otherTotal) {
         if (totalExpenses > 1000) {
             if (billsTotal == 0){
                 String warningMessage = "You havent put anything in your bills, is everything you inputted correct?";
@@ -51,10 +51,23 @@ public class Warning {
                     null,
                     warningMessage,
                     "Budget Alert",
-                    JOptionPane.WARNING_MESSAGE
-                );
+                    JOptionPane.WARNING_MESSAGE);
+                    return;
             }
+            else if  (otherTotal >= totalExpenses * 0.15){
+                double percentage = (otherTotal / totalExpenses) * 100;
+                String warningMessage = String.format(
+                    "⚠️ Budget Alert: The other category ($%.2f) are %.1f%% of your Total ($%.2f)!\n" +
+                    "Are these things essential to you? Think more about how useful these expenses are and if they are nessisary",
+                    otherTotal, percentage, totalExpenses);
+                
+                JOptionPane.showMessageDialog(
+                    null,
+                    warningMessage,
+                    "Budget Alert",
+                    JOptionPane.WARNING_MESSAGE);
         }
         return;
     }
+}
 }
