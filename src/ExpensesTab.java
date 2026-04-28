@@ -30,47 +30,62 @@ public class ExpensesTab extends JPanel {
         this.container = container;
 
         this.setBackground(Constants.APP_COLOR);
-        setLayout(new BorderLayout());
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        add(createInputsPanel(), BorderLayout.NORTH);
-        add(createTablesPanel(), BorderLayout.CENTER);
-        add(createBottomPanel(), BorderLayout.SOUTH);
+        add(createHeaderPanel());
+        add(createInputsPanel());
+        add(createTablesPanel());
+        add(createBottomPanel());
     }
 
+    private JPanel createHeaderPanel() {
+        JPanel headerPanel = new JPanel();
+        //headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
+        headerPanel.setBackground(Constants.APP_COLOR);
+
+         // ---- Tab Title-----
+        JLabel expesesTabTitle = new JLabel(Constants.USERNAME + "'s Expenses");
+        expesesTabTitle.setFont(new Font("Arial", Font.BOLD, 30));
+        headerPanel.add(expesesTabTitle);
+
+        return headerPanel;
+    }
     private JPanel createBottomPanel() {
-        // Create panel
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-        bottomPanel.setBackground(Constants.APP_COLOR);
 
-        // view all expenses button
-        JButton viewAllExpensesButton = new JButton("View All Expenses");
-        viewAllExpensesButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        viewAllExpensesButton.addActionListener(e -> {
-            layout.show(container, "ALL EXPENSES");
-            allExpensesTab.refreshTable();
-        });
-        bottomPanel.add(viewAllExpensesButton);
+    // flow layout panel to allign components to the left
+    JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+    bottomPanel.setBackground(Constants.APP_COLOR);
+    
 
-        // sum of all expenses
+    // separate panel to stack the components vertically
+    JPanel labelsPanel = new JPanel();
+    labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS));
+    labelsPanel.setBackground(Constants.APP_COLOR);
 
-        sumOfAllExpenses = new JLabel("Total Spent: $" + String.format("%.2f", expenseManager.getSumOfAllExpenses()));
-        sumOfAllExpenses.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        sumOfAllExpenses.setFont(new Font("Arial", Font.BOLD, 16));
-        bottomPanel.add(sumOfAllExpenses);
+     JButton viewAllExpensesButton = new JButton("View All Expenses");
+    viewAllExpensesButton.addActionListener(e -> {
+        layout.show(container, "ALL EXPENSES");
+        allExpensesTab.refreshTable();
+    });
 
-        // remaining budget
+    labelsPanel.add(viewAllExpensesButton);
 
-        budget = new Budget(45); // temporary budget value
+    sumOfAllExpenses = new JLabel("Total Spent: $" + String.format("%.2f", expenseManager.getSumOfAllExpenses()));
+    sumOfAllExpenses.setFont(new Font("Arial", Font.BOLD, 16));
+    sumOfAllExpenses.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+    labelsPanel.add(sumOfAllExpenses);
 
-        budgetInformation = new JLabel("You have: $"
-                + String.format("%.2f", (budget.getBudget() - expenseManager.getSumOfAllExpenses())) + " remaining");
-        budgetInformation.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        budgetInformation.setFont(new Font("Arial", Font.BOLD, 16));
-        bottomPanel.add(budgetInformation);
+    budget = new Budget(45);
+    budgetInformation = new JLabel("You have: $"
+            + String.format("%.2f", (budget.getBudget() - expenseManager.getSumOfAllExpenses())) + " remaining");
+    budgetInformation.setFont(new Font("Arial", Font.BOLD, 16));
+    budgetInformation.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+    labelsPanel.add(budgetInformation);
 
-        return bottomPanel;
-    }
+    bottomPanel.add(labelsPanel);
+
+    return bottomPanel;
+}
 
     private JPanel createTablesPanel() {
         JPanel tablesPanel = new JPanel();
