@@ -36,7 +36,7 @@ public class ForgotPasswordTab extends JPanel {
         add(loadQuestion);
 
         questionLabel = new JLabel("");
-        questionLabel.setBounds(120, 225, 250, 25);
+        questionLabel.setBounds(120, 225, 300, 25);
         add(questionLabel);
 
         answerField = new JTextField();
@@ -51,24 +51,57 @@ public class ForgotPasswordTab extends JPanel {
         back.setBounds(120, 350, 200, 30);
         add(back);
 
-        // LOAD QUESTION (placeholder logic for now)
+        // ================= LOAD QUESTION =================
         loadQuestion.addActionListener(e -> {
+
             String username = usernameField.getText();
 
-            if (!UserStore.users.containsKey(username)) {
+            User user = UserStore.users.get(username);
+
+            if (user == null) {
                 JOptionPane.showMessageDialog(this, "User not found");
                 return;
             }
 
-            questionLabel.setText("What is your security answer?");
+            questionLabel.setText(user.securityQuestion);
         });
 
-        // CHECK ANSWER (placeholder)
+        // ================= SUBMIT ANSWER =================
         submit.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this,
-                    "This is where password reset will happen next");
+
+            String username = usernameField.getText();
+            String answer = answerField.getText();
+
+            User user = UserStore.users.get(username);
+
+            if (user == null) {
+                JOptionPane.showMessageDialog(this, "User not found");
+                return;
+            }
+
+            // check answer
+            if (user.securityAnswer.equalsIgnoreCase(answer)) {
+
+                String newPassword = JOptionPane.showInputDialog(this, "Enter new password:");
+
+                if (newPassword == null || newPassword.isEmpty()) {
+                    return;
+                }
+
+                user.password = newPassword;
+                UserStore.saveUsers();
+
+                JOptionPane.showMessageDialog(this, "Password reset successful!");
+
+                // go back to login
+                cardLayout.show(cardPanel, "LOGIN");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Incorrect answer");
+            }
         });
 
+        // ================= BACK =================
         back.addActionListener(e ->
             cardLayout.show(cardPanel, "LOGIN")
         );
