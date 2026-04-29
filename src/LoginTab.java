@@ -7,7 +7,6 @@ public class LoginTab extends JPanel {
     private JPasswordField passwordField;
 
     public LoginTab() {
-
         setLayout(null);
         setBackground(Constants.APP_COLOR);
 
@@ -42,11 +41,15 @@ public class LoginTab extends JPanel {
         loginButton.setBounds(150, 290, 120, 35);
         add(loginButton);
 
-        // Event
-        loginButton.addActionListener(e -> handleLogin());
-    }
+        // Register button
+        JButton registerButton = new JButton("Register");
+        registerButton.setBounds(150, 340, 120, 35);
+        add(registerButton);
 
-    // ===================== LOGIC METHODS =====================
+        // Events (fixed duplicate)
+        loginButton.addActionListener(e -> handleLogin());
+        registerButton.addActionListener(e -> handleRegister());
+    }
 
     private void handleLogin() {
         String username = usernameField.getText();
@@ -59,7 +62,27 @@ public class LoginTab extends JPanel {
         }
     }
 
+    private void handleRegister() {
+        String username = usernameField.getText();
+        String password = String.valueOf(passwordField.getPassword());
+
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter username and password");
+            return;
+        }
+
+        if (UserStore.users.containsKey(username)) {
+            JOptionPane.showMessageDialog(this, "Username already exists");
+            return;
+        }
+
+        UserStore.users.put(username, password);
+        UserStore.saveUsers();
+        JOptionPane.showMessageDialog(this, "User registered! You can now log in.");
+    }
+
     private boolean authenticate(String username, char[] password) {
-        return username.equals("admin") && String.valueOf(password).equals("1234");
+        String storedPassword = UserStore.users.get(username);
+        return storedPassword != null && storedPassword.equals(String.valueOf(password));
     }
 }
