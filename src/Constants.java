@@ -5,12 +5,8 @@ public final class Constants {
     public static final int WINDOW_WIDTH = 500;
     public static final int WINDOW_HEIGHT = 600;
     public static final String APP_TITLE = "Expense Tracker";
-<<<<<<< HEAD
-    public static final Color APP_COLOR = Color.getHSBColor(171,95,14);
-=======
     public static final Color APP_COLOR = Color.getHSBColor(171,95,14);
     public static final String USERNAME = "Andrew";
->>>>>>> 9bf4d94062f0a308f0efc0adfd3755c1d11936bf
 
 }
 
