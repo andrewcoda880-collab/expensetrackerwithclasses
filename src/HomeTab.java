@@ -4,8 +4,13 @@ import java.awt.Font;
 import javax.swing.*;
 public class HomeTab extends JPanel {
 
+<<<<<<< HEAD
     private CardLayout Homelayout;
     private JPanel HomeContainer;
+=======
+    //private CardLayout Homelayout;
+    //private JPanel HomeContainer;
+>>>>>>> 9bf4d94062f0a308f0efc0adfd3755c1d11936bf
     
     public HomeTab(CardLayout Homelayout, JPanel HomeContainer) {
         
