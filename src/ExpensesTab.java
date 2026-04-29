@@ -1,7 +1,10 @@
 import java.awt.*;
 import java.util.List;
 import javax.swing.*;
+<<<<<<< HEAD
 //import javax.swing.border.Border;
+=======
+>>>>>>> Kyle-Branch
 import javax.swing.table.DefaultTableModel;
 
 public class ExpensesTab extends JPanel {
@@ -18,11 +21,14 @@ public class ExpensesTab extends JPanel {
     private JPanel container;
     private JLabel sumOfAllExpenses;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     private Budget budget;
     private JLabel budgetInformation;
     private AllExpensesTab allExpensesTab;
 >>>>>>> 9bf4d94062f0a308f0efc0adfd3755c1d11936bf
+=======
+>>>>>>> Kyle-Branch
 
     public ExpensesTab(ExpenseManager expenseManager, CardLayout layout, JPanel container,
             AllExpensesTab allExpensesTab) {
@@ -61,6 +67,10 @@ public class ExpensesTab extends JPanel {
     
 
 <<<<<<< HEAD
+        sumOfAllExpenses = new JLabel("Total Spent: " + expenseManager.getSumOfAllExpenses());
+        bottomPanel.add(sumOfAllExpenses);
+
+
         sumOfAllExpenses = new JLabel("Total Spent: " + expenseManager.getSumOfAllExpenses());
         bottomPanel.add(sumOfAllExpenses);
 
@@ -222,11 +232,15 @@ public class ExpensesTab extends JPanel {
         try {
             double amount = Double.parseDouble(amountText);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Kyle-Branch
 
             if (amount < 0) {
                 JOptionPane.showMessageDialog(this, "Must be a non-negative number");
                 return;
             }
+<<<<<<< HEAD
 =======
             
             // Check if amount is valid (from first version)
@@ -236,6 +250,8 @@ public class ExpensesTab extends JPanel {
             }
             
 >>>>>>> 9bf4d94062f0a308f0efc0adfd3755c1d11936bf
+=======
+>>>>>>> Kyle-Branch
             Expense expense = new Expense(name, amount, category);
             expenseManager.addExpense(expense);
 
@@ -258,6 +274,9 @@ public class ExpensesTab extends JPanel {
 
     private void refreshExpensesTabData() {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Kyle-Branch
         
         refreshRecentExpensesTable();
         refreshTopExpensesTable();
@@ -267,6 +286,7 @@ public class ExpensesTab extends JPanel {
     private void refreshSumOfAllExpenses(){
         sumOfAllExpenses.setText("Total Spent: " + expenseManager.getSumOfAllExpenses());
         return;
+<<<<<<< HEAD
 =======
 
         refreshRecentExpensesTable();
@@ -279,12 +299,17 @@ public class ExpensesTab extends JPanel {
     private void refreshSumOfAllExpenses() {
         sumOfAllExpenses.setText("Total Spent: $" + String.format("%.2f", expenseManager.getSumOfAllExpenses()));
 >>>>>>> 9bf4d94062f0a308f0efc0adfd3755c1d11936bf
+=======
+>>>>>>> Kyle-Branch
     }
 
     private void refreshTopExpensesTable() {
         topExpenseTableModel.setRowCount(0);
         List<Expense> sortedExpenses = expenseManager.getSortedExpenses();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Kyle-Branch
         int sortedLimit = Math.min(3, sortedExpenses.size()); // limits our table size to 3 (or less)
         for (int i = 0; i < sortedLimit; i++) {
 =======
@@ -300,6 +325,9 @@ public class ExpensesTab extends JPanel {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Kyle-Branch
     private void refreshRecentExpensesTable(){
 
         recentExepenseTableModel.setRowCount(0);
@@ -313,6 +341,7 @@ public class ExpensesTab extends JPanel {
             });
         }
 
+<<<<<<< HEAD
 =======
     private void refreshBudget() {
         budgetInformation.setText("You have $"
@@ -329,6 +358,8 @@ public class ExpensesTab extends JPanel {
                 expenses.get(i).getCategory(),
         });
 >>>>>>> 9bf4d94062f0a308f0efc0adfd3755c1d11936bf
+=======
+>>>>>>> Kyle-Branch
     }
 }
 

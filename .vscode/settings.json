@@ -6,7 +6,16 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
+<<<<<<< HEAD
         "c:\\Users\\alvar\\Downloads\\jfreechart-1.0.1\\jfreechart-1.0.1\\lib\\jcommon-1.0.0.jar",
         "c:\\Users\\alvar\\Downloads\\jfreechart-1.0.1\\jfreechart-1.0.1\\lib\\jfreechart-1.0.1.jar"
     ]
+=======
+        "/Users/kylepaz/Downloads/jfreechart-1.0.1/**/*.jar"
+    ],
+    "cSpell.words": [
+        "INCOMESUMMARY"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
+>>>>>>> Kyle-Branch
 }

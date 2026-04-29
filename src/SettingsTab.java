@@ -65,6 +65,5 @@ public class SettingsTab extends JPanel {
         //starting at 10:58 I (steve) am now gona work on the settingstab
         
         
-         
     }
 }

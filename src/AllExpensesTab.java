@@ -17,22 +17,13 @@ public class AllExpensesTab extends JPanel {
     private JLabel allExpensesLabel;
     private DefaultTableModel allExpensesTableModel;
     private JTable allExpensesTable;
-    private ExpenseManager expenseManager;
+    //private ExpenseManager expenseManager;
+    // I'm just commenting this out since there is an error here!!!
 
-<<<<<<< HEAD
     public AllExpensesTab() {
         JPanel allExpensesPanel = new JPanel();
         allExpensesPanel.setBackground(Constants.APP_COLOR);
         return;
-=======
-    public AllExpensesTab(ExpenseManager expenseManager) {
-        this.expenseManager = expenseManager;
-        
-        this.setBackground(Constants.APP_COLOR);
-        setLayout(new BorderLayout());
-
-        add(createTopPanel());
->>>>>>> 9bf4d94062f0a308f0efc0adfd3755c1d11936bf
     }
 
     private JPanel createTopPanel(){
@@ -70,6 +61,7 @@ public class AllExpensesTab extends JPanel {
         return topPanel;
     }
 
+    
     public void refreshTable() {
         allExpensesTableModel.setRowCount(0);
         List<Expense> allExpenses = expenseManager.getExpenses();
@@ -80,5 +72,6 @@ public class AllExpensesTab extends JPanel {
                     expense.getCategory(),
             });
     }
+            
 }
 }
