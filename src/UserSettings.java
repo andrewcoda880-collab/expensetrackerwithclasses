@@ -1,4 +1,3 @@
-package src.main;
 
 public class UserSettings {
     private String  timeNotifications;
