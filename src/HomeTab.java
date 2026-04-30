@@ -61,12 +61,11 @@ public class HomeTab extends JPanel {
         settingsButton.addActionListener(e -> layout.show(container, "MYSETTINGS"));
         incomeButton.addActionListener(e -> layout.show(container, "MYINCOME"));
 
-        // Add the panels (except myIncome since it's already added in MainFrame)
+        // Add the panels 
         container.add(new myExpenses(), "MYEXPENSES");
         container.add(new myBudget(), "MYBUDGET");
         container.add(new myInvestments(), "MYINVESTMENTS");
         container.add(new mySubscriptions(), "MYSUBSCRIPTIONS");
         container.add(new mySettings(), "MYSETTINGS");
-        // Note: myIncome is now added in MainFrame to avoid duplication
     }
 }

@@ -1,0 +1,2 @@
+add date and time feature to app
+add setting to add more categories
