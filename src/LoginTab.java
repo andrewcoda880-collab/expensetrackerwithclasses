@@ -134,4 +134,5 @@ public class LoginTab extends JPanel {
 
         JOptionPane.showMessageDialog(this, "User registered!");
     }
+    */
 }
