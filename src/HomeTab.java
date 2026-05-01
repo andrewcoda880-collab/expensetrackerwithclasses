@@ -7,10 +7,13 @@ public class HomeTab extends JPanel {
     public HomeTab(CardLayout layout, JPanel Container) {
         
         setBackground(Constants.APP_COLOR);
+        this.setLayout(null);
+        addButtons(layout, Container);
+        addTitle();
+    }
     
-        JPanel homepagePanel = new JPanel();
-        JLabel homepageLabel = new JLabel();
-
+    //method to add the title to the homepage panel
+    public void addTitle(){
         JLabel title = new JLabel("Home");
         title.setFont(new Font("Arial", Font.BOLD, 24));
         this.add(title);
@@ -33,8 +36,8 @@ public class HomeTab extends JPanel {
         final JButton investmentsButton = new JButton("My Investments");
         investmentsButton.setBounds(100,225,300,50);
 
-        //add the reports button to the homepage panel
-        JButton SubscriptionsButton = new JButton("Subscriptions");
+        //add the subscriptions button to the homepage panel
+        final JButton SubscriptionsButton = new JButton("My Subscriptions");
         SubscriptionsButton.setBounds(100,300,300,50);
 
         //add the settings button to the homepage panel
@@ -58,12 +61,11 @@ public class HomeTab extends JPanel {
         settingsButton.addActionListener(e -> layout.show(container, "MYSETTINGS"));
         incomeButton.addActionListener(e -> layout.show(container, "MYINCOME"));
 
-        // Add the panels (except myIncome since it's already added in MainFrame)
+        // Add the panels 
         container.add(new myExpenses(), "MYEXPENSES");
         container.add(new myBudget(), "MYBUDGET");
         container.add(new myInvestments(), "MYINVESTMENTS");
         container.add(new mySubscriptions(), "MYSUBSCRIPTIONS");
         container.add(new mySettings(), "MYSETTINGS");
-        // Note: myIncome is now added in MainFrame to avoid duplication
     }
 }

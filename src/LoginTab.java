@@ -6,56 +6,84 @@ public class LoginTab extends JPanel {
     private JTextField usernameField;
     private JPasswordField passwordField;
 
-    public LoginTab() {
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+
+    public LoginTab(CardLayout cardLayout, JPanel cardPanel) {
+
+        this.cardLayout = cardLayout;
+        this.cardPanel = cardPanel;
+
         setLayout(null);
         setBackground(Constants.APP_COLOR);
 
-        // Title
         JLabel title = new JLabel("Login");
         title.setFont(new Font("Arial", Font.BOLD, 28));
         title.setBounds(170, 60, 200, 40);
         add(title);
 
-        // Username label
         JLabel userLabel = new JLabel("Username:");
         userLabel.setBounds(120, 140, 100, 25);
         add(userLabel);
 
-        // Username field
         usernameField = new JTextField();
         usernameField.setBounds(120, 165, 200, 30);
         add(usernameField);
 
-        // Password label
         JLabel passLabel = new JLabel("Password:");
         passLabel.setBounds(120, 210, 100, 25);
         add(passLabel);
 
-        // Password field
         passwordField = new JPasswordField();
         passwordField.setBounds(120, 235, 200, 30);
+        passwordField.setEchoChar('*');
         add(passwordField);
 
-        // Login button
+        JCheckBox showPassword = new JCheckBox("Show Password");
+        showPassword.setBounds(120, 265, 150, 20);
+        showPassword.setBackground(Constants.APP_COLOR);
+        add(showPassword);
+
+        showPassword.addActionListener(e -> {
+            if (showPassword.isSelected()) {
+                passwordField.setEchoChar((char) 0);
+            } else {
+                passwordField.setEchoChar('*');
+            }
+        });
+
         JButton loginButton = new JButton("Login");
-        loginButton.setBounds(150, 290, 120, 35);
+        loginButton.setBounds(150, 300, 120, 35);
         add(loginButton);
 
-        // Register button
         JButton registerButton = new JButton("Register");
-        registerButton.setBounds(150, 340, 120, 35);
+        registerButton.setBounds(150, 350, 120, 35);
         add(registerButton);
 
-        // Events (fixed duplicate)
+        JButton forgotPassword = new JButton("Forgot Password?");
+        forgotPassword.setBounds(110, 400, 200, 25);
+        forgotPassword.setBorderPainted(false);
+        forgotPassword.setContentAreaFilled(false);
+        forgotPassword.setFocusPainted(false);
+        forgotPassword.setForeground(Color.BLUE);
+        forgotPassword.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        add(forgotPassword);
+
         loginButton.addActionListener(e -> handleLogin());
         registerButton.addActionListener(e -> handleRegister());
+
+        forgotPassword.addActionListener(e ->
+            cardLayout.show(cardPanel, "FORGOT")
+        );
     }
 
     private void handleLogin() {
         String username = usernameField.getText();
-        char[] password = passwordField.getPassword();
+        String password = String.valueOf(passwordField.getPassword());
 
-        if (authenticate(username, password)) {
+        User user = UserStore.users.get(username);
+
+        if (user != null && user.password.equals(password)) {
             JOptionPane.showMessageDialog(this, "Login successful!");
         } else {
             JOptionPane.showMessageDialog(this, "Invalid login");
@@ -72,18 +100,38 @@ public class LoginTab extends JPanel {
         }
 
         if (UserStore.users.containsKey(username)) {
-            JOptionPane.showMessageDialog(this, "Username already exists");
+            JOptionPane.showMessageDialog(this, "User already exists");
             return;
         }
 
-        UserStore.users.put(username, password);
-        UserStore.saveUsers();
-        JOptionPane.showMessageDialog(this, "User registered! You can now log in.");
-    }
+        String[] questions = {
+            "What is your pet's name?",
+            "What is your mother's maiden name?",
+            "What city were you born in?",
+            "What was your first school?",
+            "What is your favorite food?"
+        };
 
-    private boolean authenticate(String username, char[] password) {
-        String storedPassword = UserStore.users.get(username);
-        return storedPassword != null && storedPassword.equals(String.valueOf(password));
+        String selectedQuestion = (String) JOptionPane.showInputDialog(
+                this,
+                "Select a security question:",
+                "Security Question",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                questions,
+                questions[0]
+        );
+
+        String answer = JOptionPane.showInputDialog(this, "Enter your answer:");
+
+        if (selectedQuestion == null || answer == null || answer.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Security question required");
+            return;
+        }
+
+        UserStore.users.put(username, new User(password, selectedQuestion, answer));
+        UserStore.saveUsers();
+
+        JOptionPane.showMessageDialog(this, "User registered!");
     }
-    */
 }
