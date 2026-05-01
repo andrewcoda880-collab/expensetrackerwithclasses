@@ -27,4 +27,6 @@ public class Income{
         public double getFrequencyAmount(){
            return frequencyAmount;
         }
+
+        
 }

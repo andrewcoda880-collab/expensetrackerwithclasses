@@ -2,6 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 public class IncomeSummary extends JPanel {
 
     private final static List<Income> incomes = new ArrayList<>();  // List to hold income entries
@@ -9,6 +10,9 @@ public class IncomeSummary extends JPanel {
     private static JLabel weeklyAmount;
     private static JLabel monthlyAmount;
     private static JLabel yearlyAmount;
+    private  JTextField sourceOfIncomeField;
+    public DefaultTableModel incomeSummaryTableModel;
+    private JTable topIncome;
     
 
     public IncomeSummary(CardLayout layout, JPanel container) {
@@ -50,7 +54,17 @@ public class IncomeSummary extends JPanel {
         yearlyAmount.setBounds(0, 490, 350, 30);
         add(yearlyAmount);
 
+        //Income Summary Calculation Table
+        String[] columnsForSummaryTable = { "Source of Income", "Weekly", "Monthly", "Yearly"};
+        incomeSummaryTableModel = new DefaultTableModel(columnsForSummaryTable, 0);
+        topIncome = new JTable(incomeSummaryTableModel);
+        JScrollPane incomeScrollPane = new JScrollPane(topIncome);
+        incomeScrollPane.setBounds(0, 100, 500, 300);
+        add(incomeScrollPane);
+
         UpdateTotalIncome();
+
+  
 
     }
 
@@ -140,6 +154,31 @@ public class IncomeSummary extends JPanel {
            }
            return yearlyIncome;
         }
+
+        public double getWeeklyIncome(){
+        
+
+
+        }
+
+
+       public void refreshIncomeTable() {
+        incomeSummaryTableModel.setRowCount(0);
+        List<Income> incomes = IncomeSummary.getSortedIncomes();
+        int recentLimit = Math.min(3, incomes.size());
+        for (int i = 0; i < recentLimit; i++) {
+            Income income = sortedIncomes.get(i);
+            
+            incomeSummaryTableModel.addRow(new Object[] {
+                incomes.get(i).getSource(),
+                String.format("%.2f", incomes.calculateWeeklyIncome()),
+                String.format("%.2f", incomes.calculateMonthlyIncome()),
+                String.format("%.2f", incomes.calculateYearlyIncome())
+            });
+
+            }
+       }
+
 
         public static void UpdateTotalIncome(){
          //printing total income text

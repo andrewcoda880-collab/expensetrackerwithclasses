@@ -17,7 +17,7 @@ public class myIncome extends JPanel {
     // It will display a summary of the user's income, including the total amount earned, the current value of the income,
     // and the profit/loss.
     private final JLabel sourceOfIncomeLabel;
-    private final JTextField sourceOfIncomeField;
+    public  JTextField sourceOfIncomeField;
     private  JLabel totalIncomeLabel;
     private JTextField totalIncomeField;
     private  JLabel frequencyAmountLabel;
@@ -28,6 +28,7 @@ public class myIncome extends JPanel {
     private JLabel TotalIncomeLabel;
     private DefaultTableModel incomeTableModel;
     private JTable topIncome;
+
 
     //constructor
     public myIncome(CardLayout layout, JPanel container) {
@@ -109,14 +110,12 @@ public class myIncome extends JPanel {
         IncomeSummaryButton.setBounds(0, 490, 200, 40);
         add(IncomeSummaryButton);
 
-        // Action listener for the Income Summary button to show the Income Summary panel when clicked
-        IncomeSummaryButton.addActionListener(e -> layout.show(container, "INCOMESUMMARY"));
-        IncomeSummaryButton.addActionListener(e -> refreshIncomeTable());
-        IncomeSummaryButton.addActionListener(e -> IncomeSummary.UpdateTotalIncome());
-        container.add(new IncomeSummary(layout,container), "INCOMESUMMARY");
-
+         container.add(new IncomeSummary(layout,container), "INCOMESUMMARY");
+         IncomeSummaryButton.addActionListener(e -> layout.show(container, "INCOMESUMMARY"));
+         IncomeSummaryButton.addActionListener(e -> refreshIncomeTable());
+         IncomeSummaryButton.addActionListener(e -> IncomeSummary.UpdateTotalIncome());
     }
-    
+
         public void addIncome() {
             String source = sourceOfIncomeField.getText().trim();
             String total =  totalIncomeField.getText().trim();
