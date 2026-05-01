@@ -23,7 +23,6 @@ public class myIncome extends JPanel {
     private  JLabel frequencyAmountLabel;
     private JTextField frequencyAmountField;
     private JLabel frequencyStringsLabel;
-    private JTextField frequencyField;
     public  JComboBox<String> frequencyMenu;
     private JLabel TotalIncomeLabel;
     private DefaultTableModel incomeTableModel;

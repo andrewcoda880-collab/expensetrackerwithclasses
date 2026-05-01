@@ -4,7 +4,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import javax.swing.*;
@@ -130,6 +129,11 @@ public class GraphsTab extends JPanel {
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setBackgroundPaint(Constants.APP_COLOR);
         plot.setLabelFont(new Font("Arial", Font.PLAIN, 12));
+        if (foodTotal > 0) plot.setSectionPaint("Food", FOOD_COLOR);
+        if (transportTotal > 0) plot.setSectionPaint("Transport", TRANSPORT_COLOR);
+        if (entertainmentTotal > 0) plot.setSectionPaint("Entertainment", ENTERTAINMENT_COLOR);
+        if (billsTotal > 0) plot.setSectionPaint("Bills", BILLS_COLOR);
+        if (otherTotal > 0) plot.setSectionPaint("Other", OTHER_COLOR);
         
         updateChartPanel(chart);
         Warning.checkEntertainmentVsBills(entertainmentTotal, billsTotal, totalExpenses,foodTotal, transportTotal, otherTotal);
