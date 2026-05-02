@@ -1,29 +1,43 @@
 public class UserSettings {
-    private String timeNotifications = "Weekly";
-    private String chartPref = "Both";
+    private String  timeNotifications = "Off";
+    private String chartPref = "Pie";
     private boolean lightMode = true;
+    private GraphsTab graphsTab;
     
     public UserSettings(String timeNotifications, String chartPref, boolean lightMode) {
         this.timeNotifications = timeNotifications;
         this.chartPref = chartPref;
         this.lightMode = lightMode;
     }
-    
-    public void savePreferences() {
+    public void changePreferences() {
         switch(chartPref) {
             case "Bar":
+                graphsTab.showBarChart();
+                break;
+            case "Line":
+                graphsTab.showLineChart();
+                break;
             case "Pie":
+                graphsTab.showPieChart();
             case "Both":
                 break;
             default:
                 chartPref = "Both";
+                chartPref = "Pie";
+                graphsTab.showPieChart();
                 break;
         }
 
         switch(timeNotifications) {
             case "Weekly":
+                Notifications.checkAndShowNotification();
+                break;
             case "Monthly":
+                Notifications.checkAndShowNotification();
+                break;
             case "Bi-Weekly":
+                Notifications.checkAndShowNotification();
+                break;
             case "Off":
                 break;
             default:

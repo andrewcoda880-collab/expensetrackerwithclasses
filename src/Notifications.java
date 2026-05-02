@@ -8,6 +8,7 @@ public class Notifications {
 
     private UserSettings userSettings;
     private ExpenseManager expenseManager;
+    private String notificationFrequency;
 
     public Notifications(UserSettings userSettings, ExpenseManager expenseManager) {
         this.userSettings = userSettings;
@@ -19,11 +20,7 @@ public class Notifications {
      * The notification shows total expenses for the selected period
      */
     public void checkAndShowNotification() {
-        String notificationFrequency = userSettings.getTimeNotifications();
-        if (notificationFrequency.equals("Off")) {
-            return;
-        }
-
+        notificationFrequency = userSettings.getTimeNotifications();
         double totalExpenses = 0;
         String periodLabel = "";
 
@@ -82,7 +79,7 @@ public class Notifications {
      */
     private double calculateBiWeeklyExpenses() {
         LocalDate today = LocalDate.now();
-        LocalDate twoWeeksAgo = today.minusWeeks(2);
+        LocalDate twoWeeksAgo = today.plusWeeks(2).minusDays(1);
         
         return expenseManager.getExpenses().stream()
                 .filter(expense -> {
@@ -95,18 +92,48 @@ public class Notifications {
      * Displays a notification dialog with total expenses for a single period
      */
     private void displayNotification(double totalExpenses, String periodLabel) {
-        String message = String.format(
-                "Expense Summary - %s\n\n" + "Total Charged: $%.2f",
+        if (notificationFrequency.equals("Weekly")) {
+            String message = String.format(
+                "Expense Summary for %s\n\n" + LocalDate.now() + "-" + LocalDate.now().plusDays(6) + "\n\n" + "Total Charged: $%.2f",
                 periodLabel,
                 totalExpenses
-        );
+            );
 
-        JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(
                 null,
                 message,
                 "Expense Notification",
                 JOptionPane.INFORMATION_MESSAGE
-        );
+            );
+        }
+        else if(notificationFrequency.equals("Monthly")) {
+            String message = String.format(
+                "Expense Summary for %s\n\n" + LocalDate.now().withDayOfMonth(1) + "-" + LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth()) + "\n\n" + "Total Charged: $%.2f",
+                periodLabel,
+                totalExpenses
+            );
+
+            JOptionPane.showMessageDialog(
+                null,
+                message,
+                "Expense Notification",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+        else if(notificationFrequency.equals("Bi-Weekly")) {
+            String message = String.format(
+                "Expense Summary for %s\n\n" + LocalDate.now() + "-" + LocalDate.now().plusWeeks(2).minusDays(1) + "\n\n" + "Total Charged: $%.2f",
+                periodLabel,
+                totalExpenses
+            );
+
+            JOptionPane.showMessageDialog(
+                null,
+                message,
+                "Expense Notification",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+        }
     }
 
     public double getExpenseTotal(String period) {
