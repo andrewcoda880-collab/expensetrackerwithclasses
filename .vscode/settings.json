@@ -5,6 +5,19 @@
     ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+<<<<<<< HEAD
+        "c:\\Users\\alvar\\Downloads\\jfreechart-1.0.1\\jfreechart-1.0.1\\lib\\jcommon-1.0.0.jar",
+        "c:\\Users\\alvar\\Downloads\\jfreechart-1.0.1\\jfreechart-1.0.1\\lib\\jfreechart-1.0.1.jar",
+        "c:\\Users\\Chick\\Downloads\\jfreechart-1.0.19\\jfreechart-1.0.19\\lib\\jfreechart-1.0.19.jar",
+        "c:\\Users\\Chick\\Downloads\\jfreechart-1.0.19\\jfreechart-1.0.19\\lib\\jcommon-1.0.23.jar"
     ]
+=======
+        "/Users/kylepaz/Downloads/jfreechart-1.0.1/**/*.jar"
+    ],
+    "cSpell.words": [
+        "INCOMESUMMARY"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
+>>>>>>> Kyle-Branch
 }
