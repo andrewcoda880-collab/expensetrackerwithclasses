@@ -3,12 +3,14 @@ import java.awt.Font;
 import javax.swing.*;
 
 public class HomeTab extends JPanel {
-    
-    public HomeTab(CardLayout layout, JPanel Container) {
+    private UserSettings userSettings;
+      
+    public HomeTab(CardLayout layout, JPanel container, UserSettings userSettings) {
+    this.userSettings = userSettings;
         
         setBackground(Constants.APP_COLOR);
         this.setLayout(null);
-        addButtons(layout, Container);
+        addButtons(layout, container);
         addTitle();
     }
     
@@ -66,6 +68,6 @@ public class HomeTab extends JPanel {
         container.add(new myBudget(), "MYBUDGET");
         container.add(new myInvestments(), "MYINVESTMENTS");
         container.add(new mySubscriptions(), "MYSUBSCRIPTIONS");
-        container.add(new mySettings(), "MYSETTINGS");
+        container.add(new mySettings(userSettings), "MYSETTINGS");
     }
 }

@@ -8,7 +8,8 @@ public class MainFrame extends JFrame {
     private JPanel cardPanel = new JPanel(cardLayout);
     private ExpenseManager expenseManager = new ExpenseManager();
     private AllExpensesTab allExpensesTab;
-
+    private UserSettings userSettings = new UserSettings("Weekly", "Pie", true);
+    private Notifications notifications = new Notifications(userSettings, expenseManager);
     public MainFrame() {
 
         setTitle(Constants.APP_TITLE);
@@ -29,15 +30,18 @@ public class MainFrame extends JFrame {
         // -------------------------
         // ADD PANELS 
         // -------------------------
-        cardPanel.add(new HomeTab(cardLayout, cardPanel), "HOME");
+        cardPanel.add(new HomeTab(cardLayout, cardPanel, userSettings), "HOME");
         cardPanel.add(allExpensesTab, "ALL EXPENSES");
         cardPanel.add(new ExpensesTab(expenseManager, cardLayout, cardPanel, allExpensesTab), "EXPENSES");
-        cardPanel.add(new SettingsTab(), "SETTINGS");
+        cardPanel.add(new SettingsTab(userSettings), "SETTINGS");
         cardPanel.add(new GraphsTab(expenseManager), "GRAPHS");  
         cardPanel.add(new LoginTab(cardLayout, cardPanel), "LOGIN");
         cardPanel.add(new ForgotPasswordTab(cardLayout, cardPanel), "FORGOT"); 
         cardPanel.add(new myIncome(cardLayout, cardPanel), "MYINCOME");
         // SHOW LOGIN FIRST
         cardLayout.show(cardPanel, "LOGIN");
+    }
+    public void checkNotifications() {
+        notifications.checkAndShowNotification();
     }
 }
