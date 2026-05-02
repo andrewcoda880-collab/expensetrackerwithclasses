@@ -10,5 +10,6 @@
     ],
     "cSpell.words": [
         "INCOMESUMMARY"
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

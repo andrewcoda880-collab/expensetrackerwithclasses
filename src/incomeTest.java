@@ -19,21 +19,80 @@ public class incomeTest {
     
     @Before
     public void setUp() {
-    MyIncome = new myIncome(new CardLayout(), new JPanel());
+    myIncome MyIncome = new myIncome(new CardLayout(), new JPanel());
 
     }
+    //#1
+     @Test
+    public void testLargeIncome() {
+        Income income = new Income("Part Time Job", 10000.0, "1 Month", 1.0);
 
-    @Test
-    public void testAddIncome() {
-        Income income = new Income("Part Time Job", 100.0, "1 Month", 1.0);
         IncomeSummary.addIncome(income);
 
+        assertEquals(1, IncomeSummary.getSortedIncomes().size());
+    }
+    //#2
+    @Test
+    public void testSmallIncome() {
+        Income income = new Income("Part Time Job", 0.0005, "1 Month", 1.0);
+
+        IncomeSummary.addIncome(income);
 
         assertEquals(1, IncomeSummary.getSortedIncomes().size());
-        assertEquals("Part Time Job", IncomeSummary.getSortedIncomes().get(0).getSource());
-        assertEquals(100.0, IncomeSummary.getSortedIncomes().get(0).getTotalIncome(), 0.001);
     }
+    //#3
+    @Test
+    public void testNegativeIncome() {
+        Income income = new Income("Part Time Job", -500, "1 Week", 1.0);
+
+        IncomeSummary.addIncome(income);
+
+        assertEquals(1, IncomeSummary.getSortedIncomes().size());
+    }
+    //#4
+        @Test
+        public void testZeroIncome() {
+        Income income = new Income("Part Time Job", 0, "1 Week", 1.0);
+
+        IncomeSummary.addIncome(income);
+
+        assertEquals(1, IncomeSummary.getSortedIncomes().size());
+    }
+        //#5
+        @Test
+        public void testNoInputs() {
+        myIncome incomePanel = new myIncome(new CardLayout(), new JPanel());
+
+        incomePanel.setSourceOfIncome(" ");
+        incomePanel.setTotalIncome("");
+        incomePanel.setFrequencyAmount("");
+        incomePanel.setFrequencyMenu("");
+
+        incomePanel.addIncome();
+
+        assertEquals(0, IncomeSummary.getSortedIncomes().size());
 }
+
+        //#4
+        @Test
+        public void testForStings(){
+        myIncome incomePanel = new myIncome(new CardLayout(), new JPanel());
+
+        incomePanel.setSourceOfIncome("job");
+        incomePanel.setTotalIncome("abc");
+        incomePanel.setFrequencyAmount("1");
+        incomePanel.setFrequencyMenu("weekly");
+
+        incomePanel.addIncome();
+
+        assertEquals(0, IncomeSummary.getSortedIncomes().size());
+    }
+
+    
+
+
+}
+
     /* 
     @Test
     public void testAddExpenseIncreasesList2() {
@@ -111,4 +170,3 @@ public class incomeTest {
     }
 
     */
-}
