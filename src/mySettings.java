@@ -24,7 +24,7 @@ public class mySettings extends JPanel {
         settingsPanel.add(notifCombo);
         
         settingsPanel.add(new JLabel("Chart Type:"));
-        JComboBox<String> chartCombo = new JComboBox<>(new String[]{"Pie", "Bar"});
+        JComboBox<String> chartCombo = new JComboBox<>(new String[]{"Pie", "Bar", "Both"});
         chartCombo.setSelectedItem(userSettings.getChartPreference());
         settingsPanel.add(chartCombo);
         
