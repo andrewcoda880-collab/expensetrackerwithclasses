@@ -5,13 +5,13 @@ public final class Constants {
     public static final int WINDOW_WIDTH = 500;
     public static final int WINDOW_HEIGHT = 600;
     public static final String APP_TITLE = "Expense Tracker";
-    public static Color APP_COLOR = Color.getHSBColor(171,95,14);
+    public static Color APP_COLOR = new Color(253, 248, 210); //171,95,14
 
     static void changeTheme(boolean LightMode) {
-        if(!LightMode) {
-            APP_COLOR = Color.getHSBColor(172, 85, 93 );
+        if(LightMode) {
+            APP_COLOR = new Color(253, 248, 210);
         } else {
-            APP_COLOR = Color.getHSBColor(231, 74, 35); 
+            APP_COLOR = new Color(12, 14, 79);
         }
     }
 }

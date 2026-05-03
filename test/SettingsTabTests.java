@@ -64,6 +64,6 @@ public class SettingsTabTests {
         UserSettings userSettings = new UserSettings("Off", "Pie", false);
         userSettings.setLightMode(false);
         assertFalse(userSettings.isLightMode());
-        assertEquals(Color.getHSBColor(172, 85, 93), Constants.APP_COLOR);
+        assertEquals(new Color(12, 14, 79), Constants.APP_COLOR);
     }
 }

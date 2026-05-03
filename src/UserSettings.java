@@ -43,6 +43,21 @@ public class UserSettings {
                 timeNotifications = "Off";
                 break;
         }
+        if (lightMode) {
+                Constants.changeTheme(true);
+                SwingUtilities.invokeLater(() -> {
+                    SettingsTab.this.setBackground(Constants.APP_COLOR);
+                    revalidate();
+                    repaint();
+                });
+        } else {
+                Constants.changeTheme(false);
+                SwingUtilities.invokeLater(() -> {
+                    SettingsTab.this.setBackground(Constants.APP_COLOR);
+                    revalidate();
+                    repaint();
+                });
+        }
     }
 
     public void savePreferences(String timeNotifications, String chartPref, boolean lightMode) {
