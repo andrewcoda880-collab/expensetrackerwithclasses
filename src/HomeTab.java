@@ -24,8 +24,8 @@ public class HomeTab extends JPanel {
     //method to add the buttons to the homepage panel
     public void addButtons(CardLayout layout, JPanel container){
         //add My Expenses button to the homepage panel
-        final JButton myExpensesButton = new JButton("My Expenses");
-        myExpensesButton.setBounds(100,75,300,50);
+        final JButton myBillsButton = new JButton("My Bills");
+        myBillsButton.setBounds(100,75,300,50);
 
         //add the Budget button to the homepage panel
         final JButton budgetButton = new JButton("My Budget");
@@ -49,21 +49,21 @@ public class HomeTab extends JPanel {
 
         
 
-        add(myExpensesButton);
+        add(myBillsButton);
         add(budgetButton);
         add(investmentsButton);
         add(SubscriptionsButton);
         add(settingsButton);
         add(incomeButton);
         
-        myExpensesButton.addActionListener(e -> layout.show(container, "MYEXPENSES"));
+        myBillsButton.addActionListener(e -> layout.show(container, "MYBILLS"));
         budgetButton.addActionListener(e -> layout.show(container, "MYBUDGET"));
         investmentsButton.addActionListener(e -> layout.show(container, "MYINVESTMENTS"));
         SubscriptionsButton.addActionListener(e -> layout.show(container, "MYSUBSCRIPTIONS"));
         settingsButton.addActionListener(e -> layout.show(container, "MYSETTINGS"));
         incomeButton.addActionListener(e -> layout.show(container, "MYINCOME"));
 
-        container.add(new myExpenses(), "MYEXPENSES");
+        container.add(new myBills(layout, container), "MYBILLS");
         container.add(new myBudget(), "MYBUDGET");
         container.add(new myInvestments(), "MYINVESTMENTS");
         container.add(new mySubscriptions(layout, container), "MYSUBSCRIPTIONS");

@@ -1,64 +1,65 @@
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class SubscriptionSummary extends JPanel {
+public class BillsSummary extends JPanel {
 
-    private final static List<Subscription> subscriptions = new ArrayList<>();  // List to hold income entries
-    private static JLabel totalSubscriptionLabel;
+    private final static List<Bills> bill = new ArrayList<>();  // List to hold income entries
+    private static JLabel totalBillLabel;
     private static JLabel weeklyAmount;
     private static JLabel monthlyAmount;
     private static JLabel yearlyAmount;
-    private  JTextField SubscriptionField;
-    public DefaultTableModel subscriptionSummaryTableModel;
+    private  JTextField BillsField;
+    public DefaultTableModel billsSummaryTableModel;
     private JTable topIncome;
     
 
-    public SubscriptionSummary(CardLayout layout, JPanel container) {
+    public BillsSummary(CardLayout layout, JPanel container) {
         setBackground(Constants.APP_COLOR);
         setLayout(null); // Set layout to null for absolute positioning
 
-        JButton AddSubscriptionButton = new JButton("Add Subscription");
-        AddSubscriptionButton.setBounds(350,425 , 150, 100);
-        add(AddSubscriptionButton);
+        JButton AddBillButton = new JButton("Add Bill");
+        AddBillButton.setBounds(350,425 , 150, 100);
+        add(AddBillButton);
 
-        AddSubscriptionButton.addActionListener(e -> layout.show(container, "MYSUBSCRIPTIONS"));
+        AddBillButton.addActionListener(e -> layout.show(container, "MYBILLS"));
         
 
-        JLabel summaryLabel = new JLabel("Subscription Summary");
+        JLabel summaryLabel = new JLabel("Bills Summary");
         summaryLabel.setFont(new Font("Arial", Font.BOLD, 24));
         summaryLabel.setBounds(10, 20, 500, 30);
         summaryLabel.setHorizontalAlignment(JLabel.CENTER);
         summaryLabel.setVerticalAlignment(JLabel.NORTH);
         add(summaryLabel);
 
-        double totalPrice = getSumOfAllIncome();
-        totalSubscriptionLabel = new JLabel("Total Price: $" + String.format("%.2f", totalPrice));
-        totalSubscriptionLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-        totalSubscriptionLabel.setBounds(0, 400, 400, 30);
-        add(totalSubscriptionLabel);
+        double totalPrice = getSumOfAllBills();
+        totalBillLabel = new JLabel("Total Price: $" + String.format("%.2f", totalPrice));
+        totalBillLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+        totalBillLabel.setBounds(0, 400, 400, 30);
+        add(totalBillLabel);
 
-        weeklyAmount = new JLabel("Estimated Weekly Price of Subscription: $0.00");
+        weeklyAmount = new JLabel("Estimated Weekly Price of Bills: $0.00");
         weeklyAmount.setFont(new Font("Arial", Font.BOLD, 15));
         weeklyAmount.setBounds(0, 430, 400, 30);
         add(weeklyAmount);
 
-        monthlyAmount = new JLabel("Estimated Monthly Price of Subscription: $0.00");
+        monthlyAmount = new JLabel("Estimated Monthly Price of Bills: $0.00");
         monthlyAmount.setFont(new Font("Arial", Font.BOLD, 15));
         monthlyAmount.setBounds(0, 460, 425, 30);
         add(monthlyAmount);
 
-        yearlyAmount = new JLabel("Estimated Yearly Price of Subscription: $0.00");
+        yearlyAmount = new JLabel("Estimated Yearly Price of Bills: $0.00");
         yearlyAmount.setFont(new Font("Arial", Font.BOLD, 15));
         yearlyAmount.setBounds(0, 490, 400, 30);
         add(yearlyAmount);
 
         //Income Summary Calculation Table
         String[] columnsForSummaryTable = { "Subscription", "Weekly", "Monthly", "Yearly"};
-        subscriptionSummaryTableModel = new DefaultTableModel(columnsForSummaryTable, 0);
-        topIncome = new JTable(subscriptionSummaryTableModel);
+        billsSummaryTableModel = new DefaultTableModel(columnsForSummaryTable, 0);
+        topIncome = new JTable(billsSummaryTableModel);
         JScrollPane incomeScrollPane = new JScrollPane(topIncome);
         incomeScrollPane.setBounds(0, 100, 500, 300);
         add(incomeScrollPane);
@@ -68,33 +69,33 @@ public class SubscriptionSummary extends JPanel {
 
     }
 
-        public static void addSubscription(Subscription subscription){ 
-        subscriptions.add(subscription);
+        public static void addBills(Bills newBill){ 
+        bill.add(newBill);
     }
     
-        public static List<Subscription> getSortedSubscriptions(){ // sorts our incomes from high to low
-        List<Subscription> sortedSubscriptions = new ArrayList<>(subscriptions);
-        sortedSubscriptions.sort((a,b) -> Double.compare(b.getTotalPrice(), a.getTotalPrice()));
-        return sortedSubscriptions;
+        public static List<Bills> getSortedBills(){ // sorts our incomes from high to low
+        List<Bills> sortedBills = new ArrayList<>(bill);
+        sortedBills.sort((a,b) -> Double.compare(b.getTotalPrice(), a.getTotalPrice()));
+        return sortedBills;
     }
 
-        public List<Subscription> getSubscription() { // returns regular list of incomes ()
-        return subscriptions;
+        public List<Bills> getBills() { // returns regular list of incomes ()
+        return bill;
     }
         
-        public static double getSumOfAllIncome() {
+        public static double getSumOfAllBills() {
             double totalPrice = 0;
-            for (Subscription i : subscriptions){
+            for (Bills i : bill){
                 totalPrice += i.getTotalPrice();
             }
             return totalPrice;
        }
             
 
-            public static double calculateWeeklyCostOfSubscription(){
+            public static double calculateWeeklyCostOfBill(){
 
             double weeklyCost = 0;
-            for (Subscription i :subscriptions){
+            for (Bills i :bill){
             double totalIncome = i.getTotalPrice();
             String frequency = i.getInputFrequency();
             double frequencyAmount = i.getFrequencyAmount();
@@ -112,9 +113,9 @@ public class SubscriptionSummary extends JPanel {
            return weeklyCost;
         }
 
-            public static double calculateMonthyCostofSubscription(){
+            public static double calculateMonthyCostofBill(){
             double monthlyCost = 0;
-            for (Subscription i : subscriptions){
+            for (Bills i : bill){
             double totalIncome = i.getTotalPrice();
             String frequency = i.getInputFrequency();
             double frequencyAmount = i.getFrequencyAmount();
@@ -133,9 +134,9 @@ public class SubscriptionSummary extends JPanel {
            return monthlyCost;
         }
 
-        public static double calculateYearlyCostOfSubscription(){
+        public static double calculateYearlyCostOfBill(){
             double yearlyCost = 0;
-            for (Subscription i :subscriptions){
+            for (Bills i :bill){
             double totalCost = i.getTotalPrice();
             String frequency = i.getInputFrequency();
             double frequencyAmount = i.getFrequencyAmount();
@@ -154,12 +155,12 @@ public class SubscriptionSummary extends JPanel {
            return yearlyCost;
         }
 
-        public static double calculateWeeklyCostForSubscriptionsTable(Subscription sub){
+        public static double calculateWeeklyCostForBillsTable(Bills bill){
             //Income income comes from the class income
             
-            double totalCost = sub.getTotalPrice();
-            String frequency = sub.getInputFrequency();
-            double frequencyAmount = sub.getFrequencyAmount();
+            double totalCost = bill.getTotalPrice();
+            String frequency = bill.getInputFrequency();
+            double frequencyAmount = bill.getFrequencyAmount();
 
                 if (frequency.contains("Week")) {
                 return totalCost / frequencyAmount;
@@ -173,12 +174,12 @@ public class SubscriptionSummary extends JPanel {
            return 0;
         }
 
-            public static double calculateMonthlyCostForSubscriptionsTable(Subscription sub){
+            public static double calculateMonthlyCostForBillsTable(Bills bill){
             //Income income comes from the class income
             
-            double totalCost = sub.getTotalPrice();
-            String frequency = sub.getInputFrequency();
-            double frequencyAmount = sub.getFrequencyAmount();
+            double totalCost = bill.getTotalPrice();
+            String frequency = bill.getInputFrequency();
+            double frequencyAmount = bill.getFrequencyAmount();
 
 
                 if (frequency.contains("Week")) {
@@ -194,12 +195,12 @@ public class SubscriptionSummary extends JPanel {
            
         }
 
-            public static double calculateYearlyCostForSubscriptionsTable(Subscription sub){
+            public static double calculateYearlyCostForBillsTable(Bills bill){
             //Income income comes from the class income
             
-            double totalCost = sub.getTotalPrice();
-            String frequency = sub.getInputFrequency();
-            double frequencyAmount = sub.getFrequencyAmount();
+            double totalCost = bill.getTotalPrice();
+            String frequency = bill.getInputFrequency();
+            double frequencyAmount = bill.getFrequencyAmount();
 
         if (frequency.contains("Week")) {
                 return (totalCost / frequencyAmount)* 52;
@@ -216,18 +217,18 @@ public class SubscriptionSummary extends JPanel {
     
 
 
-       public void refreshSubscriptionsTable() {
-        subscriptionSummaryTableModel.setRowCount(0);
-        List<Subscription> sortedSubscription = SubscriptionSummary.getSortedSubscriptions();
-        int recentLimit = Math.min(3, subscriptions.size());
+       public void refreshBillsTable() {
+        billsSummaryTableModel.setRowCount(0);
+        List<Bills> sortedBills = BillsSummary.getSortedBills();
+        int recentLimit = Math.min(3, bill.size());
         for (int i = 0; i < recentLimit; i++) {
-            Subscription sub = sortedSubscription.get(i);
+            Bills bills = sortedBills.get(i);
             
-            subscriptionSummaryTableModel.addRow(new Object[] {
-            sub.getSubscription(),
-            String.format("$%.2f", calculateWeeklyCostForSubscriptionsTable(sub)),
-            String.format("$%.2f", calculateMonthlyCostForSubscriptionsTable(sub)),
-            String.format("$%.2f", calculateYearlyCostForSubscriptionsTable(sub))
+            billsSummaryTableModel.addRow(new Object[] {
+            bills.getBills(),
+            String.format("$%.2f", calculateWeeklyCostForBillsTable(bills)),
+            String.format("$%.2f", calculateMonthlyCostForBillsTable(bills)),
+            String.format("$%.2f", calculateYearlyCostForBillsTable(bills))
             });
 
             }
@@ -236,16 +237,16 @@ public class SubscriptionSummary extends JPanel {
 
         public static void UpdateTotalPrice(){
         
-        double totalPrice = getSumOfAllIncome();
-        totalSubscriptionLabel.setText("Total Price of Subscription: $" + String.format("%.2f", totalPrice));
+        double totalPrice = getSumOfAllBills();
+        totalBillLabel.setText("Total Price of Bills: $" + String.format("%.2f", totalPrice));
 
-        double weeklySubscriptionAmount = calculateWeeklyCostOfSubscription();
-        weeklyAmount.setText("Estimated Weekly Price of Subscription: $" + String.format("%.2f", weeklySubscriptionAmount));
+        double weeklySubscriptionAmount = calculateWeeklyCostOfBill();
+        weeklyAmount.setText("Estimated Weekly Price of Bills: $" + String.format("%.2f", weeklySubscriptionAmount));
 
-        double monthlySubscriptionAmount = calculateMonthyCostofSubscription();
-        monthlyAmount.setText("Estimated Monthly Price of Subscription: $" + String.format("%.2f", monthlySubscriptionAmount));
+        double monthlySubscriptionAmount = calculateMonthyCostofBill();
+        monthlyAmount.setText("Estimated Monthly Price of Bills: $" + String.format("%.2f", monthlySubscriptionAmount));
 
-        double yearlySubscriptionAmount = calculateYearlyCostOfSubscription();
-        yearlyAmount.setText("Estimated Yearly Price of Subscription: $" + String.format("%.2f", yearlySubscriptionAmount));
+        double yearlySubscriptionAmount = calculateYearlyCostOfBill();
+        yearlyAmount.setText("Estimated Yearly Price of Bills: $" + String.format("%.2f", yearlySubscriptionAmount));
       }
     }

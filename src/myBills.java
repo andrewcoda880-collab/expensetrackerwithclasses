@@ -11,13 +11,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class mySubscriptions extends JPanel {
+public class myBills extends JPanel {
 
     // This class represents the summary of the user's income. This can be accessed from the "My Income" button on the homepage.
     // It will display a summary of the user's income, including the total amount earned, the current value of the income,
     // and the profit/loss.
-    private final JLabel SubscriptionsLabel;
-    public  JTextField SubscriptionsField;
+    private final JLabel BillsLabel;
+    public  JTextField BillsField;
     private  JLabel totalPriceLabel;
     private JTextField totalPriceField;
     private  JLabel frequencyAmountLabel;
@@ -31,26 +31,26 @@ public class mySubscriptions extends JPanel {
 
 
     //constructor
-    public mySubscriptions(CardLayout layout, JPanel container) {
+    public myBills(CardLayout layout, JPanel container) {
 
         setBackground(Constants.APP_COLOR);
         setLayout(null); // Set layout to null for absolute positioning
 
-        JLabel label = new JLabel("My Subscriptions");
+        JLabel label = new JLabel("My Bills");
         label.setFont(new Font("Arial", Font.ITALIC, 20));
         label.setBounds(0, 20, 250, 40);
         add(label);
 
         //Lets the user input the name of their job/occupation/source of income
-        SubscriptionsLabel = new JLabel("Name of Subscription:");
-        SubscriptionsLabel.setBounds(0, 70, 200, 40);
-        SubscriptionsLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        add(SubscriptionsLabel);
+        BillsLabel = new JLabel("Name of Bill:");
+        BillsLabel.setBounds(0, 70, 200, 40);
+        BillsLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        add(BillsLabel);
 
-        SubscriptionsField = new JTextField();
-        SubscriptionsField.setBounds(175, 70, 200, 40);
-        SubscriptionsField.setFont(new Font("Arial", Font.PLAIN, 16));
-        add(SubscriptionsField);
+        BillsField = new JTextField();
+        BillsField.setBounds(175, 70, 200, 40);
+        BillsField.setFont(new Font("Arial", Font.PLAIN, 16));
+        add(BillsField);
 
         //Lets the user input the total amount of income they earn
 
@@ -88,17 +88,17 @@ public class mySubscriptions extends JPanel {
         frequencyMenu.setBounds(175, 220, 200, 40);
         this.add(frequencyMenu);
 
-        JButton submitButton = new JButton("Submit Subscription");
+        JButton submitButton = new JButton("Submit Bill");
         submitButton.setBounds(175, 270, 200, 40);
         add(submitButton);
 
-        TotalIncomeLabel = new JLabel("Subscription Calculations:");
+        TotalIncomeLabel = new JLabel("Bill Calculations:");
         TotalIncomeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         TotalIncomeLabel.setBounds(0, 300, 200, 40);
         add(TotalIncomeLabel);
 
         //Income Calculation Table
-        String[] columnsForTable = { "Subscription", "Total Income", "Frequency"};
+        String[] columnsForTable = { "Bill", "Total Income", "Frequency"};
         incomeTableModel = new DefaultTableModel(columnsForTable, 0);
         topIncome = new JTable(incomeTableModel);
         JScrollPane incomeScrollPane = new JScrollPane(topIncome);
@@ -106,34 +106,34 @@ public class mySubscriptions extends JPanel {
         add(incomeScrollPane);
         submitButton.addActionListener(e -> addSubscription());
 
-        JButton SubscriptionSummaryButton = new JButton("View Subscriptions Summary");
-        SubscriptionSummaryButton.setBounds(0, 490, 200, 40);
-        add(SubscriptionSummaryButton);
+        JButton BillsSummaryButton = new JButton("View Bills Summary");
+        BillsSummaryButton.setBounds(0, 490, 200, 40);
+        add(BillsSummaryButton);
 
-        SubscriptionSummary summaryPanel = new SubscriptionSummary(layout, container);
-        container.add(summaryPanel, "SUBSCRIPTIONSUMMARY");
+        BillsSummary summaryPanel = new BillsSummary(layout, container);
+        container.add(summaryPanel, "BILLSSUMMARY");
 
-        SubscriptionSummaryButton.addActionListener(e -> {
-        summaryPanel.refreshSubscriptionsTable();
-        SubscriptionSummary.UpdateTotalPrice();
-        layout.show(container, "SUBSCRIPTIONSUMMARY");
+        BillsSummaryButton.addActionListener(e -> {
+        summaryPanel.refreshBillsTable();
+        BillsSummary.UpdateTotalPrice();
+        layout.show(container, "BILLSSUMMARY");
  });
     }
 
         public void addSubscription() {
-            String subscription = SubscriptionsField.getText().trim();
+            String bill = BillsField.getText().trim();
             String total =  totalPriceField.getText().trim();
             String inputFrequency = null;
             String frequencyAmountString = frequencyAmountField.getText().trim();
 
-            if (subscription.isEmpty() || total.isEmpty() ||frequencyAmountString.isEmpty()) {
+            if (bill.isEmpty() || total.isEmpty() ||frequencyAmountString.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Fill in all fields");
             return;
             }
             try {
-                double frequencyAmountForSubscription = Double.parseDouble(frequencyAmountString);
+                double frequencyAmountForBill = Double.parseDouble(frequencyAmountString);
                 double totalPrice = Double.parseDouble(total);
-                if (totalPrice < 0 || frequencyAmountForSubscription < 0){
+                if (totalPrice < 0 || frequencyAmountForBill < 0){
                 JOptionPane.showMessageDialog(this, "Must be a non-negative number");
                 return;
                 }
@@ -160,12 +160,12 @@ public class mySubscriptions extends JPanel {
                 } else {
                 inputFrequency = frequencyAmountField.getText() + " No Frequency Selected";
                 }//end if statement for frequency selection
-            Subscription sub = new Subscription(subscription, totalPrice, inputFrequency, frequencyAmountForSubscription);
-            SubscriptionSummary.addSubscription(sub);
+            Bills bills = new Bills(bill, totalPrice, inputFrequency, frequencyAmountForBill);
+            BillsSummary.addBills(bills);
 
-            JOptionPane.showMessageDialog(this, "Subscription Added");
+            JOptionPane.showMessageDialog(this, "Bill Added");
             incomeTableModel.addRow(new Object[] {
-                subscription,
+                bill,
                 String.format("$%.2f", totalPrice),
                 inputFrequency
                 });
@@ -176,23 +176,23 @@ public class mySubscriptions extends JPanel {
             }
         }
 
-        public void refreshSubscriptionTable() {
+        public void refreshBillTable() {
         incomeTableModel.setRowCount(0);
-        List<Subscription> subscriptions = SubscriptionSummary.getSortedSubscriptions();
-        int recentLimit = Math.min(3, subscriptions.size());
+        List<Bills> bills = BillsSummary.getSortedBills();
+        int recentLimit = Math.min(3, bills.size());
         for (int i = 0; i < recentLimit; i++) {
             incomeTableModel.addRow(new Object[] {
-                    subscriptions.get(i).getSubscription(),
-                    String.format("%.2f", subscriptions.get(i).getTotalPrice()), // 2 decimal places
-                    subscriptions.get(i).getInputFrequency(),
+                    bills.get(i).getBills(),
+                    String.format("%.2f", bills.get(i).getTotalPrice()), // 2 decimal places
+                    bills.get(i).getInputFrequency(),
             });
         }
 
             }
 
         //Setters
-        public void setSubscription(String subscription){
-          SubscriptionsField.setText(subscription);
+        public void setBills(String bill){
+          BillsField.setText(bill);
 
         }
 
@@ -200,11 +200,11 @@ public class mySubscriptions extends JPanel {
         totalPriceField.setText(totalPrice);
         }
 
-        public void setFrequencyAmount(String amountForSubscription) {
-        frequencyAmountField.setText(amountForSubscription);
+        public void setFrequencyAmount(String amountForBill) {
+        frequencyAmountField.setText(amountForBill);
         }
 
-        public void setFrequencyMenu(String SubscriptionFrequency) {
-        frequencyMenu.setSelectedItem(SubscriptionFrequency);
+        public void setFrequencyMenu(String BillFrequency) {
+        frequencyMenu.setSelectedItem(BillFrequency);
 }
      }
