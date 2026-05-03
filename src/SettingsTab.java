@@ -85,7 +85,7 @@ public class SettingsTab extends JPanel {
             boolean lightMode = (themeSlider.getValue() == 1);
 
             userSettings.savePreferences(selectedNotif, selectedChart, lightMode);
-            JOptionPane.showMessageDialog(this, "Settings saved!:\nNotifications: " + selectedNotif + "\nChart Type: " + selectedChart + "\nLight Mode: " + lightMode);
+            JOptionPane.showMessageDialog(this, "Settings saved!:\nNotifications: " + selectedNotif + "\nChart Type: " + selectedChart + "\nMode Theme: " + (lightMode ? "Light" : "Dark"));
         });
 
         textPanel.add(miscSettings);
