@@ -49,7 +49,7 @@ public class IncomeSummary extends JPanel {
         monthlyAmount.setBounds(0, 460, 350, 30);
         add(monthlyAmount);
 
-        yearlyAmount = new JLabel("Estimated Monthly Income: $0.00");
+        yearlyAmount = new JLabel("Estimated Yearly Income: $0.00");
         yearlyAmount.setFont(new Font("Arial", Font.BOLD, 18));
         yearlyAmount.setBounds(0, 490, 350, 30);
         add(yearlyAmount);
@@ -155,25 +155,80 @@ public class IncomeSummary extends JPanel {
            return yearlyIncome;
         }
 
-        public double getWeeklyIncome(){
-        
+        public static double calculateWeeklyIncomeForIncomeTable(Income income){
+            //Income income comes from the class income
+            
+            double totalIncome = income.getTotalIncome();
+            String frequency = income.getInputFrequency();
+            double frequencyAmount = income.getFrequencyAmount();
 
-
+                if (frequency.contains("Week")) {
+                return totalIncome / frequencyAmount;
+            }
+            else if (frequency.contains("Month")){
+               return totalIncome / (frequencyAmount * 4.345);
+            }
+            else if (frequency.contains("Year")){
+               return totalIncome / (frequencyAmount * 52);
+            }      
+           return 0;
         }
+
+            public static double calculateMonthlyIncomeForIncomeTable(Income income){
+            //Income income comes from the class income
+            
+            double totalIncome = income.getTotalIncome();
+            String frequency = income.getInputFrequency();
+            double frequencyAmount = income.getFrequencyAmount();
+
+
+                if (frequency.contains("Week")) {
+                return totalIncome / (frequencyAmount) * 4.345;
+            }
+            else if (frequency.contains("Month")){
+               return totalIncome / frequencyAmount;
+            }
+            else if (frequency.contains("Year")){
+               return totalIncome / (frequencyAmount * 12);
+            }
+            return 0;
+           
+        }
+
+            public static double calculateYearlyIncomeForIncomeTable(Income income){
+            //Income income comes from the class income
+            
+            double totalIncome = income.getTotalIncome();
+            String frequency = income.getInputFrequency();
+            double frequencyAmount = income.getFrequencyAmount();
+
+        if (frequency.contains("Week")) {
+                return (totalIncome / frequencyAmount)* 52;
+            }
+            else if (frequency.contains("Month")){
+               return (totalIncome / frequencyAmount) * 12;
+            }
+            else if (frequency.contains("Year")){
+               return totalIncome / (frequencyAmount);
+            }
+            
+           return 0;
+        }
+    
 
 
        public void refreshIncomeTable() {
         incomeSummaryTableModel.setRowCount(0);
-        List<Income> incomes = IncomeSummary.getSortedIncomes();
+        List<Income> sortedIncomes = IncomeSummary.getSortedIncomes();
         int recentLimit = Math.min(3, incomes.size());
         for (int i = 0; i < recentLimit; i++) {
             Income income = sortedIncomes.get(i);
             
             incomeSummaryTableModel.addRow(new Object[] {
-                incomes.get(i).getSource(),
-                String.format("%.2f", incomes.calculateWeeklyIncome()),
-                String.format("%.2f", incomes.calculateMonthlyIncome()),
-                String.format("%.2f", incomes.calculateYearlyIncome())
+              income.getSource(),
+            String.format("$%.2f", calculateWeeklyIncomeForIncomeTable(income)),
+            String.format("$%.2f", calculateMonthlyIncomeForIncomeTable(income)),
+            String.format("$%.2f", calculateYearlyIncomeForIncomeTable(income))
             });
 
             }

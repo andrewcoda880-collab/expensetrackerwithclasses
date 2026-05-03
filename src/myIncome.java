@@ -110,10 +110,15 @@ public class myIncome extends JPanel {
         IncomeSummaryButton.setBounds(0, 490, 200, 40);
         add(IncomeSummaryButton);
 
-         container.add(new IncomeSummary(layout,container), "INCOMESUMMARY");
-         IncomeSummaryButton.addActionListener(e -> layout.show(container, "INCOMESUMMARY"));
-         IncomeSummaryButton.addActionListener(e -> refreshIncomeTable());
-         IncomeSummaryButton.addActionListener(e -> IncomeSummary.UpdateTotalIncome());
+        IncomeSummary summaryPanel = new IncomeSummary(layout, container);
+        container.add(summaryPanel, "INCOMESUMMARY");
+
+        IncomeSummaryButton.addActionListener(e -> {
+        summaryPanel.refreshIncomeTable();
+        IncomeSummary.UpdateTotalIncome();
+        layout.show(container, "INCOMESUMMARY");
+});
+         
     }
 
         public void addIncome() {
