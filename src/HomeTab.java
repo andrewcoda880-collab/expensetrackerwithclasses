@@ -66,7 +66,7 @@ public class HomeTab extends JPanel {
         container.add(new myExpenses(), "MYEXPENSES");
         container.add(new myBudget(), "MYBUDGET");
         container.add(new myInvestments(), "MYINVESTMENTS");
-        container.add(new mySubscriptions(), "MYSUBSCRIPTIONS");
+        container.add(new mySubscriptions(layout, container), "MYSUBSCRIPTIONS");
         container.add(new mySettings(), "MYSETTINGS");
         container.add(new myIncome(layout,container), "MYINCOME");
 
