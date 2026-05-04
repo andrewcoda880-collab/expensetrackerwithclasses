@@ -6,7 +6,6 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.chart.renderer.category.BarRenderer;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
