@@ -13,7 +13,7 @@ public class myBudget extends JPanel {
 
     }
 
-    public  void refreshBudget(){
+    public void refreshBudget(){
 
         removeAll();
         
@@ -39,7 +39,7 @@ public class myBudget extends JPanel {
 
         //variables for subscriptions
         double weeklyTotalSubscriptions = SubscriptionSummary.calculateWeeklyCostOfSubscription();
-        double monthlyTotalSubscriptions =SubscriptionSummary.calculateMonthlyCostOfSubscription();
+        double monthlyTotalSubscriptions =SubscriptionSummary.calculateMonthlyCostofSubscription();
         double yearlyTotalSubscriptions =SubscriptionSummary.calculateYearlyCostOfSubscription();
 
 
@@ -122,9 +122,6 @@ public class myBudget extends JPanel {
         yearlyAfterEverything.setFont(new Font("Arial", Font.BOLD, 10));
         yearlyAfterEverything.setBounds(0, 450, 500, 50);
         add(yearlyAfterEverything);
-
-
-
 
     }
 }

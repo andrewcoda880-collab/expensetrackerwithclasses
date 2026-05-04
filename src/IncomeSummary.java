@@ -63,7 +63,6 @@ public class IncomeSummary extends JPanel {
         add(incomeScrollPane);
 
         UpdateTotalIncome();
-
   
 
     }
@@ -249,4 +248,6 @@ public class IncomeSummary extends JPanel {
         double yearlyIncomeAmount = calculateYearlyIncome();
         yearlyAmount.setText("Estimated Yearly Income: $" + String.format("%.2f", yearlyIncomeAmount));
       }
+
+
     }

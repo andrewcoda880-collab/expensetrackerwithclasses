@@ -65,7 +65,6 @@ public class SubscriptionSummary extends JPanel {
 
         UpdateTotalPrice();
 
-
     }
 
         public static void addSubscription(Subscription subscription){ 

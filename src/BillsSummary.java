@@ -240,13 +240,14 @@ public class BillsSummary extends JPanel {
         double totalPrice = getSumOfAllBills();
         totalBillLabel.setText("Total Price of Bills: $" + String.format("%.2f", totalPrice));
 
-        double weeklySubscriptionAmount = calculateWeeklyCostOfBill();
-        weeklyAmount.setText("Estimated Weekly Price of Bills: $" + String.format("%.2f", weeklySubscriptionAmount));
+        double weeklyBillsAmount = calculateWeeklyCostOfBill();
+        weeklyAmount.setText("Estimated Weekly Price of Bills: $" + String.format("%.2f", weeklyBillsAmount));
 
         double monthlySubscriptionAmount = calculateMonthlyCostofBill();
         monthlyAmount.setText("Estimated Monthly Price of Bills: $" + String.format("%.2f", monthlySubscriptionAmount));
 
-        double yearlySubscriptionAmount = calculateYearlyCostOfBill();
-        yearlyAmount.setText("Estimated Yearly Price of Bills: $" + String.format("%.2f", yearlySubscriptionAmount));
+        double yearlyBillsAmount = calculateYearlyCostOfBill();
+        yearlyAmount.setText("Estimated Yearly Price of Bills: $" + String.format("%.2f", yearlyBillsAmount));
       }
+
     }
