@@ -23,29 +23,33 @@ public class HomeTab extends JPanel {
     }
     //method to add the buttons to the homepage panel
     public void addButtons(CardLayout layout, JPanel container){
+
+        final JButton incomeButton = new JButton("My Income");
+        incomeButton.setBounds(100,75,300,50);
+
         //add My Expenses button to the homepage panel
         final JButton myBillsButton = new JButton("My Bills");
-        myBillsButton.setBounds(100,75,300,50);
-
-        //add the Budget button to the homepage panel
-        final JButton budgetButton = new JButton("My Budget");
-        budgetButton.setBounds(100,150,300,50);
-
-        //add investments button to the homepage panel
-        final JButton investmentsButton = new JButton("My Investments");
-        investmentsButton.setBounds(100,225,300,50);
+        myBillsButton.setBounds(100,150,300,50);
 
         //add the reports button to the homepage panel
         final JButton SubscriptionsButton = new JButton("My Subscriptions");
-        SubscriptionsButton.setBounds(100,300,300,50);
+        SubscriptionsButton.setBounds(100,225,300,50);
+
+        //add the Budget button to the homepage panel
+        final JButton budgetButton = new JButton("My Budget");
+        budgetButton.setBounds(100,300,300,50);
+
+        //add investments button to the homepage panel
+        final JButton investmentsButton = new JButton("My Investments");
+        investmentsButton.setBounds(100,375,300,50);
+
 
 
         //add the settings button to the homepage panel
         final JButton settingsButton = new JButton("My Settings");
-        settingsButton.setBounds(100,375,300,50);
+        settingsButton.setBounds(100,450,300,50);
 
-        final JButton incomeButton = new JButton("My Income");
-        incomeButton.setBounds(100,450,300,50);
+
 
         
 

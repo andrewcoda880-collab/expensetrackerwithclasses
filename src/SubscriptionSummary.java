@@ -34,11 +34,11 @@ public class SubscriptionSummary extends JPanel {
         summaryLabel.setVerticalAlignment(JLabel.NORTH);
         add(summaryLabel);
 
-        double totalPrice = getSumOfAllIncome();
-        totalSubscriptionLabel = new JLabel("Total Price: $" + String.format("%.2f", totalPrice));
-        totalSubscriptionLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-        totalSubscriptionLabel.setBounds(0, 400, 400, 30);
-        add(totalSubscriptionLabel);
+        //double totalPrice = getSumOfAllIncome();
+        //totalSubscriptionLabel = new JLabel("Total Price: $" + String.format("%.2f", totalPrice));
+        //totalSubscriptionLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+        //totalSubscriptionLabel.setBounds(0, 400, 400, 30);
+        //add(totalSubscriptionLabel);
 
         weeklyAmount = new JLabel("Estimated Weekly Price of Subscription: $0.00");
         weeklyAmount.setFont(new Font("Arial", Font.BOLD, 15));
@@ -235,8 +235,8 @@ public class SubscriptionSummary extends JPanel {
 
         public static void UpdateTotalPrice(){
         
-        double totalPrice = getSumOfAllIncome();
-        totalSubscriptionLabel.setText("Total Price of Subscription: $" + String.format("%.2f", totalPrice));
+        //double totalPrice = getSumOfAllIncome();
+        //totalSubscriptionLabel.setText("Total Price of Subscription: $" + String.format("%.2f", totalPrice));
 
         double weeklySubscriptionAmount = calculateWeeklyCostOfSubscription();
         weeklyAmount.setText("Estimated Weekly Price of Subscription: $" + String.format("%.2f", weeklySubscriptionAmount));

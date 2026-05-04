@@ -35,11 +35,11 @@ public class BillsSummary extends JPanel {
         summaryLabel.setVerticalAlignment(JLabel.NORTH);
         add(summaryLabel);
 
-        double totalPrice = getSumOfAllBills();
-        totalBillLabel = new JLabel("Total Price: $" + String.format("%.2f", totalPrice));
-        totalBillLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-        totalBillLabel.setBounds(0, 400, 400, 30);
-        add(totalBillLabel);
+        //double totalPrice = getSumOfAllBills();
+        //totalBillLabel = new JLabel("Total Price: $" + String.format("%.2f", totalPrice));
+        //totalBillLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+        //totalBillLabel.setBounds(0, 400, 400, 30);
+        //add(totalBillLabel);
 
         weeklyAmount = new JLabel("Estimated Weekly Price of Bills: $0.00");
         weeklyAmount.setFont(new Font("Arial", Font.BOLD, 15));
@@ -237,8 +237,8 @@ public class BillsSummary extends JPanel {
 
         public static void UpdateTotalPrice(){
         
-        double totalPrice = getSumOfAllBills();
-        totalBillLabel.setText("Total Price of Bills: $" + String.format("%.2f", totalPrice));
+        //double totalPrice = getSumOfAllBills();
+        //totalBillLabel.setText("Total Price of Bills: $" + String.format("%.2f", totalPrice));
 
         double weeklyBillsAmount = calculateWeeklyCostOfBill();
         weeklyAmount.setText("Estimated Weekly Price of Bills: $" + String.format("%.2f", weeklyBillsAmount));

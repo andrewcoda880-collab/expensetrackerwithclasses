@@ -108,19 +108,19 @@ public class myBudget extends JPanel {
         //Estimated Leftover money after everything
         JLabel weeklyAfterEverything = new JLabel("The weekly estimated leftover money after paying bills, subscriptions and other expenses is: " + "$" + String.format("%.2f", weeklyLeftoverMoneyAfterEverything));
         weeklyAfterEverything.setFont(new Font("Arial", Font.BOLD, 10));
-        weeklyAfterEverything.setBounds(0, 350, 500, 50);
+        weeklyAfterEverything.setBounds(0, 350, 550, 50);
         add(weeklyAfterEverything);
 
         //Estimated Leftover money after everything
         JLabel monthlyAfterEverything = new JLabel("The monthly estimated leftover money after paying bills, subscriptions and other expenses is: " + "$" + String.format("%.2f", monthlyLeftoverMoneyAfterEverything));
         monthlyAfterEverything.setFont(new Font("Arial", Font.BOLD, 10));
-        monthlyAfterEverything.setBounds(0, 400, 500, 50);
+        monthlyAfterEverything.setBounds(0, 400, 550, 50);
         add(monthlyAfterEverything);
 
         //Estimated Leftover money after everything
         JLabel yearlyAfterEverything = new JLabel("The yearly estimated leftover money after paying bills, subscriptions and other expenses is: " + "$" + String.format("%.2f", yearlyLeftoverMoneyAfterEverything));
         yearlyAfterEverything.setFont(new Font("Arial", Font.BOLD, 10));
-        yearlyAfterEverything.setBounds(0, 450, 500, 50);
+        yearlyAfterEverything.setBounds(0, 450, 550, 50);
         add(yearlyAfterEverything);
 
     }

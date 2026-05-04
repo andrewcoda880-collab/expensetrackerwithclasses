@@ -33,11 +33,11 @@ public class IncomeSummary extends JPanel {
         summaryLabel.setVerticalAlignment(JLabel.NORTH);
         add(summaryLabel);
 
-        double totalIncome = getSumOfAllIncome();
-        totalIncomeLabel = new JLabel("Total Income: $" + String.format("%.2f", totalIncome));
-        totalIncomeLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-        totalIncomeLabel.setBounds(0, 400, 350, 30);
-        add(totalIncomeLabel);
+        //double totalIncome = getSumOfAllIncome();
+        //totalIncomeLabel = new JLabel("Total Income: $" + String.format("%.2f", totalIncome));
+        //totalIncomeLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        //totalIncomeLabel.setBounds(0, 400, 350, 30);
+        //add(totalIncomeLabel);
 
         weeklyAmount = new JLabel("Estimated Weekly Income: $0.00");
         weeklyAmount.setFont(new Font("Arial", Font.BOLD, 18));
@@ -236,8 +236,8 @@ public class IncomeSummary extends JPanel {
 
         public static void UpdateTotalIncome(){
          //printing total income text
-        double totalIncome = getSumOfAllIncome();
-        totalIncomeLabel.setText("Total Income: $" + String.format("%.2f", totalIncome));
+        //double totalIncome = getSumOfAllIncome();
+        //totalIncomeLabel.setText("Total Income: $" + String.format("%.2f", totalIncome));
 
         double weeklyIncomeAmount = calculateWeeklyIncome();
         weeklyAmount.setText("Estimated Weekly Income: $" + String.format("%.2f", weeklyIncomeAmount));
