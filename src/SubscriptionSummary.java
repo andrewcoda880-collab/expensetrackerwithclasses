@@ -112,7 +112,7 @@ public class SubscriptionSummary extends JPanel {
            return weeklyCost;
         }
 
-            public static double calculateMonthyCostofSubscription(){
+            public static double calculateMonthlyCostofSubscription(){
             double monthlyCost = 0;
             for (Subscription i : subscriptions){
             double totalIncome = i.getTotalPrice();
@@ -242,7 +242,7 @@ public class SubscriptionSummary extends JPanel {
         double weeklySubscriptionAmount = calculateWeeklyCostOfSubscription();
         weeklyAmount.setText("Estimated Weekly Price of Subscription: $" + String.format("%.2f", weeklySubscriptionAmount));
 
-        double monthlySubscriptionAmount = calculateMonthyCostofSubscription();
+        double monthlySubscriptionAmount = calculateMonthlyCostofSubscription();
         monthlyAmount.setText("Estimated Monthly Price of Subscription: $" + String.format("%.2f", monthlySubscriptionAmount));
 
         double yearlySubscriptionAmount = calculateYearlyCostOfSubscription();

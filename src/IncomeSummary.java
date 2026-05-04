@@ -113,7 +113,7 @@ public class IncomeSummary extends JPanel {
            return weeklyIncome;
         }
 
-            public static double calculateMonthyIncome(){
+            public static double calculateMonthlyIncome(){
             double monthlyIncome = 0;
             for (Income i :incomes){
             double totalIncome = i.getTotalIncome();
@@ -243,7 +243,7 @@ public class IncomeSummary extends JPanel {
         double weeklyIncomeAmount = calculateWeeklyIncome();
         weeklyAmount.setText("Estimated Weekly Income: $" + String.format("%.2f", weeklyIncomeAmount));
 
-        double monthlyIncomeAmount = calculateMonthyIncome();
+        double monthlyIncomeAmount = calculateMonthlyIncome();
         monthlyAmount.setText("Estimated Monthly Income: $" + String.format("%.2f", monthlyIncomeAmount));
 
         double yearlyIncomeAmount = calculateYearlyIncome();
