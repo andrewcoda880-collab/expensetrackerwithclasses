@@ -6,26 +6,28 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.renderer.category.BarRenderer;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GraphsTab extends JPanel {
     
     private ExpenseManager expenseManager;
     private ChartPanel chartPanel;
-    private ChartPanel secondChartPanel;  
     private JPanel chartContainer;
     private String currentChartType = "Both";
     private JLabel totalExpensesLabel;
-    private UserSettings userSettings;  
+    private UserSettings userSettings;
     
     // Define constant colors for each category
-    private static final Color FOOD_COLOR = new Color(255, 99, 132);
-    private static final Color TRANSPORT_COLOR = new Color(54, 162, 235);
-    private static final Color ENTERTAINMENT_COLOR = new Color(255, 206, 86);
-    private static final Color BILLS_COLOR = new Color(75, 192, 192);
-    private static final Color OTHER_COLOR = new Color(153, 102, 255);
+    private static final Color FOOD_COLOR = new Color(255, 99, 132);      // Pink/Red
+    private static final Color TRANSPORT_COLOR = new Color(54, 162, 235); // Blue
+    private static final Color ENTERTAINMENT_COLOR = new Color(255, 206, 86); // Yellow/Gold
+    private static final Color BILLS_COLOR = new Color(75, 192, 192);     // Teal
+    private static final Color OTHER_COLOR = new Color(153, 102, 255);    // Purple
     
     public GraphsTab(ExpenseManager expenseManager, UserSettings userSettings) { 
         this.expenseManager = expenseManager;
@@ -65,8 +67,13 @@ public class GraphsTab extends JPanel {
         refreshChart();
     }
     
-    private double[] calculateExpenses() {
-        double foodTotal = 0, transportTotal = 0, entertainmentTotal = 0, billsTotal = 0, otherTotal = 0;
+    private Map<String, Double> calculateExpensesByCategory() {
+        Map<String, Double> categoryTotals = new HashMap<>();
+        categoryTotals.put("Food", 0.0);
+        categoryTotals.put("Transport", 0.0);
+        categoryTotals.put("Entertainment", 0.0);
+        categoryTotals.put("Bills", 0.0);
+        categoryTotals.put("Other", 0.0);
         
         List<Expense> expenses = expenseManager.getExpenses();
         
@@ -75,22 +82,19 @@ public class GraphsTab extends JPanel {
             double amount = expense.getAmount();
             
             if (category.equals("Food")) {
-                foodTotal += amount;
+                categoryTotals.put("Food", categoryTotals.get("Food") + amount);
             } else if (category.equals("Transport")) {
-                transportTotal += amount;
+                categoryTotals.put("Transport", categoryTotals.get("Transport") + amount);
             } else if (category.equals("Entertainment")) {
-                entertainmentTotal += amount;
+                categoryTotals.put("Entertainment", categoryTotals.get("Entertainment") + amount);
             } else if (category.equals("Bills")) {
-                billsTotal += amount;
-            } else {
-                otherTotal += amount;
+                categoryTotals.put("Bills", categoryTotals.get("Bills") + amount);
+            } else if (category.equals("Other")) {
+                categoryTotals.put("Other", categoryTotals.get("Other") + amount);
             }
         }
         
-        double totalExpenses = foodTotal + transportTotal + entertainmentTotal + billsTotal + otherTotal;
-        totalExpensesLabel.setText(String.format("Total Expenses: $%.2f", totalExpenses));
-        
-        return new double[]{foodTotal, transportTotal, entertainmentTotal, billsTotal, otherTotal, totalExpenses};
+        return categoryTotals;
     }
     
     private void showPieChart() {
@@ -109,13 +113,19 @@ public class GraphsTab extends JPanel {
     }
     
     private void updatePieChart() {
-        double[] totals = calculateExpenses();
-        double foodTotal = totals[0], transportTotal = totals[1];
-        double entertainmentTotal = totals[2], billsTotal = totals[3];
-        double otherTotal = totals[4], totalExpenses = totals[5];
+        Map<String, Double> categoryTotals = calculateExpensesByCategory();
+        double foodTotal = categoryTotals.get("Food");
+        double transportTotal = categoryTotals.get("Transport");
+        double entertainmentTotal = categoryTotals.get("Entertainment");
+        double billsTotal = categoryTotals.get("Bills");
+        double otherTotal = categoryTotals.get("Other");
+        double totalExpenses = foodTotal + transportTotal + entertainmentTotal + billsTotal + otherTotal;
+        
+        totalExpensesLabel.setText(String.format("Total Expenses: $%.2f", totalExpenses));
         
         DefaultPieDataset dataset = new DefaultPieDataset();
         
+        // Only add categories with positive values
         if (foodTotal > 0) dataset.setValue("Food", foodTotal);
         if (transportTotal > 0) dataset.setValue("Transport", transportTotal);
         if (entertainmentTotal > 0) dataset.setValue("Entertainment", entertainmentTotal);
@@ -129,6 +139,10 @@ public class GraphsTab extends JPanel {
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setBackgroundPaint(Constants.APP_COLOR);
         plot.setLabelFont(new Font("Arial", Font.PLAIN, 12));
+        plot.setShadowPaint(null);
+        plot.setLabelGap(0.02);
+        
+        // Set custom colors for each section using the dataset keys
         if (foodTotal > 0) plot.setSectionPaint(0, FOOD_COLOR);
         if (transportTotal > 0) plot.setSectionPaint(1, TRANSPORT_COLOR);
         if (entertainmentTotal > 0) plot.setSectionPaint(2, ENTERTAINMENT_COLOR);
@@ -144,17 +158,25 @@ public class GraphsTab extends JPanel {
     }
     
     private void updateBarChart() {
-        double[] totals = calculateExpenses();
-        double foodTotal = totals[0], transportTotal = totals[1];
-        double entertainmentTotal = totals[2], billsTotal = totals[3];
-        double otherTotal = totals[4], totalExpenses = totals[5];
+        Map<String, Double> categoryTotals = calculateExpensesByCategory();
+        double foodTotal = categoryTotals.get("Food");
+        double transportTotal = categoryTotals.get("Transport");
+        double entertainmentTotal = categoryTotals.get("Entertainment");
+        double billsTotal = categoryTotals.get("Bills");
+        double otherTotal = categoryTotals.get("Other");
+        double totalExpenses = foodTotal + transportTotal + entertainmentTotal + billsTotal + otherTotal;
         
+        totalExpensesLabel.setText(String.format("Total Expenses: $%.2f", totalExpenses));
+        
+        // Create dataset with separate series for each category (so each gets its own color)
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        if (foodTotal > 0) dataset.addValue(foodTotal, "Amount", "Food");
-        if (transportTotal > 0) dataset.addValue(transportTotal, "Amount", "Transport");
-        if (entertainmentTotal > 0) dataset.addValue(entertainmentTotal, "Amount", "Entertainment");
-        if (billsTotal > 0) dataset.addValue(billsTotal, "Amount", "Bills");
-        if (otherTotal > 0) dataset.addValue(otherTotal, "Amount", "Other");
+        
+        // Each category gets its own series name, which creates separate colored bars
+        if (foodTotal > 0) dataset.addValue(foodTotal, "Food", "Food");
+        if (transportTotal > 0) dataset.addValue(transportTotal, "Transport", "Transport");
+        if (entertainmentTotal > 0) dataset.addValue(entertainmentTotal, "Entertainment", "Entertainment");
+        if (billsTotal > 0) dataset.addValue(billsTotal, "Bills", "Bills");
+        if (otherTotal > 0) dataset.addValue(otherTotal, "Other", "Other");
         
         JFreeChart barChart = ChartFactory.createBarChart(
             String.format("Expense Distribution (Total: $%.2f)", totalExpenses),
@@ -163,6 +185,28 @@ public class GraphsTab extends JPanel {
         
         CategoryPlot plot = (CategoryPlot) barChart.getPlot();
         plot.setBackgroundPaint(Constants.APP_COLOR);
+        plot.setRangeGridlinePaint(Color.GRAY);
+        
+        // Set colors for each series (each bar gets its own color)
+        org.jfree.chart.renderer.category.BarRenderer renderer = 
+            (org.jfree.chart.renderer.category.BarRenderer) plot.getRenderer();
+        
+        int seriesIndex = 0;
+        if (foodTotal > 0) {
+            renderer.setSeriesPaint(seriesIndex++, FOOD_COLOR);
+        }
+        if (transportTotal > 0) {
+            renderer.setSeriesPaint(seriesIndex++, TRANSPORT_COLOR);
+        }
+        if (entertainmentTotal > 0) {
+            renderer.setSeriesPaint(seriesIndex++, ENTERTAINMENT_COLOR);
+        }
+        if (billsTotal > 0) {
+            renderer.setSeriesPaint(seriesIndex++, BILLS_COLOR);
+        }
+        if (otherTotal > 0) {
+            renderer.setSeriesPaint(seriesIndex++, OTHER_COLOR);
+        }
         
         // Clear container and show single chart
         chartContainer.removeAll();
@@ -173,10 +217,15 @@ public class GraphsTab extends JPanel {
     }
     
     private void updateBothCharts() {
-        double[] totals = calculateExpenses();
-        double foodTotal = totals[0], transportTotal = totals[1];
-        double entertainmentTotal = totals[2], billsTotal = totals[3];
-        double otherTotal = totals[4], totalExpenses = totals[5];
+        Map<String, Double> categoryTotals = calculateExpensesByCategory();
+        double foodTotal = categoryTotals.get("Food");
+        double transportTotal = categoryTotals.get("Transport");
+        double entertainmentTotal = categoryTotals.get("Entertainment");
+        double billsTotal = categoryTotals.get("Bills");
+        double otherTotal = categoryTotals.get("Other");
+        double totalExpenses = foodTotal + transportTotal + entertainmentTotal + billsTotal + otherTotal;
+        
+        totalExpensesLabel.setText(String.format("Total Expenses: $%.2f", totalExpenses));
         
         // Create Pie Chart
         DefaultPieDataset pieDataset = new DefaultPieDataset();
@@ -193,19 +242,24 @@ public class GraphsTab extends JPanel {
         PiePlot piePlot = (PiePlot) pieChart.getPlot();
         piePlot.setBackgroundPaint(Constants.APP_COLOR);
         piePlot.setLabelFont(new Font("Arial", Font.PLAIN, 12));
+        piePlot.setShadowPaint(null);
+        
+        // Set custom colors for pie chart sections
         if (foodTotal > 0) piePlot.setSectionPaint(0, FOOD_COLOR);
         if (transportTotal > 0) piePlot.setSectionPaint(1, TRANSPORT_COLOR);
         if (entertainmentTotal > 0) piePlot.setSectionPaint(2, ENTERTAINMENT_COLOR);
         if (billsTotal > 0) piePlot.setSectionPaint(3, BILLS_COLOR);
         if (otherTotal > 0) piePlot.setSectionPaint(4, OTHER_COLOR);
         
-        // Create Bar Chart
+        // Create Bar Chart with separate series for each category
         DefaultCategoryDataset barDataset = new DefaultCategoryDataset();
-        if (foodTotal > 0) barDataset.addValue(foodTotal, "Amount", "Food");
-        if (transportTotal > 0) barDataset.addValue(transportTotal, "Amount", "Transport");
-        if (entertainmentTotal > 0) barDataset.addValue(entertainmentTotal, "Amount", "Entertainment");
-        if (billsTotal > 0) barDataset.addValue(billsTotal, "Amount", "Bills");
-        if (otherTotal > 0) barDataset.addValue(otherTotal, "Amount", "Other");
+        
+        // Each category gets its own series name for different colored bars
+        if (foodTotal > 0) barDataset.addValue(foodTotal, "Food", "Food");
+        if (transportTotal > 0) barDataset.addValue(transportTotal, "Transport", "Transport");
+        if (entertainmentTotal > 0) barDataset.addValue(entertainmentTotal, "Entertainment", "Entertainment");
+        if (billsTotal > 0) barDataset.addValue(billsTotal, "Bills", "Bills");
+        if (otherTotal > 0) barDataset.addValue(otherTotal, "Other", "Other");
         
         JFreeChart barChart = ChartFactory.createBarChart(
             String.format("Bar Chart - Total: $%.2f", totalExpenses),
@@ -214,6 +268,28 @@ public class GraphsTab extends JPanel {
         
         CategoryPlot barPlot = (CategoryPlot) barChart.getPlot();
         barPlot.setBackgroundPaint(Constants.APP_COLOR);
+        barPlot.setRangeGridlinePaint(Color.GRAY);
+        
+        // Set colors for each bar (each series gets a different color)
+        org.jfree.chart.renderer.category.BarRenderer barRenderer = 
+            (org.jfree.chart.renderer.category.BarRenderer) barPlot.getRenderer();
+        
+        int seriesIndex = 0;
+        if (foodTotal > 0) {
+            barRenderer.setSeriesPaint(seriesIndex++, FOOD_COLOR);
+        }
+        if (transportTotal > 0) {
+            barRenderer.setSeriesPaint(seriesIndex++, TRANSPORT_COLOR);
+        }
+        if (entertainmentTotal > 0) {
+            barRenderer.setSeriesPaint(seriesIndex++, ENTERTAINMENT_COLOR);
+        }
+        if (billsTotal > 0) {
+            barRenderer.setSeriesPaint(seriesIndex++, BILLS_COLOR);
+        }
+        if (otherTotal > 0) {
+            barRenderer.setSeriesPaint(seriesIndex++, OTHER_COLOR);
+        }
         
         // Clear container and set up split layout for both charts
         chartContainer.removeAll();
@@ -238,7 +314,7 @@ public class GraphsTab extends JPanel {
     
     private void updateChartPanel(JFreeChart chart) {
         if (chartPanel != null && chartPanel.getParent() != null) {
-            // Remove old chart panel
+            chartContainer.remove(chartPanel);
         }
         
         chartPanel = new ChartPanel(chart);

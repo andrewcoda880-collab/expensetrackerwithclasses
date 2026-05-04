@@ -11,7 +11,7 @@ public class Warning {
                     JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            // Check if entertainment is 25% or more of Total Expenses
+            // Check if entertainment is 10% or more of Total Expenses
             else if (entertainmentTotal >= totalExpenses * 0.10) {
                 double percentage = (entertainmentTotal / totalExpenses) * 100;
                 String warningMessage = String.format(
@@ -27,11 +27,11 @@ public class Warning {
                 return;
             }
             else if (foodTotal >= totalExpenses * 0.15) {
-                double percentage = (entertainmentTotal / totalExpenses) * 100;
+                double foodpercentage = (foodTotal / totalExpenses) * 100;
                 String warningMessage = String.format(
                     "⚠️ Budget Alert: Food expenses ($%.2f) are %.1f%% of your Total ($%.2f)!\n" +
                     "Is all this food nessisary, groceries? Takeout? Consider thinking of spending less on food!",
-                    foodTotal, percentage, totalExpenses);
+                    foodTotal, foodpercentage, totalExpenses);
                 
                 JOptionPane.showMessageDialog(
                     null,
@@ -41,11 +41,11 @@ public class Warning {
                 return;
             }
             else if  (transportTotal >= totalExpenses * 0.15){
-                double percentage = (transportTotal / totalExpenses) * 100;
+                double transportpercentage = (transportTotal / totalExpenses) * 100;
                 String warningMessage = String.format(
                     "⚠️ Budget Alert: Transport expenses ($%.2f) are %.1f%% of your Total ($%.2f)!\n" +
                     "How much are you going out? is all this going out nessisary? If not just stay at home save some money on gas!",
-                    transportTotal, percentage, totalExpenses);
+                    transportTotal, transportpercentage, totalExpenses);
                 
                 JOptionPane.showMessageDialog(
                     null,
@@ -55,11 +55,11 @@ public class Warning {
                     return;
             }
             else if  (otherTotal >= totalExpenses * 0.15){
-                double percentage = (otherTotal / totalExpenses) * 100;
+                double otherpercentage = (otherTotal / totalExpenses) * 100;
                 String warningMessage = String.format(
                     "⚠️ Budget Alert: The other category ($%.2f) are %.1f%% of your Total ($%.2f)!\n" +
                     "Are these things essential to you? Think more about how useful these expenses are and if they are nessisary",
-                    otherTotal, percentage, totalExpenses);
+                    otherTotal, otherpercentage, totalExpenses);
                 
                 JOptionPane.showMessageDialog(
                     null,
