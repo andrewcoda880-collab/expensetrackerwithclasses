@@ -2,7 +2,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class LoginTab extends JPanel {
+public class LoginTab extends JPanel implements ThemeListener {
 
     private JTextField usernameField;
     private JPasswordField passwordField;
@@ -11,6 +11,7 @@ public class LoginTab extends JPanel {
 
         setLayout(null);
         setBackground(Constants.APP_COLOR);
+        ThemeManager.register(this);
 
         // Title
         JLabel title = new JLabel("Login");
@@ -54,5 +55,16 @@ public class LoginTab extends JPanel {
                 JOptionPane.showMessageDialog(this, "Invalid login");
             }
         });
+    }
+
+    private void newTheme(Component c) {
+        c.setBackground(Constants.APP_COLOR);
+
+    }
+    @Override
+    public void onThemeChanged() {
+        newTheme(this);
+        revalidate();
+        repaint();
     }
 }

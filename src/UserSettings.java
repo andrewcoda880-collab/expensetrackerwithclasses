@@ -29,34 +29,22 @@ public class UserSettings {
 
         switch(timeNotifications) {
             case "Weekly":
-                Notifications.checkAndShowNotification();
+                Notifications notifications1 = new Notifications(this, new ExpenseManager());
+                notifications1.checkAndShowNotification();
                 break;
             case "Monthly":
-                Notifications.checkAndShowNotification();
+                Notifications notifications2 = new Notifications(this, new ExpenseManager());
+                notifications2.checkAndShowNotification();
                 break;
             case "Bi-Weekly":
-                Notifications.checkAndShowNotification();
+                Notifications notifications3 = new Notifications(this, new ExpenseManager());
+                notifications3.checkAndShowNotification();
                 break;
             case "Off":
                 break;
             default:
                 timeNotifications = "Off";
                 break;
-        }
-        if (lightMode) {
-                Constants.changeTheme(true);
-                SwingUtilities.invokeLater(() -> {
-                    SettingsTab.this.setBackground(Constants.APP_COLOR);
-                    revalidate();
-                    repaint();
-                });
-        } else {
-                Constants.changeTheme(false);
-                SwingUtilities.invokeLater(() -> {
-                    SettingsTab.this.setBackground(Constants.APP_COLOR);
-                    revalidate();
-                    repaint();
-                });
         }
     }
 

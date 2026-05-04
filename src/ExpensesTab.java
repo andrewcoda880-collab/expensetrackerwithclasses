@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
-public class ExpensesTab extends JPanel {
+public class ExpensesTab extends JPanel implements ThemeListener {
 
     private JTextField nameField;
     private JTextField amountField;
@@ -22,6 +22,7 @@ public class ExpensesTab extends JPanel {
         this.expenseManager = expenseManager;
         this.layout = layout;
         this.container = container;
+        ThemeManager.register(this);
 
         this.setBackground(Constants.APP_COLOR);
         setLayout(new BorderLayout());
@@ -41,6 +42,7 @@ public class ExpensesTab extends JPanel {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         bottomPanel.setBackground(Constants.APP_COLOR);
+        bottomPanel.putClientProperty("themed", true);
 
         JButton viewAllExpensesButton = new JButton("View All Expenses");
         viewAllExpensesButton.addActionListener(e -> layout.show(container, "ALL EXPENSES"));
@@ -53,17 +55,20 @@ public class ExpensesTab extends JPanel {
         JPanel tablesPanel = new JPanel();
         tablesPanel.setLayout(new BoxLayout(tablesPanel, BoxLayout.Y_AXIS));
         tablesPanel.setBackground(Constants.APP_COLOR);
+        tablesPanel.putClientProperty("themed", true);
 
 
         JPanel topExpensesPanel = new JPanel();
         topExpensesPanel.setLayout(new BoxLayout(topExpensesPanel, BoxLayout.Y_AXIS));
         topExpensesPanel.setBackground(Constants.APP_COLOR);
+        topExpensesPanel.putClientProperty("themed", true);
 
        
 
         JPanel recentExpensesPanel = new JPanel();
         recentExpensesPanel.setLayout(new BoxLayout(recentExpensesPanel, BoxLayout.Y_AXIS));
         recentExpensesPanel.setBackground(Constants.APP_COLOR);
+        recentExpensesPanel.putClientProperty("themed", true);
 
 
         // -- Top Expenses Label ---
@@ -112,6 +117,7 @@ public class ExpensesTab extends JPanel {
 
         JPanel inputsPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         inputsPanel.setBackground(Constants.APP_COLOR);
+        inputsPanel.putClientProperty("themed", true);
 
         // ----- Name --------
         JLabel nameLabel = new JLabel("Expense Name:");
@@ -204,5 +210,24 @@ public class ExpensesTab extends JPanel {
                     expenses.get(i).getCategory(),
             });
         }
+    }
+    private void newTheme(Component c) {
+        if (c instanceof JComponent comp) {
+            Object themed = comp.getClientProperty("themed");
+            if(Boolean.TRUE.equals(themed)) {
+                comp.setBackground(Constants.APP_COLOR);
+            }
+        }
+        if (c instanceof Container container) {
+            for(Component comp : container.getComponents()) {
+                newTheme(comp);
+            }
+        }
+    }
+    @Override
+    public void onThemeChanged() {
+        newTheme(this);
+        revalidate();
+        repaint();
     }
 }

@@ -8,6 +8,7 @@ public class MainFrame extends JFrame {
     private JPanel cardPanel = new JPanel(cardLayout);
     private ExpenseManager expenseManager = new ExpenseManager();
     private UserSettings userSettings = new UserSettings("Weekly", "Pie", true);
+    private ExpensesTab expensesTab = new ExpensesTab(expenseManager, cardLayout, cardPanel);
     private Notifications notifications = new Notifications(userSettings, expenseManager);
 
     public MainFrame() {

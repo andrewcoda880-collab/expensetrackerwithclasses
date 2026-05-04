@@ -3,13 +3,18 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
-public class SettingsTab extends JPanel {
+public class SettingsTab extends JPanel implements ThemeListener{
         private JComboBox<String> notifsMenu;
         private JComboBox<String> chartMenu;
         private UserSettings userSettings;
+        private ExpensesTab expensesTab;
+        private GraphsTab graphsTab;
+        private LoginTab loginTab;
+        private HomeTab homeTab;
 
     public SettingsTab(UserSettings userSettings){
         this.userSettings = userSettings;
+        ThemeManager.register(this);
         setLayout(new BorderLayout());
         setBackground(Constants.APP_COLOR);
 
@@ -37,7 +42,6 @@ public class SettingsTab extends JPanel {
         JLabel titleNotificationSettings = new JLabel("Enable Notifications");
         titleNotificationSettings.setFont(new Font("Arial", Font.BOLD, 14));
         notifsMenu = new JComboBox<>(new String[]{"Weekly", "Monthly", "Bi-Weekly", "Off"});
-        titleNotificationSettings.setBorder(BorderFactory.createLineBorder(new Color(50, 50, 185), 6));
 
         JLabel chartType = new JLabel("Chart Types");
         chartType.setFont(new Font("Arial", Font.BOLD, 14));
@@ -59,17 +63,17 @@ public class SettingsTab extends JPanel {
 
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 9));
-        textPanel.setBackground(Color.LIGHT_GRAY);
+        textPanel.setBackground(Constants.APP_COLOR);
 
         JPanel sliderPanel = new JPanel();
         sliderPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5)); 
-        sliderPanel.setBackground(Color.LIGHT_GRAY);
+        sliderPanel.setBackground(Constants.APP_COLOR);
         
         JPanel themePanel = new JPanel();
         TitledBorder appBorder;
         appBorder = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "App Settings");
-        themePanel.setLayout(new BorderLayout(10, 0));
-        themePanel.setPreferredSize(new Dimension(500, 225));
+        themePanel.setLayout(new BorderLayout(10, 30));
+        //themePanel.setPreferredSize(new Dimension(500, 225));
         themePanel.setBackground(Color.LIGHT_GRAY);
         themePanel.setBorder(appBorder);
         JSlider themeSlider = new JSlider(0, 1, userSettings.isLightMode() ? 1 : 0);
@@ -87,6 +91,8 @@ public class SettingsTab extends JPanel {
 
             userSettings.savePreferences(selectedNotif, selectedChart, lightMode);
             userSettings.changePreferences();
+            ThemeManager.setTheme(lightMode);
+            //graphsTab.chgTheme();
             JOptionPane.showMessageDialog(this, "Settings saved!:\nNotifications: " + selectedNotif + "\nChart Type: " + selectedChart + "\nTheme Mode: " + (lightMode ? "Light" : "Dark"));
         });
 
@@ -96,10 +102,30 @@ public class SettingsTab extends JPanel {
         themePanel.add(sliderPanel, BorderLayout.EAST);
         themePanel.add(buttonPanel, BorderLayout.SOUTH);
         add(themePanel, BorderLayout.SOUTH);
-
-
-
         
          
+    }
+    @Override
+    public void onThemeChanged() {
+        chgTheme();
+    }
+    public void chgTheme() {
+        setBackground(Constants.APP_COLOR);
+        for (Component c : getComponents()) {
+            c.setBackground(Constants.APP_COLOR);
+            //c.setForeground(Constants.TEXT_COLOR);
+             if (c instanceof JPanel) {
+                for (Component inner : ((JPanel) c).getComponents()) {
+                    if (userSettings.isLightMode()) {
+                        inner.setBackground(Constants.APP_COLOR);
+                        //inner.setForeground(Constants.TEXT_COLOR);
+                    } else {
+                    inner.setBackground(Color.DARK_GRAY);
+                   // inner.setForeground(Constants.TEXT_COLOR);
+                    }
+                }
+            }
+        }
+        repaint();
     }
 }

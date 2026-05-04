@@ -1,12 +1,14 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Font;
+import java.awt.*;
 import javax.swing.*;
-public class HomeTab extends JPanel {
+public class HomeTab extends JPanel implements ThemeListener {
     
     public HomeTab(CardLayout Homelayout, JPanel HomeContainer) {
         
         setBackground(Constants.APP_COLOR);
+        ThemeManager.register(this);
     
         JPanel homepagePanel = new JPanel();
         JLabel homepageLabel = new JLabel();
@@ -65,5 +67,15 @@ public class HomeTab extends JPanel {
         add(investmentsButton);
         add(SubscriptionsButton);
         add(settingsButton);
+    }
+
+    private void newTheme(Component c) {
+        c.setBackground(Constants.APP_COLOR);
+    }
+    @Override
+    public void onThemeChanged() {
+        newTheme(this);
+        revalidate();
+        repaint();
     }
 }
