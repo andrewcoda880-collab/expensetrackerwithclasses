@@ -77,6 +77,11 @@ public class LoginTab extends JPanel {
         );
     }
 
+    // ✅ NEW: username validation method
+    private boolean isValidUsername(String username) {
+        return username.matches("[a-zA-Z0-9]+");
+    }
+
     private void handleLogin() {
         String username = usernameField.getText();
         String password = String.valueOf(passwordField.getPassword());
@@ -93,6 +98,17 @@ public class LoginTab extends JPanel {
     private void handleRegister() {
         String username = usernameField.getText();
         String password = String.valueOf(passwordField.getPassword());
+
+        // ✅ NEW: validate username first
+        if (!isValidUsername(username)) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Username can only contain letters and numbers (no spaces or symbols).",
+                "Invalid Username",
+                JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
 
         if (username.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter username and password");

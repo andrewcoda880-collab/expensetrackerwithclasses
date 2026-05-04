@@ -1,1 +1,5 @@
+Adrian|Tacos!!|What is your favorite food?|Tacos
+Adrian!|Newpass!|What city were you born in?|los angeles
+Adrianv|Newpass!|What city were you born in?|los angeles
+Adrian!!|passWord!|What city were you born in?|los angeles
 Banana|125r2rfrt1|What city were you born in?|NorthHills
