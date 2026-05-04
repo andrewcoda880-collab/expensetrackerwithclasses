@@ -1,7 +1,7 @@
 
 public class UserSettings {
     private String  timeNotifications = "Off";
-    private String chartPref = "Pie";
+    private String chartPref = "Both";
     private boolean lightMode = true;
     private GraphsTab graphsTab;
     
@@ -15,15 +15,12 @@ public class UserSettings {
             case "Bar":
                 graphsTab.showBarChart();
                 break;
-            case "Line":
-                graphsTab.showLineChart();
-                break;
             case "Pie":
                 graphsTab.showPieChart();
                 break;
             default:
-                chartPref = "Pie";
-                graphsTab.showPieChart();
+                chartPref = "Both";
+                graphsTab.showBothCharts();
                 break;
         }
 

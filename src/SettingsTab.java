@@ -45,7 +45,7 @@ public class SettingsTab extends JPanel implements ThemeListener{
 
         JLabel chartType = new JLabel("Chart Types");
         chartType.setFont(new Font("Arial", Font.BOLD, 14));
-        chartMenu = new JComboBox<>(new String[]{"Pie", "Bar", "Line"});
+        chartMenu = new JComboBox<>(new String[]{"Pie", "Bar", "Both"});
 
         notifsMenu.setSelectedItem(userSettings.getTimeNotifications());
         chartMenu.setSelectedItem(userSettings.getChartPreference());
