@@ -67,61 +67,88 @@ public class myBudget extends JPanel {
         double yearlyLeftoverMoneyAfterEverything = yearlyIncome - yearlyTotalBills - yearlyTotalSubscriptions - otherExpenses;
 
         
-        JLabel weeklyAfterBills = new JLabel("The weekly estimated leftover money after paying bills is: " + "$"+ String.format("%.2f",weeklyLeftoverAfterBills));
-        weeklyAfterBills.setFont(new Font("Arial", Font.BOLD, 15));
-        weeklyAfterBills.setBounds(0, 50, 500, 50);
-        add(weeklyAfterBills);
+        //JLabel weeklyAfterBills = new JLabel("The weekly estimated leftover money after paying bills is: " + "$"+ String.format("%.2f",weeklyLeftoverAfterBills));
+        //weeklyAfterBills.setFont(new Font("Arial", Font.BOLD, 15));
+        //weeklyAfterBills.setBounds(0, 50, 500, 50);
+        //add(weeklyAfterBills);
 
         JLabel monthlyAfterBills = new JLabel("The estimated monthly leftover money after paying bills is: " + "$" + String.format("%.2f", monthlyLeftoverAfterBills));
         monthlyAfterBills.setFont(new Font("Arial", Font.BOLD, 15));
         monthlyAfterBills.setBounds(0, 100, 500, 50);
         add(monthlyAfterBills);
 
-        JLabel yearlyAfterBills = new JLabel("The estimated yearly leftover money after paying bills is: " + "$" + String.format("%.2f",yearlyLeftoverAfterBills));
-        yearlyAfterBills.setFont(new Font("Arial", Font.BOLD, 15));
-        yearlyAfterBills.setBounds(0, 150, 500, 50);
-        add(yearlyAfterBills);
+        //JLabel yearlyAfterBills = new JLabel("The estimated yearly leftover money after paying bills is: " + "$" + String.format("%.2f",yearlyLeftoverAfterBills));
+        //yearlyAfterBills.setFont(new Font("Arial", Font.BOLD, 15));
+        //yearlyAfterBills.setBounds(0, 150, 500, 50);
+        //add(yearlyAfterBills);
 
 
 
         //Calculate Estimated LeftOver Money After Bills And Subscriptions (Weekly)
-        double weeklyLeftoverAfterBillsAndSubscriptions = weeklyLeftoverAfterBills - weeklyTotalSubscriptions;
-        JLabel weeklyAfterBillsAndSubscriptions = new JLabel("The weekly estimated leftover money after paying bills and subscriptions is: " + "$" + String.format("%.2f",weeklyLeftoverAfterBillsAndSubscriptions));
-        weeklyAfterBillsAndSubscriptions.setFont(new Font("Arial", Font.BOLD, 12));
-        weeklyAfterBillsAndSubscriptions.setBounds(0, 200, 500, 50);
+        //double weeklyLeftoverAfterBillsAndSubscriptions = weeklyLeftoverAfterBills - weeklyTotalSubscriptions;
+        //JLabel weeklyAfterBillsAndSubscriptions = new JLabel("The weekly estimated leftover money after paying bills and subscriptions is: " + "$" + String.format("%.2f",weeklyLeftoverAfterBillsAndSubscriptions));
+        //weeklyAfterBillsAndSubscriptions.setFont(new Font("Arial", Font.BOLD, 12));
+        //weeklyAfterBillsAndSubscriptions.setBounds(0, 200, 500, 50);
 
-        add(weeklyAfterBillsAndSubscriptions);
+        //add(weeklyAfterBillsAndSubscriptions);
         //Calculate Estimated LeftOver Money After Bills And Subscriptions (Monthly)
         double monthlyLeftoverAfterBillsAndSubscriptions = monthlyLeftoverAfterBills - monthlyTotalSubscriptions;
         JLabel monthlyAfterBillsAndSubscriptions = new JLabel("The monthly estimated leftover money after paying bills and subscriptions is: " + "$" + String.format("%.2f", monthlyLeftoverAfterBillsAndSubscriptions));
         monthlyAfterBillsAndSubscriptions.setFont(new Font("Arial", Font.BOLD, 12));
-        monthlyAfterBillsAndSubscriptions.setBounds(0, 250, 500, 50);
+        monthlyAfterBillsAndSubscriptions.setBounds(0, 200, 500, 50);
         
         add(monthlyAfterBillsAndSubscriptions);
         //Calculate Estimated LeftOver Money After Bills And Subscriptions (Yearly)
-        double yearlyLeftoverAfterBillsAndSubscriptions = yearlyLeftoverAfterBills - yearlyTotalSubscriptions;
-        JLabel yearlyAfterBillsAndSubscriptions = new JLabel("The yearly estimated leftover money after paying bills and subscriptions is: " + "$" + String.format("%.2f", yearlyLeftoverAfterBillsAndSubscriptions));
-        yearlyAfterBillsAndSubscriptions.setFont(new Font("Arial", Font.BOLD, 12));
-        yearlyAfterBillsAndSubscriptions.setBounds(0, 300, 500, 50);
-        add(yearlyAfterBillsAndSubscriptions);
+        //double yearlyLeftoverAfterBillsAndSubscriptions = yearlyLeftoverAfterBills - yearlyTotalSubscriptions;
+        //JLabel yearlyAfterBillsAndSubscriptions = new JLabel("The yearly estimated leftover money after paying bills and subscriptions is: " + "$" + String.format("%.2f", yearlyLeftoverAfterBillsAndSubscriptions));
+        //yearlyAfterBillsAndSubscriptions.setFont(new Font("Arial", Font.BOLD, 12));
+        //yearlyAfterBillsAndSubscriptions.setBounds(0, 300, 500, 50);
+        //add(yearlyAfterBillsAndSubscriptions);
 
         //Estimated Leftover money after everything
-        JLabel weeklyAfterEverything = new JLabel("The weekly estimated leftover money after paying bills, subscriptions and other expenses is: " + "$" + String.format("%.2f", weeklyLeftoverMoneyAfterEverything));
-        weeklyAfterEverything.setFont(new Font("Arial", Font.BOLD, 10));
-        weeklyAfterEverything.setBounds(0, 350, 550, 50);
-        add(weeklyAfterEverything);
+        //JLabel weeklyAfterEverything = new JLabel("The weekly estimated leftover money after paying bills, subscriptions and other expenses is: " + "$" + String.format("%.2f", weeklyLeftoverMoneyAfterEverything));
+        //weeklyAfterEverything.setFont(new Font("Arial", Font.BOLD, 10));
+        //weeklyAfterEverything.setBounds(0, 350, 550, 50);
+        //add(weeklyAfterEverything);
 
         //Estimated Leftover money after everything
         JLabel monthlyAfterEverything = new JLabel("The monthly estimated leftover money after paying bills, subscriptions and other expenses is: " + "$" + String.format("%.2f", monthlyLeftoverMoneyAfterEverything));
         monthlyAfterEverything.setFont(new Font("Arial", Font.BOLD, 10));
-        monthlyAfterEverything.setBounds(0, 400, 550, 50);
+        monthlyAfterEverything.setBounds(0, 300, 550, 50);
         add(monthlyAfterEverything);
 
         //Estimated Leftover money after everything
-        JLabel yearlyAfterEverything = new JLabel("The yearly estimated leftover money after paying bills, subscriptions and other expenses is: " + "$" + String.format("%.2f", yearlyLeftoverMoneyAfterEverything));
-        yearlyAfterEverything.setFont(new Font("Arial", Font.BOLD, 10));
-        yearlyAfterEverything.setBounds(0, 450, 550, 50);
-        add(yearlyAfterEverything);
+        //JLabel yearlyAfterEverything = new JLabel("The yearly estimated leftover money after paying bills, subscriptions and other expenses is: " + "$" + String.format("%.2f", yearlyLeftoverMoneyAfterEverything));
+        //yearlyAfterEverything.setFont(new Font("Arial", Font.BOLD, 10));
+        //yearlyAfterEverything.setBounds(0, 450, 550, 50);
+        //add(yearlyAfterEverything);
+
+        JLabel rule = new JLabel("Suggested monthly budget: 50% - needs, 30% - wants, 20% - savings");
+        rule.setFont(new Font("Arial", Font.BOLD, 12));
+        rule.setBounds(0, 400, 550, 50);
+        add(rule);
+
+        double needs = .50 * monthlyIncome;
+        double wants = .30 * monthlyIncome;
+        double savings = .20 * monthlyIncome;
+
+        JLabel needsLabel = new JLabel("Needs: " + String.format("%.2f",needs));
+        needsLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        needsLabel.setBounds(0, 420, 550, 50);
+        add(needsLabel);
+
+        JLabel wantsLabel = new JLabel("Wants: " + String.format("%.2f", wants));
+        wantsLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        wantsLabel.setBounds(0, 440, 550, 50);
+        add(wantsLabel);
+
+        JLabel savingsLabel = new JLabel("Savings: " + String.format("%.2f", wants));
+        savingsLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        savingsLabel.setBounds(0, 460, 550, 50);
+        add(savingsLabel);
+
+
+
 
     }
 }

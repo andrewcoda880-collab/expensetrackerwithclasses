@@ -21,7 +21,7 @@ public class SubscriptionSummary extends JPanel {
         setLayout(null); // Set layout to null for absolute positioning
 
         JButton AddSubscriptionButton = new JButton("Add Subscription");
-        AddSubscriptionButton.setBounds(350,425 , 150, 100);
+        AddSubscriptionButton.setBounds(350,425 , 150, 50);
         add(AddSubscriptionButton);
 
         AddSubscriptionButton.addActionListener(e -> layout.show(container, "MYSUBSCRIPTIONS"));

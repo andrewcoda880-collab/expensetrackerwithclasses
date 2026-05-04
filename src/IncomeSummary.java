@@ -20,7 +20,7 @@ public class IncomeSummary extends JPanel {
         setLayout(null); // Set layout to null for absolute positioning
 
         JButton AddIncomeButton = new JButton("Add Source of Income");
-        AddIncomeButton.setBounds(300, 450, 200, 60);
+        AddIncomeButton.setBounds(350, 425, 150, 50);
         add(AddIncomeButton);
 
         AddIncomeButton.addActionListener(e -> layout.show(container, "MYINCOME"));

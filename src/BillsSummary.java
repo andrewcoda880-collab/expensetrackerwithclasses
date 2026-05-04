@@ -22,7 +22,7 @@ public class BillsSummary extends JPanel {
         setLayout(null); // Set layout to null for absolute positioning
 
         JButton AddBillButton = new JButton("Add Bill");
-        AddBillButton.setBounds(350,425 , 150, 100);
+        AddBillButton.setBounds(350,425 , 150, 50);
         add(AddBillButton);
 
         AddBillButton.addActionListener(e -> layout.show(container, "MYBILLS"));
