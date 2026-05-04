@@ -6,6 +6,6 @@ public final class Constants {
     public static final int WINDOW_HEIGHT = 600;
     public static final String APP_TITLE = "Expense Tracker";
     public static final Color APP_COLOR = Color.getHSBColor(171,95,14);
-    public static final String USERNAME = "Andrew";//username
+    public static final String USERNAME = "";//username
 }
 

@@ -44,7 +44,7 @@ public class ExpensesTab extends JPanel {
         headerPanel.setBackground(Constants.APP_COLOR);
 
          // ---- Tab Title-----
-        JLabel expesesTabTitle = new JLabel(Constants.USERNAME + "'s Expenses");
+        JLabel expesesTabTitle = new JLabel(Constants.USERNAME + "Expenses");
         expesesTabTitle.setFont(new Font("Arial", Font.BOLD, 30));
         headerPanel.add(expesesTabTitle);
 
