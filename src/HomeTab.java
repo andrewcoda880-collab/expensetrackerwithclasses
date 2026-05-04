@@ -4,11 +4,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class HomeTab extends JPanel {
+public class HomeTab extends JPanel implements ThemeListener{
     private ExpenseManager expenseManager;
     public HomeTab(CardLayout layout, JPanel container, ExpenseManager expenseManager) {
         this.expenseManager = expenseManager;
         setBackground(Constants.APP_COLOR);
+        ThemeManager.register(this);
         setLayout(null);
         addButtons(layout, container);
         addTitle();
@@ -55,5 +56,15 @@ public class HomeTab extends JPanel {
         subscriptionsButton.addActionListener(e -> layout.show(container, "MYSUBSCRIPTIONS"));
         settingsButton.addActionListener(e -> layout.show(container, "SETTINGS"));
         incomeButton.addActionListener(e -> layout.show(container, "MYINCOME"));
+    }
+
+    private void newTheme(Component c) {
+        c.setBackground(Constants.APP_COLOR);
+    }
+    @Override
+    public void onThemeChanged() {
+        newTheme(this);
+        revalidate();
+        repaint();
     }
 }

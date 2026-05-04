@@ -1,7 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class LoginTab extends JPanel {
+public class LoginTab extends JPanel implements ThemeListener {
 
     private JTextField usernameField;
     private JPasswordField passwordField;
@@ -16,6 +16,7 @@ public class LoginTab extends JPanel {
 
         setLayout(null);
         setBackground(Constants.APP_COLOR);
+        ThemeManager.register(this);
 
         JLabel title = new JLabel("Login");
         title.setFont(new Font("Arial", Font.BOLD, 28));
@@ -133,5 +134,16 @@ public class LoginTab extends JPanel {
         UserStore.saveUsers();
 
         JOptionPane.showMessageDialog(this, "User registered!");
+    }
+
+    private void newTheme(Component c) {
+        c.setBackground(Constants.APP_COLOR);
+
+    }
+    @Override
+    public void onThemeChanged() {
+        newTheme(this);
+        revalidate();
+        repaint();
     }
 }

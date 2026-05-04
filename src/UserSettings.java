@@ -1,6 +1,6 @@
 public class UserSettings {
     private String  timeNotifications = "Off";
-    private String chartPref = "Pie";
+    private String chartPref = "Both";
     private boolean lightMode = true;
     private GraphsTab graphsTab;
     
@@ -14,29 +14,28 @@ public class UserSettings {
             case "Bar":
                 graphsTab.showBarChart();
                 break;
-            case "Line":
-                graphsTab.showLineChart();
-                break;
             case "Pie":
                 graphsTab.showPieChart();
             case "Both":
                 break;
             default:
                 chartPref = "Both";
-                chartPref = "Pie";
-                graphsTab.showPieChart();
+                graphsTab.showBothCharts();
                 break;
         }
 
         switch(timeNotifications) {
             case "Weekly":
-                Notifications.checkAndShowNotification();
+                Notifications notifications1 = new Notifications(this, new ExpenseManager());
+                notifications1.checkAndShowNotification();
                 break;
             case "Monthly":
-                Notifications.checkAndShowNotification();
+                Notifications notifications2 = new Notifications(this, new ExpenseManager());
+                notifications2.checkAndShowNotification();
                 break;
             case "Bi-Weekly":
-                Notifications.checkAndShowNotification();
+                Notifications notifications3 = new Notifications(this, new ExpenseManager());
+                notifications3.checkAndShowNotification();
                 break;
             case "Off":
                 break;

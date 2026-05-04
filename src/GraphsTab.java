@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class GraphsTab extends JPanel {
+public class GraphsTab extends JPanel implements ThemeListener {
     
     private ExpenseManager expenseManager;
     private ChartPanel chartPanel;
@@ -37,6 +37,7 @@ public class GraphsTab extends JPanel {
         JPanel titlePanel = new JPanel();
         titlePanel.setBackground(Constants.APP_COLOR);
         JLabel title = new JLabel("Expense Graphs");
+        ThemeManager.register(this);
         title.setFont(new Font("Arial", Font.BOLD, 24));
         titlePanel.add(title);
         
@@ -260,5 +261,16 @@ public class GraphsTab extends JPanel {
         } else {  // "Both" is the default
             showBothCharts();
         }
+    }
+
+        private void newTheme(Component c) {
+        c.setBackground(Constants.APP_COLOR);
+
+    }
+    @Override
+    public void onThemeChanged() {
+        newTheme(this);
+        revalidate();
+        repaint();
     }
 }
