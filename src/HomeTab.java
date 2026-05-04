@@ -55,20 +55,31 @@ public class HomeTab extends JPanel {
         add(SubscriptionsButton);
         add(settingsButton);
         add(incomeButton);
+
+
         
         myBillsButton.addActionListener(e -> layout.show(container, "MYBILLS"));
-        budgetButton.addActionListener(e -> layout.show(container, "MYBUDGET"));
+        myBudget budgetPanel = new myBudget();
+
+        budgetButton.addActionListener(e -> {
+        budgetPanel.refreshBudget();
+        layout.show(container, "MYBUDGET");
+        });
+
+        container.add(budgetPanel, "MYBUDGET");
         investmentsButton.addActionListener(e -> layout.show(container, "MYINVESTMENTS"));
         SubscriptionsButton.addActionListener(e -> layout.show(container, "MYSUBSCRIPTIONS"));
         settingsButton.addActionListener(e -> layout.show(container, "MYSETTINGS"));
         incomeButton.addActionListener(e -> layout.show(container, "MYINCOME"));
 
+
+
         container.add(new myBills(layout, container), "MYBILLS");
-        container.add(new myBudget(), "MYBUDGET");
         container.add(new myInvestments(), "MYINVESTMENTS");
         container.add(new mySubscriptions(layout, container), "MYSUBSCRIPTIONS");
         container.add(new mySettings(), "MYSETTINGS");
         container.add(new myIncome(layout,container), "MYINCOME");
+
 
     }
 }
