@@ -5,7 +5,8 @@ public final class Constants {
     public static final int WINDOW_WIDTH = 500;
     public static final int WINDOW_HEIGHT = 600;
     public static final String APP_TITLE = "Expense Tracker";
-    public static Color APP_COLOR = new Color(253, 248, 210); //171,95,14
+    public static Color APP_COLOR = new Color(253, 248, 210);
+    public static final String USERNAME = "";
 
     static void changeTheme(boolean LightMode) {
         if(LightMode) {
